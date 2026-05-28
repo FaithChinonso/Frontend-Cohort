@@ -1,0 +1,8 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# TypeScript build output — students will generate these locally
+07-typescript/starter/script.js
+07-typescript/solution/script.js

@@ -1,0 +1,91 @@
+/* --- Carried over from Section 03 --- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background-color: #fdf6ec;
+  color: #2a2a2a;
+  line-height: 1.5;
+}
+
+header {
+  background-color: #c8553d;
+  color: white;
+  padding: 1.5rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 0.75rem;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+article h1 { color: #c8553d; margin-top: 0; }
+article h2 { color: #588157; }
+article img { width: 100%; border-radius: 6px; margin: 1rem 0; }
+ul, ol { padding-left: 1.5rem; line-height: 1.8; }
+
+footer {
+  text-align: center;
+  color: #888;
+  font-size: 0.875rem;
+  margin: 2rem 0;
+}
+
+
+/* --- TODO: NEW STYLES FOR SECTION 04 --- */
+
+/* TODO 1: Make the <header> a flex container — logo left, nav right, vertically centered. */
+
+
+/* TODO 2: Style the .intro section — center text, some bottom margin. */
+
+
+/* TODO 3: Style .recipe-grid as a responsive CSS grid using
+   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) and a 1.5rem gap. */
+
+
+/* TODO 4: Style each .recipe-card — white background, rounded corners,
+   subtle border, hide overflow so the image's corners are rounded too.
+   Add a transition for transform and box-shadow. */
+
+
+/* TODO 5: On .recipe-card:hover, lift the card with translateY(-4px)
+   and add a box-shadow. */
+
+
+/* TODO 6: Make .recipe-card img fill width (width: 100%, height: 180px, object-fit: cover) */
+
+
+/* TODO 7: Style .card-body — padding inside. */
+
+
+/* TODO 8: Style .category — small pill: padding, background, color, border-radius,
+   small font-size, display: inline-block, uppercase. */
+
+
+/* TODO 9: Add a media query for max-width: 768px that:
+   - makes the header stack vertically (flex-direction: column)
+   - centers the header items
+   - centers the nav links */
+

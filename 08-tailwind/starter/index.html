@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tasty Bites — Tailwind</title>
+
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Small extra stylesheet (we only need it for one .active state — see TODO 7) -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <!-- TODO: Style the header — red bg, white text, flex justify-between items-center, padding -->
+    <header>
+      <h1>Tasty Bites</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="#">Recipes</a>
+        <a href="#">About</a>
+      </nav>
+    </header>
+
+    <!-- TODO: Style main — max-w-6xl, mx-auto, padding -->
+    <main>
+
+      <!-- TODO: Style intro — text-center, margin-bottom -->
+      <section class="intro">
+        <h2>Recipes worth making</h2>
+        <p>Simple, tested, and unfussy.</p>
+      </section>
+
+      <!-- TODO: Style controls — flex flex-col items-center gap-4, margin-bottom -->
+      <section class="controls">
+
+        <!-- TODO: Style the search input — rounded-full, padding, border, focus styles -->
+        <input type="search" id="search" placeholder="Search recipes..." />
+
+        <!-- TODO: Style the filters wrapper — flex flex-wrap justify-center gap-2 -->
+        <div class="filters">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="Breakfast">Breakfast</button>
+          <button class="filter-btn" data-category="Lunch">Lunch</button>
+          <button class="filter-btn" data-category="Dinner">Dinner</button>
+          <button class="filter-btn" data-category="Dessert">Dessert</button>
+        </div>
+      </section>
+
+      <!-- TODO: Style the grid — grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 -->
+      <section class="recipe-grid"></section>
+    </main>
+
+    <!-- TODO: Style footer — text-center, text-gray-500, text-sm, padding -->
+    <footer>
+      <p>&copy; 2026 Tasty Bites.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tasty Bites — Home (TS)</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <header>
+      <h1>Tasty Bites</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="#">Recipes</a>
+        <a href="#">About</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro">
+        <h2>Recipes worth making</h2>
+        <p>Simple, tested, and unfussy.</p>
+      </section>
+
+      <section class="controls">
+        <input type="search" id="search" placeholder="Search recipes..." />
+        <div class="filters">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="Breakfast">Breakfast</button>
+          <button class="filter-btn" data-category="Lunch">Lunch</button>
+          <button class="filter-btn" data-category="Dinner">Dinner</button>
+          <button class="filter-btn" data-category="Dessert">Dessert</button>
+        </div>
+      </section>
+
+      <section class="recipe-grid"></section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Tasty Bites.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

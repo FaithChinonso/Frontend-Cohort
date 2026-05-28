@@ -1,0 +1,12 @@
+{
+  "name": "tasty-bites-ts",
+  "version": "1.0.0",
+  "description": "Section 07 — TypeScript version of Tasty Bites",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}

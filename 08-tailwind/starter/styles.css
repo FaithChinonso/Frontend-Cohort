@@ -1,0 +1,14 @@
+/* Most styling will live in Tailwind classes in index.html.
+   This file is only here for the .active button state, which
+   gets toggled by JS — Tailwind handles static classes best. */
+
+/* TODO: style .filter-btn.active here once you've styled the
+   base .filter-btn with Tailwind in the HTML. Use any colors
+   you like. For example:
+
+   .filter-btn.active {
+     background-color: #dc2626;
+     color: white;
+     border-color: #dc2626;
+   }
+*/
