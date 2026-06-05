@@ -218,7 +218,24 @@ margin-bottom: 20px;
 
 Same shorthand works for `padding` and `border`.
 
-### Width and height
+### Width and height — and `clamp()` for the modern flex
+
+Hardcoded sizes work, but real pages need to look good at every screen size. The modern way:
+
+```css
+/* OLD: brittle */
+h1 { font-size: 48px; }
+
+/* MODERN: fluid — scales smoothly between min and max */
+h1 { font-size: clamp(2rem, 4vw + 1rem, 4.5rem); }
+```
+
+`clamp(MIN, IDEAL, MAX)` takes three values:
+- The smallest the value can ever be (on tiny phones)
+- The "ideal" value, often expressed with `vw` (viewport-width units)
+- The largest it can ever be (on huge desktops)
+
+The browser smoothly interpolates between them. **Use `clamp()` for headline sizes** — one rule replaces three media queries.
 
 ```css
 .card {
@@ -239,7 +256,87 @@ The `*` selector means "every element." This single rule fixes a lot of frustrat
 
 ---
 
-## 6. Backgrounds and borders
+## 6. Custom properties — CSS variables
+
+When you reuse the same color in 20 places and then want to change it, finding and replacing is painful. CSS lets you define **custom properties** (often called CSS variables):
+
+```css
+:root {
+  --color-bg:     #FAF6EF;
+  --color-text:   #2B1D13;
+  --color-accent: #C2563A;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+a {
+  color: var(--color-accent);
+}
+```
+
+Two rules:
+- **Define** with `--name: value;` inside any selector. `:root` (the `<html>` element) is the standard place — they're then available everywhere.
+- **Use** with `var(--name)`.
+
+Change `--color-accent` once at the top of the file and every link, button, and pill that uses it updates everywhere. This is how real design systems work.
+
+We'll use these properties for the **Tasty Bites palette** in this section:
+
+```css
+:root {
+  --cream:      #FAF6EF;  /* warm off-white background */
+  --paper:      #F3ECDF;  /* card/surface color */
+  --espresso:   #2B1D13;  /* body text (not pure black — looks softer) */
+  --terracotta: #C2563A;  /* accent — links, highlights */
+  --sage:       #7A8A6B;  /* secondary accent */
+  --rule:       #E4D9C5;  /* subtle dividers */
+}
+```
+
+The same idea works for fonts:
+
+```css
+:root {
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3 { font-family: var(--font-display); }
+body       { font-family: var(--font-body); }
+```
+
+---
+
+## 7. Loading real fonts from Google Fonts
+
+The system fonts (Georgia, Arial) work, but pro sites use carefully chosen typefaces. The easiest source is **Google Fonts** (free, fast).
+
+Add this to your `<head>`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;600;700&family=Cormorant+Garamond:ital@1&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Then reference the fonts in your CSS:
+
+```css
+body { font-family: 'Inter', sans-serif; }
+h1   { font-family: 'DM Serif Display', serif; }
+```
+
+The `&display=swap` part tells the browser: *show the fallback font immediately, swap in the real one when it loads* — no blank text while waiting.
+
+---
+
+## 8. Backgrounds and borders
 
 ```css
 .hero {
@@ -255,7 +352,7 @@ The `*` selector means "every element." This single rule fixes a lot of frustrat
 
 ---
 
-## 7. The "cascade" — when rules conflict
+## 9. The "cascade" — when rules conflict
 
 What if two rules try to style the same thing?
 
@@ -281,23 +378,26 @@ Don't worry about memorizing this — when something doesn't look right, open th
 
 ## Your turn
 
-Open `starter/`. You'll find `recipe.html` (the same page from Section 02) and an empty `styles.css`.
+Open `starter/`. The HTML already has the Google Fonts `<link>` ready and the new markup we'll need (a `<p class="meta">` row, a `.hero` wrapper). You'll work in `styles.css`.
 
-The HTML already has a `<link>` to the CSS file. You only need to edit `styles.css`.
+We're building a **magazine-style recipe page** — cream background, terracotta accents, big serif title, italic byline.
 
 Make the page look good:
 
-1. Add `* { box-sizing: border-box; }` at the top
-2. Set a nice font on `body` (try `font-family: 'Georgia', serif;`)
-3. Give `body` a soft background color (e.g. `#fdf6ec`) and a darker text color (e.g. `#2a2a2a`)
-4. Center the `main` element and limit its width to `720px`. Hint: `margin: 0 auto` centers a block element horizontally.
-5. Style the `header` — background color, padding, center the text
-6. Style the `nav` links with some spacing and a color
-7. Add padding to the `article` and a white background
-8. Make the recipe image fill the article width: `width: 100%`
-9. Style the headings — bigger, different color
-10. Give the lists some padding-left so the bullets show, and increase line-height for readability
-11. Style the `footer` — smaller text, centered, with some top margin
+1. Add `* { box-sizing: border-box; }` at the top.
+2. Define your **palette** as CSS variables on `:root` (use the Tasty Bites tokens from section 6 above — cream, paper, espresso, terracotta, sage, rule).
+3. Define `--font-display`, `--font-body`, and `--font-accent` variables.
+4. Style the `body`: cream background, espresso color, Inter font, `line-height: 1.65`.
+5. Style the `<header>`: terracotta background, cream text, padding, center the title.
+6. Style the `<nav>` links: cream color, no underline, spacing.
+7. Center `<main>` with `max-width: 760px` and horizontal padding.
+8. Give `<article>` a paper background, generous padding, soft `border-radius`, and a subtle espresso-tinted box shadow (`0 12px 24px -12px rgb(43 29 19 / 0.12)`).
+9. Style the recipe title (`article h1`): `font-family: var(--font-display)`, `font-size: clamp(2rem, 4vw + 1rem, 3.25rem)`, terracotta color, balanced line-height.
+10. Style `.meta` (the byline row): Cormorant Garamond italic, smaller, muted espresso.
+11. Replace the `h2` underline with a `--rule` hairline `border-bottom` and add small-caps eyebrow style (`text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.9rem;`).
+12. Make the hero image fill the article width with a slight `border-radius`.
+13. **Bonus:** add a drop cap on `.description::first-letter` — float left, large, terracotta, in the display font.
+14. Style the `<footer>` — small, centered, muted espresso.
 
 Compare with `solution/styles.css` when you're done.
 
@@ -315,7 +415,7 @@ article p { }       /* p inside article */
 /* Common properties */
 color: #333;
 background-color: #fff;
-font-family: Arial, sans-serif;
+font-family: 'Inter', sans-serif;
 font-size: 1rem;
 font-weight: bold;
 text-align: center;
@@ -328,6 +428,15 @@ border: 1px solid #ccc;
 border-radius: 8px;
 width: 100%;
 max-width: 720px;
+
+/* CSS variables — define once, reuse everywhere */
+:root {
+  --accent: #C2563A;
+}
+a { color: var(--accent); }
+
+/* Fluid sizing — replaces media queries for type */
+h1 { font-size: clamp(2rem, 4vw + 1rem, 4.5rem); }
 
 /* Always include this */
 * { box-sizing: border-box; }

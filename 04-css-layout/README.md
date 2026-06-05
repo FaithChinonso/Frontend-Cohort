@@ -244,27 +244,162 @@ The `transition` says: *"when the `background` property changes, animate it over
 
 ---
 
+## 7. `aspect-ratio` — never wrestle with image sizes again
+
+Recipe cards look broken when one image is square and the next is wide — heights jump around, the grid feels uneven. The fix is one property:
+
+```css
+.recipe-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;    /* always tall portrait */
+  object-fit: cover;       /* crop to fill, don't squish */
+}
+```
+
+`aspect-ratio` locks the shape regardless of the actual image dimensions. `object-fit: cover` makes the image fill that box, cropping any excess instead of stretching. **Every modern image on the web uses this combo.**
+
+### Bonus: image zoom on hover
+
+A small but luxurious touch. Wrap the image in a div, hide the overflow, and scale the image up on card hover:
+
+```html
+<article class="recipe-card">
+  <div class="card-image-wrap">
+    <img src="..." />
+  </div>
+  <div class="card-body">...</div>
+</article>
+```
+
+```css
+.card-image-wrap {
+  overflow: hidden;        /* clip the scaled image to the wrapper */
+}
+
+.card-image-wrap img {
+  transition: transform 0.45s ease;
+}
+
+.recipe-card:hover .card-image-wrap img {
+  transform: scale(1.05);  /* gentle zoom — not too much */
+}
+```
+
+The image grows, the wrapper crops the overflow, and the card feels alive.
+
+---
+
+## 8. Magazine asymmetry — one card spans two columns
+
+Real magazines don't make every card the same size. The featured story gets more space. CSS Grid lets us do this with one rule:
+
+```css
+.recipe-card--featured {
+  grid-column: span 2;     /* this card takes up two columns */
+}
+```
+
+```html
+<article class="recipe-card recipe-card--featured">...</article>
+<article class="recipe-card">...</article>
+<article class="recipe-card">...</article>
+```
+
+The featured card stays double-wide on desktop and **automatically falls back** to a single column on mobile because `minmax()` decides there's no room for two columns. No media query needed — the grid handles it.
+
+---
+
+## 9. Two more selectors you'll love — `:is()` and `color-mix()`
+
+### `:is()` — avoid repeating yourself
+
+When you want the same rule to apply to multiple selectors:
+
+```css
+/* Old way — repetitive */
+h1, h2, h3 {
+  font-family: 'DM Serif Display', serif;
+}
+
+article h1, article h2, article h3 {
+  margin-top: 1.5rem;
+}
+
+/* With :is() — cleaner */
+:is(article, section) :is(h1, h2, h3) {
+  margin-top: 1.5rem;
+}
+```
+
+`:is(a, b, c)` matches any of `a`, `b`, or `c`. It's just shorthand, but on a big stylesheet it adds up.
+
+### `color-mix()` — tint a color without inventing a new variable
+
+Need a "20% terracotta on cream" background for a soft category pill? Don't add another palette variable — mix them:
+
+```css
+.category {
+  background: color-mix(in srgb, var(--terracotta) 12%, transparent);
+  color: var(--terracotta);
+}
+```
+
+This takes 12% of your terracotta and mixes it with transparent (giving a subtle wash). Change `--terracotta` once and every tinted pill updates automatically. **Hugely useful for hover states, disabled buttons, and soft accents.**
+
+---
+
+## 10. Staggered animations — cards fade in one after another
+
+A signature touch on premium sites — cards don't all pop in at once, they cascade:
+
+```css
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.recipe-card {
+  opacity: 0;
+  animation: fade-up 0.6s ease forwards;
+  animation-delay: calc(var(--i, 0) * 80ms);
+}
+```
+
+Then set `--i` per card in the HTML:
+
+```html
+<article class="recipe-card" style="--i: 0">...</article>
+<article class="recipe-card" style="--i: 1">...</article>
+<article class="recipe-card" style="--i: 2">...</article>
+```
+
+Card 0 fades in immediately, card 1 after 80ms, card 2 after 160ms. Small detail, big "wow."
+
+---
+
 ## Your turn
 
 Open `starter/`. You'll find:
 
-- `index.html` — the homepage skeleton. **6 recipe cards already in the HTML.** Each card has class `recipe-card` with an image, title, description, and category tag.
-- `recipe.html` — same recipe page from Section 03
-- `styles.css` — the CSS from Section 03 is already there. Add new styles below the comment.
+- `index.html` — the homepage skeleton with **6 recipe cards** already in the HTML. The first card has `recipe-card--featured` for the asymmetric layout. Each card has an image wrapped in `.card-image-wrap`, a `.meta` byline row, and a `.category` pill.
+- `recipe.html` — the recipe page from Section 03
+- `styles.css` — Section 03 tokens already at the top. Build everything else.
 
 **Build this:**
 
-1. Make the header use flexbox: logo on the left, nav on the right, vertically centered.
-2. Style the recipe cards container as a grid: `repeat(auto-fit, minmax(280px, 1fr))` with a 1.5rem gap.
-3. Style each `.recipe-card`:
-   - White background, rounded corners, a subtle border
-   - The image fills the card width with `width: 100%`
-   - Padding around the text
-   - Add a `transition` and on `:hover` slightly lift the card (`transform: translateY(-4px)` and a box-shadow)
-4. Style the category tag (`.category`) — a small colored pill at the top of each card.
-5. Add a media query at the bottom: when screen width is 768px or less, make the header stack vertically and center its items.
+1. Make the header a flex container — logo left, nav right, vertically centered.
+2. Style `.intro` — centered text, a small-caps eyebrow line above the heading.
+3. Style `.recipe-grid` as a grid using `repeat(auto-fill, minmax(min(100%, 18rem), 1fr))` and a `clamp()` gap.
+4. Make `.recipe-card--featured` span 2 columns (it'll automatically collapse on mobile).
+5. Style each `.recipe-card` — paper background, rounded corners, espresso-tinted soft shadow, a `transition` for lift+shadow, and hover lift (`translateY(-4px)`).
+6. Style `.card-image-wrap` — `overflow: hidden`, rounded top corners. Inside, the `img` gets `aspect-ratio: 4/5`, `object-fit: cover`, and a transition.
+7. On `.recipe-card:hover .card-image-wrap img`, apply `transform: scale(1.05)` for the zoom effect.
+8. Style `.category` as a small pill using `color-mix()` for the soft terracotta background.
+9. Style `.meta` (the byline) — Cormorant Garamond italic, smaller, muted espresso.
+10. Add the **staggered fade-in** keyframe + use `--i` on each card. The HTML already passes `style="--i: 0"`, `style="--i: 1"`, etc.
+11. Add a media query at 640px that stacks the header vertically.
 
-When done, resize the browser window from wide to narrow — the grid should reflow automatically.
+Resize from wide to narrow — the grid should reflow, the featured card should drop to single-width, and the header should stack.
 
 Compare with `solution/`.
 
@@ -283,11 +418,40 @@ Compare with `solution/`.
   flex-wrap: wrap;
 }
 
-/* Grid */
+/* Grid — modern responsive */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+/* Featured card spans 2 cols (collapses on mobile via minmax) */
+.card--featured { grid-column: span 2; }
+
+/* Image polish */
+.card-image-wrap { overflow: hidden; }
+.card-image-wrap img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+.card:hover .card-image-wrap img { transform: scale(1.05); }
+
+/* Tinted pill via color-mix() */
+.pill {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+
+/* Staggered fade-in */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card {
+  animation: fade-up 0.6s ease forwards;
+  animation-delay: calc(var(--i, 0) * 80ms);
 }
 
 /* Hover */
@@ -297,7 +461,7 @@ button:hover { background: blue; cursor: pointer; }
 button { transition: all 0.2s ease; }
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   /* phone-only styles here */
 }
 ```

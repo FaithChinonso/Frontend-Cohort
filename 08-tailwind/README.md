@@ -254,30 +254,94 @@ There's no rule, but a readable order is:
 
 ---
 
+## 8. Customizing Tailwind — extending the theme
+
+Tailwind's stock palette is good, but real products have their own brand colors and fonts. You don't have to give those up to use Tailwind — you **extend** the theme.
+
+With the CDN, the easiest way is an inline `<script>` config **before** the Tailwind CDN script:
+
+```html
+<script>
+  window.tailwind = {
+    config: {
+      theme: {
+        extend: {
+          colors: {
+            cream:      '#FAF6EF',
+            paper:      '#F3ECDF',
+            espresso:   '#2B1D13',
+            terracotta: '#C2563A',
+            sage:       '#7A8A6B',
+            rule:       '#E4D9C5',
+          },
+          fontFamily: {
+            display: ['"DM Serif Display"', 'serif'],
+            body:    ['Inter', 'system-ui', 'sans-serif'],
+            accent:  ['"Cormorant Garamond"', 'serif'],
+          },
+        },
+      },
+    },
+  };
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+```
+
+Now you can use these in HTML like any other Tailwind class:
+
+```html
+<body class="bg-cream text-espresso font-body">
+  <h1 class="font-display text-terracotta">Tasty Bites</h1>
+  <span class="bg-terracotta/10 text-terracotta">Dinner</span>
+</body>
+```
+
+Notice **`bg-terracotta/10`** — that's Tailwind's color opacity shorthand. `/10` means 10% opacity. This is the Tailwind equivalent of CSS's `color-mix()` — perfect for soft pill backgrounds.
+
+**This is how real teams use Tailwind** — they extend the theme with their design tokens (just like we did with CSS variables in Section 03), and then never touch a stylesheet again.
+
+---
+
+## 9. Loading Google Fonts alongside Tailwind
+
+Tailwind just emits the `font-family` rule — the browser still needs to download the font. Add the Google Fonts `<link>` to `<head>`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital@1&display=swap"
+/>
+```
+
+Then `font-display`, `font-body`, and `font-accent` in your markup actually render in DM Serif Display, Inter, and Cormorant Garamond.
+
+---
+
 ## Your turn
 
-Open `starter/`. You'll find a copy of the recipe app from Section 06 — same `index.html`, same `script.js`, but **`styles.css` is empty** and the HTML elements have **no class attributes** beyond the structural ones JS needs (`recipe-grid`, `filter-btn`, `category`).
+Open `starter/`. You'll find:
+- `index.html` — the page skeleton. Tailwind CDN is loaded, the `tailwind.config` script is already in place with the Tasty Bites tokens (`cream`, `terracotta`, `font-display`, etc.), and Google Fonts are linked.
+- `script.js` — same recipe data + render logic as Section 06. **You'll add Tailwind classes inside the card's `innerHTML` template.**
+- `styles.css` — only a few lines for the `.filter-btn.active` state (Tailwind can't see classes JS toggles at runtime).
 
-The page also loads Tailwind from the CDN.
+**Your job:** style everything using **only the extended Tailwind theme**. Match the editorial look from Sections 04 and 06.
 
-**Your job:** style everything using only Tailwind utility classes in the HTML. The look should match what we had before (or improve on it — go wild).
-
-Specifically:
-
-1. **Body**: light background (e.g. `bg-amber-50`), font family, text color.
-2. **Header**: red background, white text, flex with logo left and nav right. Stacks vertically on mobile.
-3. **Nav links**: bold, hover underline.
-4. **Main**: max width (~`max-w-6xl`), centered (`mx-auto`), padding.
-5. **Intro section**: centered text, big heading.
-6. **Search input**: white background, rounded full, padding, border. On focus, change border color.
-7. **Filter buttons**: pill shape, gray border, on hover change border color, on `.active` (still set by JS) — use a special class. *Hint: you'll need a tiny bit of custom CSS in `styles.css` for the `.active` state since Tailwind doesn't know about JS-toggled classes by default, OR use Tailwind's "data attribute" technique. For this exercise, the simplest is to put active styles in `styles.css`.*
-8. **Recipe grid**: `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6`.
-9. **Recipe card**: white background, rounded, shadow, overflow hidden. On `hover:` lift with `hover:-translate-y-1` and `hover:shadow-xl` (add `transition`).
-10. **Card body**: padding, spacing between elements.
-11. **Category pill**: small, green background, white text, rounded full, uppercase.
-12. **Footer**: centered, gray text, small.
-
-Update `script.js` if needed so the cards it generates use Tailwind classes too (you'll need to change the `innerHTML` template).
+1. **Body**: `bg-cream text-espresso font-body`.
+2. **Header**: `bg-terracotta text-cream`, flex `justify-between` `items-center`, padding. Stacks vertically below `md:`.
+3. **Logo (h1)**: `font-display text-2xl`.
+4. **Nav links**: padded pills with `hover:bg-white/20`.
+5. **Intro section**: centered, with a small-caps eyebrow line above an `h2` using `font-display text-4xl text-espresso text-balance`.
+6. **Search input**: `bg-paper text-espresso rounded-full px-5 py-2 border border-rule`, focus styles.
+7. **Filter buttons**: paper background, rounded full, border-rule, `hover:border-terracotta`. `.active` state in the small `styles.css` file.
+8. **Recipe grid**: `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6` and mark the first card with `sm:col-span-2` for the featured look.
+9. **Recipe card** (in `script.js`'s template): `bg-paper rounded-xl overflow-hidden shadow hover:-translate-y-1 hover:shadow-xl transition group`. The `group` modifier lets us scale the image on card hover.
+10. **Card image** (inside `.card-image-wrap`): use `aspect-[4/5] object-cover` and add `transition group-hover:scale-105` for the zoom.
+11. **Card body**: `p-5 space-y-2`.
+12. **Category pill**: `inline-block bg-terracotta/10 text-terracotta text-xs uppercase tracking-widest px-2.5 py-1 rounded-full font-semibold`.
+13. **Meta line**: `font-accent italic text-espresso/60`.
+14. **Footer**: `text-center text-espresso/55 text-sm py-6`.
 
 Compare with `solution/`.
 

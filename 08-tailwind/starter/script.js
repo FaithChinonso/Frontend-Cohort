@@ -1,15 +1,15 @@
-// Same logic as Section 06 — but YOU need to add Tailwind classes
-// to the card template (innerHTML) below.
+// Same logic as Section 06. Your job: add Tailwind classes to the card template
+// so it matches the editorial look.
 
 const recipes = [
-  { title: "Spaghetti Carbonara",   category: "Dinner",    description: "Classic Roman pasta with eggs, cheese, and pancetta.", image: "https://images.unsplash.com/photo-1612874742237-6526221588e3" },
-  { title: "Chicken Tikka Masala",  category: "Dinner",    description: "Creamy, spiced tomato curry that's a weeknight favorite.", image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641" },
-  { title: "Chocolate Chip Cookies",category: "Dessert",   description: "Crisp edges, chewy middle.", image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e" },
-  { title: "Fluffy Pancakes",       category: "Breakfast", description: "Tall, light, golden.", image: "https://images.unsplash.com/photo-1525351484163-7529414344d8" },
-  { title: "Caesar Salad",          category: "Lunch",     description: "Crunchy romaine, sharp dressing.", image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe" },
-  { title: "Margherita Pizza",      category: "Dinner",    description: "Three toppings, perfect crust.", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" },
-  { title: "Avocado Toast",         category: "Breakfast", description: "Smashed avocado, lemon, chili.", image: "https://images.unsplash.com/photo-1588137378633-dea1336ce1e2" },
-  { title: "Tiramisu",              category: "Dessert",   description: "Coffee, mascarpone, magic.", image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9" },
+  { title: "Spaghetti Carbonara",   category: "Dinner",    description: "Classic Roman pasta with eggs, cheese, and pancetta.",     image: "https://images.unsplash.com/photo-1612874742237-6526221588e3", chef: "Anna",  minutes: 25, cuisine: "Italian"  },
+  { title: "Chicken Tikka Masala",  category: "Dinner",    description: "Creamy, spiced tomato curry that's a weeknight favorite.", image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641", chef: "Raj",   minutes: 40, cuisine: "Indian"   },
+  { title: "Chocolate Chip Cookies",category: "Dessert",   description: "Crisp edges, chewy middle.",                               image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e", chef: "Maya",  minutes: 30, cuisine: "Baking"   },
+  { title: "Fluffy Pancakes",       category: "Breakfast", description: "Tall, light, golden.",                                     image: "https://images.unsplash.com/photo-1525351484163-7529414344d8", chef: "Sam",   minutes: 15, cuisine: "American" },
+  { title: "Caesar Salad",          category: "Lunch",     description: "Crunchy romaine, sharp dressing.",                         image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe", chef: "Lu",    minutes: 10, cuisine: "Classic"  },
+  { title: "Margherita Pizza",      category: "Dinner",    description: "Three toppings, perfect crust.",                           image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38", chef: "Marco", minutes: 45, cuisine: "Italian"  },
+  { title: "Avocado Toast",         category: "Breakfast", description: "Smashed avocado, lemon, chili.",                           image: "https://images.unsplash.com/photo-1588137378633-dea1336ce1e2", chef: "Kai",   minutes: 5,  cuisine: "Brunch"   },
+  { title: "Tiramisu",              category: "Dessert",   description: "Coffee, mascarpone, magic.",                               image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9", chef: "Sofia", minutes: 60, cuisine: "Italian"  },
 ];
 
 let searchQuery = "";
@@ -20,30 +20,35 @@ function renderRecipes(list) {
   grid.innerHTML = "";
 
   if (list.length === 0) {
-    grid.innerHTML = `<p class="text-center text-gray-500 col-span-full py-8">No recipes found.</p>`;
+    grid.innerHTML = `<p class="font-accent italic text-espresso/60 text-center col-span-full py-10">No recipes found.</p>`;
     return;
   }
 
-  list.forEach((recipe) => {
+  list.forEach((recipe, i) => {
     const card = document.createElement("article");
 
-    // TODO: Add Tailwind classes to the article wrapper:
-    //   bg-white rounded-xl overflow-hidden shadow
-    //   hover:-translate-y-1 hover:shadow-xl transition
+    // TODO 9: Add Tailwind classes to the card. Suggested:
+    //   "group bg-paper rounded-xl overflow-hidden shadow hover:-translate-y-1 hover:shadow-xl transition duration-300"
+    // Also: make the FIRST card (i === 0) span 2 columns with " sm:col-span-2"
     card.className = "recipe-card";
 
-    // TODO: Add Tailwind classes inside the template below:
-    //   img — w-full h-44 object-cover
-    //   wrapper div — p-5 space-y-2
-    //   .category — inline-block bg-green-700 text-white text-xs px-2 py-0.5 rounded-full uppercase tracking-wide
-    //   h3 — text-lg font-bold
-    //   p — text-stone-600 text-sm
-    //   a — text-red-600 font-bold no-underline hover:underline
+    // TODO 10-13: Add Tailwind classes inside the template below:
+    //   image wrapper:  "overflow-hidden bg-rule"
+    //   img:            "w-full aspect-[4/5] object-cover block transition duration-500 group-hover:scale-105"
+    //   card-body:      "p-5 space-y-2"
+    //   .category:      "inline-block bg-terracotta/10 text-terracotta text-xs uppercase tracking-widest px-2.5 py-1 rounded-full font-semibold"
+    //   h3:             "font-display text-xl text-espresso text-balance"
+    //   .meta:          "font-accent italic text-espresso/60 text-sm"
+    //   description p:  "text-espresso/75 text-sm"
+    //   a:              "text-terracotta font-semibold no-underline hover:underline inline-block text-sm"
     card.innerHTML = `
-      <img src="${recipe.image}" alt="${recipe.title}" />
+      <div class="card-image-wrap">
+        <img src="${recipe.image}" alt="${recipe.title}" />
+      </div>
       <div>
         <span class="category">${recipe.category}</span>
         <h3>${recipe.title}</h3>
+        <p class="meta">by Chef ${recipe.chef} · ${recipe.minutes} min · ${recipe.cuisine}</p>
         <p>${recipe.description}</p>
         <a href="#">View recipe →</a>
       </div>

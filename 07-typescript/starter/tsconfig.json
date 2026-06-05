@@ -12,5 +12,5 @@
     "rootDir": "./",
     "lib": ["ES2020", "DOM"]
   },
-  "include": ["script.ts"]
+  "files": ["script.ts"]
 }

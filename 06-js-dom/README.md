@@ -7,6 +7,8 @@
 
 This is where it stops being a static page and starts being a *web app*.
 
+> **Styles:** This section uses the same editorial design system from Section 04 — cream/paper palette, DM Serif Display, Cormorant Garamond italic for the byline, terracotta accents, image zoom on hover. We won't introduce new CSS concepts here (we're focused on JS), but the cards JS renders need to match the same `.card-image-wrap` + `.meta` markup pattern. A small CSS bonus at the end shows `:has()` for styling the empty state.
+
 ---
 
 ## 1. What is the DOM?
@@ -251,6 +253,24 @@ Useful for category buttons — each button stores which category it filters by.
 
 ---
 
+## 8. Bonus — `:has()` for styling empty states
+
+A new CSS selector you can use right now: `:has()` lets you style an element **based on its children**.
+
+In our app, the recipe grid is empty when search/filter finds nothing. With `:has()` we can style that case in pure CSS — no extra JS class to toggle:
+
+```css
+.recipe-grid:has(.empty) {
+  display: block;
+  text-align: center;
+  padding: 3rem 0;
+}
+```
+
+This rule only fires when the grid contains an `.empty` child (our "No recipes found." message). Otherwise it stays a grid as normal. `:has()` is supported in every modern browser as of 2025.
+
+---
+
 ## Your turn
 
 Open `starter/`. You'll find:
@@ -263,7 +283,24 @@ Open `starter/`. You'll find:
 1. Write a `renderRecipes(list)` function that:
    - Finds the `<section class="recipe-grid">` element
    - Clears it (`innerHTML = ""`)
-   - For each recipe in `list`, creates a card with image, category, title, description, and a "View recipe →" link
+   - For each recipe in `list`, creates a card that matches the editorial markup:
+
+   ```html
+   <article class="recipe-card" style="--i: 0">
+     <div class="card-image-wrap">
+       <img src="..." alt="..." />
+     </div>
+     <div class="card-body">
+       <span class="category">Dinner</span>
+       <h3>Recipe title</h3>
+       <p class="meta">by Chef Anna · 25 min · Italian</p>
+       <p>Short description</p>
+       <a href="#">View recipe →</a>
+     </div>
+   </article>
+   ```
+
+   - Pass the loop index as `--i` so the staggered fade-in animation works
    - Appends each card to the grid
 
 2. Call `renderRecipes(recipes)` once to do the initial render.

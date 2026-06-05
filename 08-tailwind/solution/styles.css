@@ -1,5 +1,7 @@
+/* The .active state is applied by JS at runtime — Tailwind's CDN compiler
+   can't see JS-toggled classes, so we use plain CSS here. */
 .filter-btn.active {
-  background-color: #dc2626;
-  color: white;
-  border-color: #dc2626;
+  background-color: #C2563A;   /* terracotta */
+  color: #FAF6EF;              /* cream */
+  border-color: #C2563A;
 }

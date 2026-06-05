@@ -3,17 +3,53 @@
   <head>
     <title>Tasty Bites — Tailwind</title>
 
-    <!-- Tailwind via CDN -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital@1&display=swap"
+    />
+
+    <!-- Tailwind theme — extend with Tasty Bites tokens BEFORE loading Tailwind -->
+    <script>
+      window.tailwind = {
+        config: {
+          theme: {
+            extend: {
+              colors: {
+                cream:      '#FAF6EF',
+                paper:      '#F3ECDF',
+                espresso:   '#2B1D13',
+                terracotta: '#C2563A',
+                sage:       '#7A8A6B',
+                rule:       '#E4D9C5',
+              },
+              fontFamily: {
+                display: ['"DM Serif Display"', 'serif'],
+                body:    ['Inter', 'system-ui', 'sans-serif'],
+                accent:  ['"Cormorant Garamond"', 'serif'],
+              },
+            },
+          },
+        },
+      };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Small extra stylesheet (we only need it for one .active state — see TODO 7) -->
     <link rel="stylesheet" href="styles.css" />
   </head>
+
+  <!-- TODO 1: bg-cream text-espresso font-body -->
   <body>
 
-    <!-- TODO: Style the header — red bg, white text, flex justify-between items-center, padding -->
+    <!-- TODO 2: bg-terracotta text-cream, flex justify-between items-center,
+                 padding px-6 py-5, gap-3, stack vertically on small screens -->
     <header>
+      <!-- TODO 3: font-display text-2xl m-0 -->
       <h1>Tasty Bites</h1>
+
+      <!-- TODO 4: nav flex gap-1 — each <a> gets padding + rounded-full + hover:bg-white/20 -->
       <nav>
         <a href="index.html">Home</a>
         <a href="#">Recipes</a>
@@ -21,22 +57,23 @@
       </nav>
     </header>
 
-    <!-- TODO: Style main — max-w-6xl, mx-auto, padding -->
+    <!-- TODO: max-w-6xl mx-auto px-4 py-8 -->
     <main>
 
-      <!-- TODO: Style intro — text-center, margin-bottom -->
+      <!-- TODO 5: text-center mb-10 — eyebrow small caps tracking-widest text-terracotta,
+                  h2 font-display text-4xl md:text-5xl text-balance text-espresso -->
       <section class="intro">
+        <p class="eyebrow">— Browse the kitchen —</p>
         <h2>Recipes worth making</h2>
         <p>Simple, tested, and unfussy.</p>
       </section>
 
-      <!-- TODO: Style controls — flex flex-col items-center gap-4, margin-bottom -->
+      <!-- TODO 6 & 7: flex flex-col items-center gap-5 mb-10
+                       search: bg-paper rounded-full px-5 py-2 border border-rule
+                       filter container: flex flex-wrap justify-center gap-2
+                       filter-btn: bg-paper rounded-full border border-rule px-4 py-1.5 text-sm hover:border-terracotta -->
       <section class="controls">
-
-        <!-- TODO: Style the search input — rounded-full, padding, border, focus styles -->
         <input type="search" id="search" placeholder="Search recipes..." />
-
-        <!-- TODO: Style the filters wrapper — flex flex-wrap justify-center gap-2 -->
         <div class="filters">
           <button class="filter-btn active" data-category="all">All</button>
           <button class="filter-btn" data-category="Breakfast">Breakfast</button>
@@ -46,11 +83,11 @@
         </div>
       </section>
 
-      <!-- TODO: Style the grid — grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 -->
+      <!-- TODO 8: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 -->
       <section class="recipe-grid"></section>
     </main>
 
-    <!-- TODO: Style footer — text-center, text-gray-500, text-sm, padding -->
+    <!-- TODO 14: text-center text-espresso/55 text-sm py-6 -->
     <footer>
       <p>&copy; 2026 Tasty Bites.</p>
     </footer>

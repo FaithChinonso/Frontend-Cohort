@@ -14,26 +14,32 @@
 
 
 // ----------------------------------------------------------------
-// TODO 2: Add an interface Recipe with: title, category, description, image
-// (you can add more fields if you want — minutes, isVegetarian, etc.)
+// TODO 2: Add an interface Recipe with these fields:
+//   title: string;
+//   category: Category;
+//   description: string;
+//   image: string;
+//   chef: string;
+//   minutes: number;
+//   cuisine: string;
+//   isVegetarian: boolean;   (you can add it to the data too)
 // ----------------------------------------------------------------
 
 
 
 // ----------------------------------------------------------------
 // TODO 3: Type the recipes array as Recipe[]
-// (currently has no type annotation)
 // ----------------------------------------------------------------
 
 const recipes = [
-  { title: "Spaghetti Carbonara",   category: "Dinner",    description: "Classic Roman pasta.",          image: "https://images.unsplash.com/photo-1612874742237-6526221588e3" },
-  { title: "Chicken Tikka Masala",  category: "Dinner",    description: "Creamy, spiced tomato curry.",  image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641" },
-  { title: "Chocolate Chip Cookies",category: "Dessert",   description: "Crisp edges, chewy middle.",    image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e" },
-  { title: "Fluffy Pancakes",       category: "Breakfast", description: "Tall, light, golden.",          image: "https://images.unsplash.com/photo-1525351484163-7529414344d8" },
-  { title: "Caesar Salad",          category: "Lunch",     description: "Crunchy romaine, sharp dressing.", image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe" },
-  { title: "Margherita Pizza",      category: "Dinner",    description: "Three toppings, perfect crust.",   image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" },
-  { title: "Avocado Toast",         category: "Breakfast", description: "Smashed avocado, lemon, chili.",   image: "https://images.unsplash.com/photo-1588137378633-dea1336ce1e2" },
-  { title: "Tiramisu",              category: "Dessert",   description: "Coffee, mascarpone, magic.",       image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9" },
+  { title: "Spaghetti Carbonara",   category: "Dinner",    description: "Classic Roman pasta.",          image: "https://images.unsplash.com/photo-1612874742237-6526221588e3", chef: "Anna",  minutes: 25, cuisine: "Italian",  isVegetarian: false },
+  { title: "Chicken Tikka Masala",  category: "Dinner",    description: "Creamy, spiced tomato curry.",  image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641", chef: "Raj",   minutes: 40, cuisine: "Indian",   isVegetarian: false },
+  { title: "Chocolate Chip Cookies",category: "Dessert",   description: "Crisp edges, chewy middle.",    image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e", chef: "Maya",  minutes: 30, cuisine: "Baking",   isVegetarian: true  },
+  { title: "Fluffy Pancakes",       category: "Breakfast", description: "Tall, light, golden.",          image: "https://images.unsplash.com/photo-1525351484163-7529414344d8", chef: "Sam",   minutes: 15, cuisine: "American", isVegetarian: true  },
+  { title: "Caesar Salad",          category: "Lunch",     description: "Crunchy romaine, sharp dressing.", image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe", chef: "Lu",    minutes: 10, cuisine: "Classic",  isVegetarian: false },
+  { title: "Margherita Pizza",      category: "Dinner",    description: "Three toppings, perfect crust.",   image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38", chef: "Marco", minutes: 45, cuisine: "Italian",  isVegetarian: true  },
+  { title: "Avocado Toast",         category: "Breakfast", description: "Smashed avocado, lemon, chili.",   image: "https://images.unsplash.com/photo-1588137378633-dea1336ce1e2", chef: "Kai",   minutes: 5,  cuisine: "Brunch",   isVegetarian: true  },
+  { title: "Tiramisu",              category: "Dessert",   description: "Coffee, mascarpone, magic.",       image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9", chef: "Sofia", minutes: 60, cuisine: "Italian",  isVegetarian: true  },
 ];
 
 let searchQuery = "";
@@ -42,6 +48,17 @@ let activeCategory = "all";
 
 // ----------------------------------------------------------------
 // TODO 4: Annotate renderRecipes — parameter and return type.
+// Update the innerHTML template to match the editorial markup:
+//   <article class="recipe-card" style="--i: 0">
+//     <div class="card-image-wrap"><img .../></div>
+//     <div class="card-body">
+//       <span class="category">...</span>
+//       <h3>...</h3>
+//       <p class="meta">by Chef X · N min · Cuisine</p>
+//       <p>description</p>
+//       <a href="#">View recipe →</a>
+//     </div>
+//   </article>
 // ----------------------------------------------------------------
 
 function renderRecipes(list) {
@@ -54,14 +71,18 @@ function renderRecipes(list) {
     return;
   }
 
-  list.forEach((recipe) => {
+  list.forEach((recipe, i) => {
     const card = document.createElement("article");
     card.className = "recipe-card";
+    card.style.setProperty("--i", String(i));
     card.innerHTML = `
-      <img src="${recipe.image}" alt="${recipe.title}" />
+      <div class="card-image-wrap">
+        <img src="${recipe.image}" alt="${recipe.title}" />
+      </div>
       <div class="card-body">
         <span class="category">${recipe.category}</span>
         <h3>${recipe.title}</h3>
+        <p class="meta">by Chef ${recipe.chef} · ${recipe.minutes} min · ${recipe.cuisine}</p>
         <p>${recipe.description}</p>
         <a href="#">View recipe →</a>
       </div>
@@ -117,7 +138,5 @@ buttons.forEach((btn) => {
 // ----------------------------------------------------------------
 // TODO 7: Write a function recipeStats(list: Recipe[]) that returns
 // { total: number; avgMinutes: number; vegetarianCount: number }.
-// (You'll need to add `minutes` and `isVegetarian` to your Recipe
-// data and interface for this to work.)
 // Then console.log(recipeStats(recipes)) at the end.
 // ----------------------------------------------------------------

@@ -2,6 +2,14 @@
 <html lang="en">
   <head>
     <title>Tasty Bites — Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital@1&display=swap"
+    />
+
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -17,70 +25,91 @@
 
     <main>
       <section class="intro">
+        <p class="eyebrow">— New this week —</p>
         <h2>Recipes worth making</h2>
         <p>Simple, tested, and unfussy. New recipes every week.</p>
       </section>
 
       <section class="recipe-grid">
-        <article class="recipe-card">
-          <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3" alt="Carbonara" />
+
+        <article class="recipe-card recipe-card--featured" style="--i: 0">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3" alt="Carbonara" />
+          </div>
           <div class="card-body">
-            <span class="category">Dinner</span>
+            <span class="category">Featured · Dinner</span>
             <h3>Spaghetti Carbonara</h3>
+            <p class="meta">by Chef Anna · 25 min · Italian</p>
             <p>Classic Roman pasta with eggs, cheese, and pancetta.</p>
             <a href="recipe.html">View recipe →</a>
           </div>
         </article>
 
-        <article class="recipe-card">
-          <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641" alt="Tikka masala" />
+        <article class="recipe-card" style="--i: 1">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641" alt="Tikka masala" />
+          </div>
           <div class="card-body">
             <span class="category">Dinner</span>
             <h3>Chicken Tikka Masala</h3>
+            <p class="meta">by Chef Raj · 40 min · Indian</p>
             <p>Creamy, spiced tomato curry that's a weeknight favorite.</p>
             <a href="recipe.html">View recipe →</a>
           </div>
         </article>
 
-        <article class="recipe-card">
-          <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e" alt="Cookies" />
+        <article class="recipe-card" style="--i: 2">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e" alt="Cookies" />
+          </div>
           <div class="card-body">
             <span class="category">Dessert</span>
             <h3>Chocolate Chip Cookies</h3>
+            <p class="meta">by Chef Maya · 30 min · Baking</p>
             <p>Crisp edges, chewy middle. The recipe everyone steals.</p>
             <a href="recipe.html">View recipe →</a>
           </div>
         </article>
 
-        <article class="recipe-card">
-          <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8" alt="Pancakes" />
+        <article class="recipe-card" style="--i: 3">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8" alt="Pancakes" />
+          </div>
           <div class="card-body">
             <span class="category">Breakfast</span>
             <h3>Fluffy Pancakes</h3>
+            <p class="meta">by Chef Sam · 15 min · American</p>
             <p>Tall, light, golden. Serve with butter and real syrup.</p>
             <a href="recipe.html">View recipe →</a>
           </div>
         </article>
 
-        <article class="recipe-card">
-          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe" alt="Salad" />
+        <article class="recipe-card" style="--i: 4">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe" alt="Salad" />
+          </div>
           <div class="card-body">
             <span class="category">Lunch</span>
             <h3>Caesar Salad</h3>
+            <p class="meta">by Chef Lu · 10 min · Classic</p>
             <p>Crunchy romaine, sharp dressing, crisp croutons.</p>
             <a href="recipe.html">View recipe →</a>
           </div>
         </article>
 
-        <article class="recipe-card">
-          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Pizza" />
+        <article class="recipe-card" style="--i: 5">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Pizza" />
+          </div>
           <div class="card-body">
             <span class="category">Dinner</span>
             <h3>Margherita Pizza</h3>
+            <p class="meta">by Chef Marco · 45 min · Italian</p>
             <p>Three toppings, perfect crust. Don't overthink it.</p>
             <a href="recipe.html">View recipe →</a>
           </div>
         </article>
+
       </section>
     </main>
 

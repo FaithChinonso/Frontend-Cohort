@@ -317,7 +317,7 @@ The HTML loads `script.js` — TypeScript compiles `script.ts` → `script.js` a
 **Tasks:**
 
 1. Add a `type Category = ...` for the 4 category strings.
-2. Add an `interface Recipe { ... }` describing the recipe shape.
+2. Add an `interface Recipe { ... }` describing the recipe shape — `title`, `category` (Category), `description`, `image`, `chef`, `minutes`, `cuisine`, `isVegetarian`.
 3. Type the `recipes` array as `Recipe[]`.
 4. Annotate the parameters and return types of `renderRecipes`, `applyFilters`.
 5. Fix the DOM queries — use `as HTMLInputElement` for `#search`, type the buttons collection.

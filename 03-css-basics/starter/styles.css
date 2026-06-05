@@ -1,29 +1,58 @@
-/* TODO 1: Add the universal box-sizing rule */
+/* TODO 1: Add the universal box-sizing rule.
+   * { box-sizing: border-box; } */
 
 
-/* TODO 2: Style the <body> — font-family, background color, text color, no margin */
+/* TODO 2: Define the Tasty Bites palette as CSS variables on :root.
+   --cream, --paper, --espresso, --terracotta, --sage, --rule */
 
 
-/* TODO 3: Style the <header> — background color, padding, center the text */
+/* TODO 3: Define font-family variables (--font-display, --font-body, --font-accent). */
 
 
-/* TODO 4: Style the nav links — spacing, color, remove underline (text-decoration: none) */
+/* TODO 4: Style the <body> — cream background, espresso text, Inter font,
+   line-height: 1.65, zero margin. */
 
 
-/* TODO 5: Center the <main> with a max-width of 720px */
+/* TODO 5: Style the <header> — terracotta background, cream text, padding,
+   center the text. Style header h1 with the display font. */
 
 
-/* TODO 6: Style the <article> — white background, padding, rounded corners */
+/* TODO 6: Style nav links — cream color, no text-decoration, spacing, hover underline. */
 
 
-/* TODO 7: Make the recipe image fill the article width */
+/* TODO 7: Center <main> — max-width 760px, margin: 2.5rem auto, padding: 0 1rem. */
 
 
-/* TODO 8: Style the headings — color, spacing */
+/* TODO 8: Style <article> — paper background, generous padding (clamp(1.5rem, 4vw, 3rem)),
+   border-radius: 14px, espresso-tinted box-shadow:
+     0 1px 2px rgb(43 29 19 / 0.04), 0 12px 24px -12px rgb(43 29 19 / 0.12) */
 
 
-/* TODO 9: Add line-height to the lists for readability */
+/* TODO 9: Style .eyebrow — small caps, terracotta, letter-spacing 0.12em, margin-bottom 0.5rem. */
 
 
-/* TODO 10: Style the <footer> — centered, smaller text, gray color, margin on top */
+/* TODO 10: Style article h1 — display font, fluid size with clamp(2rem, 4vw + 1rem, 3.25rem),
+   terracotta color, line-height: 1.05, margin: 0.25rem 0 0.5rem. */
 
+
+/* TODO 11: Style .meta — Cormorant Garamond italic, color rgb(43 29 19 / 0.65),
+   font-size 1.05rem, margin-bottom 1.5rem. */
+
+
+/* TODO 12: Style article h2 — display font, espresso, with a hairline border-bottom
+   in --rule, padding-bottom: 0.4rem, margin-top: 2.5rem. */
+
+
+/* TODO 13: Style .description — relaxed line-height, slight bottom margin.
+   BONUS: drop cap on .description::first-letter (float left, font-family var(--font-display),
+   font-size: 3.2em, line-height: 0.9, padding 0.05em 0.15em 0 0, color var(--terracotta)). */
+
+
+/* TODO 14: Style .hero img — width 100%, border-radius 10px, aspect-ratio 3/2,
+   object-fit cover, display block, margin: 1rem 0. */
+
+
+/* TODO 15: Style ul, ol — padding-left 1.5rem, line-height 1.8. */
+
+
+/* TODO 16: Style <footer> — centered, espresso 60% opacity, smaller font, margin 2rem 0. */

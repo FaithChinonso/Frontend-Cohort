@@ -1,91 +1,136 @@
-/* --- Carried over from Section 03 --- */
+/* --- Tasty Bites tokens (from Section 03) --- */
 
-* {
-  box-sizing: border-box;
+:root {
+  --cream:      #FAF6EF;
+  --paper:      #F3ECDF;
+  --espresso:   #2B1D13;
+  --terracotta: #C2563A;
+  --sage:       #7A8A6B;
+  --mustard:    #D4A24C;
+  --rule:       #E4D9C5;
+
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-accent:  'Cormorant Garamond', Georgia, serif;
 }
+
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: 'Georgia', serif;
-  background-color: #fdf6ec;
-  color: #2a2a2a;
-  line-height: 1.5;
-}
-
-header {
-  background-color: #c8553d;
-  color: white;
-  padding: 1.5rem;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 0.75rem;
-  font-weight: bold;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-main {
-  max-width: 1100px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-article h1 { color: #c8553d; margin-top: 0; }
-article h2 { color: #588157; }
-article img { width: 100%; border-radius: 6px; margin: 1rem 0; }
-ul, ol { padding-left: 1.5rem; line-height: 1.8; }
-
-footer {
-  text-align: center;
-  color: #888;
-  font-size: 0.875rem;
-  margin: 2rem 0;
+  background: var(--cream);
+  color: var(--espresso);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.4vw + 0.9rem, 1.1rem);
+  line-height: 1.65;
 }
 
 
-/* --- TODO: NEW STYLES FOR SECTION 04 --- */
-
-/* TODO 1: Make the <header> a flex container — logo left, nav right, vertically centered. */
-
-
-/* TODO 2: Style the .intro section — center text, some bottom margin. */
-
-
-/* TODO 3: Style .recipe-grid as a responsive CSS grid using
-   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) and a 1.5rem gap. */
+/* --- TODO 1: Make <header> a flex container ---
+   - background var(--terracotta), cream text, padding 1.5rem clamp(1rem, 4vw, 3rem)
+   - display: flex, justify-content: space-between, align-items: center
+   - h1: font-family var(--font-display), font-size clamp(1.5rem, 2vw + 1rem, 2.25rem), margin 0
+   - nav a: cream, no underline, margin 0 0.75rem, hover underline */
 
 
-/* TODO 4: Style each .recipe-card — white background, rounded corners,
-   subtle border, hide overflow so the image's corners are rounded too.
-   Add a transition for transform and box-shadow. */
+
+/* --- TODO 2: Style .intro ---
+   - text-align: center, margin: 3rem 0 2.5rem
+   - .eyebrow: small caps, terracotta, letter-spacing 0.14em, font-size 0.85rem
+   - h2: display font, fluid clamp(2rem, 3vw + 1rem, 3rem), terracotta, text-wrap: balance */
 
 
-/* TODO 5: On .recipe-card:hover, lift the card with translateY(-4px)
-   and add a box-shadow. */
+
+/* --- TODO 3: Center <main> ---
+   - max-width: min(80rem, 92vw), margin: 0 auto, padding: 0 1rem */
 
 
-/* TODO 6: Make .recipe-card img fill width (width: 100%, height: 180px, object-fit: cover) */
+
+/* --- TODO 4: .recipe-grid as responsive grid ---
+   - display: grid
+   - grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr))
+   - gap: clamp(1rem, 2vw, 2rem) */
 
 
-/* TODO 7: Style .card-body — padding inside. */
+
+/* --- TODO 5: Featured card spans 2 columns ---
+   - .recipe-card--featured { grid-column: span 2; }
+   - inside @media (max-width: 640px), reset to auto */
 
 
-/* TODO 8: Style .category — small pill: padding, background, color, border-radius,
-   small font-size, display: inline-block, uppercase. */
+
+/* --- TODO 6: Style .recipe-card ---
+   - background: var(--paper)
+   - border-radius: 14px
+   - overflow: hidden (so image-wrap corners follow)
+   - box-shadow: 0 1px 2px rgb(43 29 19 / 0.04), 0 12px 24px -12px rgb(43 29 19 / 0.12)
+   - transition: transform 0.35s ease, box-shadow 0.35s ease
+   - On hover: translateY(-4px) + stronger shadow */
 
 
-/* TODO 9: Add a media query for max-width: 768px that:
-   - makes the header stack vertically (flex-direction: column)
-   - centers the header items
-   - centers the nav links */
+
+/* --- TODO 7: Image wrap + zoom ---
+   - .card-image-wrap { overflow: hidden; }
+   - .card-image-wrap img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+                             display: block; transition: transform 0.45s ease; }
+   - On .recipe-card:hover .card-image-wrap img { transform: scale(1.05); }
+   - For .recipe-card--featured .card-image-wrap img, change aspect-ratio to 3/2. */
+
+
+
+/* --- TODO 8: .card-body ---
+   - padding: 1.25rem 1.25rem 1.5rem
+   - h3: font-family var(--font-display), font-size clamp(1.2rem, 1vw + 1rem, 1.5rem),
+         color: var(--espresso), margin: 0.5rem 0 0.25rem, text-wrap: balance
+   - p (not .meta): color: rgb(43 29 19 / 0.75), margin: 0.5rem 0 1rem
+   - a: color var(--terracotta), no underline, font-weight 600; hover underline */
+
+
+
+/* --- TODO 9: .category pill ---
+   - display: inline-block
+   - background: color-mix(in srgb, var(--terracotta) 12%, transparent)
+   - color: var(--terracotta)
+   - font-size: 0.72rem
+   - text-transform: uppercase
+   - letter-spacing: 0.12em
+   - padding: 0.25rem 0.65rem
+   - border-radius: 999px
+   - font-weight: 600 */
+
+
+
+/* --- TODO 10: .meta ---
+   - font-family: var(--font-accent)
+   - font-style: italic
+   - font-size: 0.95rem
+   - color: rgb(43 29 19 / 0.6)
+   - margin: 0.25rem 0 0.5rem */
+
+
+
+/* --- TODO 11: Staggered fade-in animation ---
+   - Define @keyframes fade-up { from: opacity 0, translateY(12px); to: opacity 1, translateY(0); }
+   - .recipe-card { opacity: 0; animation: fade-up 0.6s ease forwards;
+                    animation-delay: calc(var(--i, 0) * 80ms); } */
+
+
+
+/* --- TODO 12: Recipe page additions (recipe.html) ---
+   Use the same approach as Section 03 — but bring in:
+   - article h1: terracotta, display font, fluid clamp size, balanced line height
+   - .description::first-letter drop cap (float left, big, terracotta)
+   - article h2: display font, hairline border-bottom in --rule
+   - .hero img: width 100%, aspect-ratio 3/2, object-fit cover, border-radius 10px */
+
+
+
+/* --- TODO 13: Footer ---
+   - text-align: center, color rgb(43 29 19 / 0.55), font-size 0.875rem, padding 2rem 0 */
+
+
+
+/* --- TODO 14: Mobile (max-width: 640px) ---
+   - header: flex-direction: column, text-align center, gap 0.5rem
+   - .recipe-card--featured: grid-column: auto */
 
