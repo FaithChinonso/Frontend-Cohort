@@ -10,18 +10,51 @@
          - a <nav> with links to "index.html" (Home) and "recipe.html" (Recipes) -->
 
 
-    <!-- TODO: Add a <main> containing:
-         - a <p> welcoming visitors
-         - a <section> with an <h2> "Latest recipes" and a <ul> of 3 recipes,
-           each <li> containing an <a href="recipe.html"> link
-         - a <section> with an <h2> "Subscribe" and a <form> containing:
+    <!-- TODO: Add a <main> containing the three blocks below. -->
+
+
+    <!-- TODO (intro band): inside <main>, add
+         <section class="intro"> with:
+           - <p class="eyebrow">— New this week —</p>
+           - <h2>Recipes worth making</h2>
+           - <p>Simple, tested, and unfussy. New recipes every week.</p>
+         (The class names are just labels we'll style later in Section 04.) -->
+
+
+    <!-- TODO (recipe grid): add a <section class="recipe-grid"> holding 6 recipe cards.
+         Each recipe is an <article class="recipe-card">. They all follow the SAME shape —
+         build one, then copy it 5 more times and change the image, text, and category.
+         Make the FIRST card the featured one by giving it two classes:
+              <article class="recipe-card recipe-card--featured">
+
+         Here is one finished card to copy as your template:
+
+         <article class="recipe-card">
+           <div class="card-image-wrap">
+             <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641" alt="Tikka masala" />
+           </div>
+           <div class="card-body">
+             <span class="category">Dinner</span>
+             <h3>Chicken Tikka Masala</h3>
+             <p class="meta">by Chef Raj · 40 min · Indian</p>
+             <p>Creamy, spiced tomato curry that's a weeknight favorite.</p>
+             <a href="recipe.html">View recipe →</a>
+           </div>
+         </article>
+
+         Right now the cards will just stack on top of each other — that's fine.
+         We turn them into a grid in Section 04 (CSS Layout). -->
+
+
+    <!-- TODO (subscribe form): add a <section> with an <h2> "Subscribe" and a <form> containing:
               * label + text input for "name" (required)
               * label + email input for "email" (required)
               * label + <select> for "category" with 3 options
-              * a submit <button> -->
+              * a submit <button>
+         Tip: wrap each label + input pair in a <div> to group it as one row. -->
 
 
-    <!-- TODO: Add a <footer> with a copyright paragraph -->
+    <!-- TODO: Add a <footer> with a copyright paragraph (use &copy; for the © symbol). -->
 
 
   </body>

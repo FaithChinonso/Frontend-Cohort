@@ -11,22 +11,108 @@
       <nav>                            <!-- <nav>: a group of navigation links -->
         <a href="index.html">Home</a>
         <a href="recipe.html">Recipes</a>
+        <a href="#">About</a>
       </nav>
     </header>
 
     <!-- <main>: the main content of the page (only one per page) -->
     <main>
-      <p>Welcome to Tasty Bites — simple recipes anyone can cook.</p>
 
-      <!-- <section>: a themed group of content -->
-      <section>
-        <h2>Latest recipes</h2>
-        <!-- <ul>: a bulleted list. Each <li> is one item, here a link. -->
-        <ul>
-          <li><a href="recipe.html">Spaghetti Carbonara</a></li>
-          <li><a href="recipe.html">Chicken Tikka Masala</a></li>
-          <li><a href="recipe.html">Chocolate Chip Cookies</a></li>
-        </ul>
+      <!-- Intro band. The class names (intro, eyebrow) are just labels we add
+           now so we can style them later in CSS. -->
+      <section class="intro">
+        <p class="eyebrow">— New this week —</p>
+        <h2>Recipes worth making</h2>
+        <p>Simple, tested, and unfussy. New recipes every week.</p>
+      </section>
+
+      <!-- Latest recipes — a grid of cards.
+           Each recipe is an <article> (a self-contained piece of content).
+           Right now these will just stack on top of each other; in Section 04
+           (CSS Layout) we turn this into a real grid. -->
+      <section class="recipe-grid">
+
+        <!-- The first card is the "featured" one — it gets an extra class
+             (recipe-card--featured) so CSS can make it bigger later. -->
+        <article class="recipe-card recipe-card--featured">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1612874742237-6526221588e3" alt="Carbonara" />
+          </div>
+          <div class="card-body">
+            <span class="category">Featured · Dinner</span>
+            <h3>Spaghetti Carbonara</h3>
+            <p class="meta">by Chef Anna · 25 min · Italian</p>
+            <p>Classic Roman pasta with eggs, cheese, and pancetta.</p>
+            <a href="recipe.html">View recipe →</a>
+          </div>
+        </article>
+
+        <!-- The rest of the cards all follow the SAME shape as the one above. -->
+        <article class="recipe-card">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641" alt="Tikka masala" />
+          </div>
+          <div class="card-body">
+            <span class="category">Dinner</span>
+            <h3>Chicken Tikka Masala</h3>
+            <p class="meta">by Chef Raj · 40 min · Indian</p>
+            <p>Creamy, spiced tomato curry that's a weeknight favorite.</p>
+            <a href="recipe.html">View recipe →</a>
+          </div>
+        </article>
+
+        <article class="recipe-card">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e" alt="Cookies" />
+          </div>
+          <div class="card-body">
+            <span class="category">Dessert</span>
+            <h3>Chocolate Chip Cookies</h3>
+            <p class="meta">by Chef Maya · 30 min · Baking</p>
+            <p>Crisp edges, chewy middle. The recipe everyone steals.</p>
+            <a href="recipe.html">View recipe →</a>
+          </div>
+        </article>
+
+        <article class="recipe-card">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8" alt="Pancakes" />
+          </div>
+          <div class="card-body">
+            <span class="category">Breakfast</span>
+            <h3>Fluffy Pancakes</h3>
+            <p class="meta">by Chef Sam · 15 min · American</p>
+            <p>Tall, light, golden. Serve with butter and real syrup.</p>
+            <a href="recipe.html">View recipe →</a>
+          </div>
+        </article>
+
+        <article class="recipe-card">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe" alt="Salad" />
+          </div>
+          <div class="card-body">
+            <span class="category">Lunch</span>
+            <h3>Caesar Salad</h3>
+            <p class="meta">by Chef Lu · 10 min · Classic</p>
+            <p>Crunchy romaine, sharp dressing, crisp croutons.</p>
+            <a href="recipe.html">View recipe →</a>
+          </div>
+        </article>
+
+        <article class="recipe-card">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Pizza" />
+          </div>
+          <div class="card-body">
+            <span class="category">Dinner</span>
+            <h3>Margherita Pizza</h3>
+            <p class="meta">by Chef Marco · 45 min · Italian</p>
+            <p>Three toppings, perfect crust. Don't overthink it.</p>
+            <a href="recipe.html">View recipe →</a>
+          </div>
+        </article>
+
       </section>
 
       <section>

@@ -344,9 +344,11 @@ The category label sits on a faint terracotta background. We get that "faint" lo
 
 ## Your turn
 
+This section is **all CSS** — you won't write any new HTML. The homepage markup is the same one **you built back in Section 02** (the grid of recipe cards), and the recipe page is the one from Section 03. Here we just style them.
+
 Open `starter/`. You'll find:
 
-- `index.html` — the homepage skeleton with **6 recipe cards** already in the HTML. The first card has `recipe-card--featured` for the asymmetric layout. Each card has an image wrapped in `.card-image-wrap`, a `.meta` byline row, and a `.category` pill.
+- `index.html` — the homepage you built in Section 02: **6 recipe cards** in a `.recipe-grid`. The first card has `recipe-card--featured` for the asymmetric layout. Each card has an image wrapped in `.card-image-wrap`, a `.meta` byline row, and a `.category` pill. Right now it's unstyled (the cards just stack) — your CSS turns it into a grid.
 - `recipe.html` — the recipe page from Section 03
 - `styles.css` — Section 03 tokens already at the top. Build everything else.
 

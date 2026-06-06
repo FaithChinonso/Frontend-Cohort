@@ -184,7 +184,47 @@ The `<div>` groups the two together as one "row." It has no meaning of its own �
 
 ---
 
-## 4. Multi-page sites
+## 4. Recipe cards
+
+Our homepage needs to show a list of recipes. We *could* use a plain `<ul>` of links, but real recipe sites show **cards** — a little box per recipe with an image, a title, and a short blurb.
+
+Each card is an `<article>` (a self-contained piece of content). Inside it we put an image and some text:
+
+```html
+<article class="recipe-card">
+  <div class="card-image-wrap">
+    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641" alt="Tikka masala" />
+  </div>
+  <div class="card-body">
+    <span class="category">Dinner</span>
+    <h3>Chicken Tikka Masala</h3>
+    <p class="meta">by Chef Raj · 40 min · Indian</p>
+    <p>Creamy, spiced tomato curry that's a weeknight favorite.</p>
+    <a href="recipe.html">View recipe →</a>
+  </div>
+</article>
+```
+
+Notice the **classes** (`recipe-card`, `card-image-wrap`, `category`, `meta`). They don't do anything yet — they're just labels we attach now so that in **Section 04 (CSS Layout)** we can find these elements and style them into a real grid of cards.
+
+A page lists many recipes, so we wrap several cards in one container:
+
+```html
+<section class="recipe-grid">
+  <article class="recipe-card recipe-card--featured">...</article>  <!-- the big one -->
+  <article class="recipe-card">...</article>
+  <article class="recipe-card">...</article>
+  <!-- ...and so on -->
+</section>
+```
+
+The first card has an **extra class**, `recipe-card--featured`. A tag can have more than one class (separated by a space). Later, CSS uses that extra label to make the featured card bigger than the rest.
+
+> **Heads up:** until we add CSS in Section 04, these cards will just stack on top of each other in a tall column — no grid, no styling. That's completely normal. HTML builds the *structure*; CSS makes it *look* like a grid.
+
+---
+
+## 5. Multi-page sites
 
 Real websites have multiple pages. To link them, you just create more HTML files and link with `<a>`:
 
@@ -200,7 +240,7 @@ my-site/
 ```
 
 In this section, we'll build **two pages**:
-1. `index.html` — homepage that lists all our recipes (just a placeholder list for now)
+1. `index.html` — the homepage: an intro, a grid of recipe **cards**, and a subscribe form
 2. `recipe.html` — the detailed Carbonara recipe from Section 01, but improved
 
 ---
@@ -218,10 +258,12 @@ Open `starter/`. You'll find two files: `index.html` and `recipe.html`. Each has
 **For `index.html`:**
 - Add a `<header>` with a site title and navigation
 - Add a `<main>` containing:
-  - A welcome message
-  - A `<ul>` of recipe names, each one a link (`<a>`) pointing to `recipe.html`
-  - A subscribe form with: an email input (required), a name input, a category dropdown (Breakfast/Lunch/Dinner), and a submit button
+  - An intro band: a `<section class="intro">` with an eyebrow line, an `<h2>`, and a short paragraph
+  - A `<section class="recipe-grid">` with **6 recipe cards** (see section 4 above). Make the first card the featured one (`class="recipe-card recipe-card--featured"`). Build one card, then copy it 5 more times and change the image, title, category, and blurb.
+  - A subscribe form with: a name input (required), an email input (required), a category dropdown (Breakfast/Lunch/Dinner), and a submit button
 - Add a `<footer>` with copyright text. Tip: write the © symbol with `&copy;` — that's an HTML *entity*, a special code for a character that's hard to type. (`&amp;` gives `&`, `&lt;` gives `<`, and so on.)
+
+Don't worry that the cards look plain and stacked — we style them into a grid in Section 04.
 
 Compare with `solution/` when you're done.
 
