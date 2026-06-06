@@ -40,6 +40,7 @@ The course is split into **8 sections**. Each section is a folder that contains:
 ### Printable references
 
 - [HTML reference PDF](reference/HTML-Reference.pdf) — beginner-friendly companion guide covering everything from lessons 01 + 02 with tips, hacks, and a complete cheat sheet.
+- [CSS reference PDF](reference/CSS-Reference.pdf) — beginner-friendly companion guide covering everything from lessons 03 + 04 plus modern CSS, flexbox, grid, animations, and a full property cheat sheet.
 
 ---
 

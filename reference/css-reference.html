@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS — The Beginner's Reference</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap">
+
+  <style>
+    :root {
+      --cream:      #FAF6EF;
+      --paper:      #F3ECDF;
+      --espresso:   #2B1D13;
+      --terracotta: #C2563A;
+      --sage:       #7A8A6B;
+      --mustard:    #D4A24C;
+      --rule:       #E4D9C5;
+
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --font-accent:  'Cormorant Garamond', Georgia, serif;
+      --font-mono:    'JetBrains Mono', Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    @page {
+      size: A4;
+      margin: 18mm 16mm;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--cream);
+      color: var(--espresso);
+      font-family: var(--font-body);
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+
+    .doc { max-width: 720px; margin: 0 auto; padding: 0 1rem; }
+
+    .page-break { page-break-after: always; }
+    h1, h2, h3 { break-after: avoid; }
+    pre, .callout, .card, table, .swatch-grid { break-inside: avoid; }
+
+    /* --- Cover --- */
+    .cover {
+      min-height: 92vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      page-break-after: always;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+    .cover::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(60% 40% at 50% 0%, color-mix(in srgb, var(--sage) 22%, transparent), transparent 70%),
+        radial-gradient(50% 40% at 50% 100%, color-mix(in srgb, var(--terracotta) 18%, transparent), transparent 70%);
+      z-index: 0;
+    }
+    .cover > * { position: relative; z-index: 1; }
+    .cover .badge {
+      display: inline-block; padding: 0.4rem 1rem;
+      border: 1px solid var(--terracotta); color: var(--terracotta);
+      font-size: 0.7rem; letter-spacing: 0.3em;
+      text-transform: uppercase; border-radius: 999px;
+      font-weight: 600; margin-bottom: 2rem;
+    }
+    .cover h1 {
+      font-family: var(--font-display);
+      font-size: 64pt; line-height: 0.95;
+      color: var(--espresso); margin: 0 0 1rem;
+      text-wrap: balance;
+    }
+    .cover .subtitle {
+      font-family: var(--font-accent); font-style: italic;
+      font-size: 18pt; color: var(--terracotta);
+      margin: 0 0 3rem;
+    }
+    .cover .for {
+      font-size: 11pt; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgb(43 29 19 / 0.55);
+      font-weight: 600; margin: 0 0 0.5rem;
+    }
+    .cover .program {
+      font-family: var(--font-display); font-size: 16pt;
+      color: var(--espresso); margin: 0 0 2rem;
+    }
+    .cover .ornament {
+      font-family: var(--font-display);
+      color: var(--terracotta);
+      font-size: 24pt; letter-spacing: 1rem;
+      margin: 1.5rem 0;
+    }
+    .cover .footer {
+      position: absolute; bottom: 2rem; left: 0; right: 0;
+      font-family: var(--font-accent); font-style: italic;
+      color: rgb(43 29 19 / 0.55);
+      font-size: 11pt; z-index: 1;
+    }
+
+    /* --- Chapter heads --- */
+    h1.chapter {
+      font-family: var(--font-display);
+      font-size: 32pt;
+      color: var(--terracotta);
+      line-height: 1.05;
+      margin: 0 0 0.25rem;
+      text-wrap: balance;
+    }
+    .chapter-eyebrow {
+      color: var(--sage); font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.28em;
+      font-weight: 600; margin: 0 0 0.6rem;
+    }
+    .chapter-intro {
+      font-family: var(--font-accent); font-style: italic;
+      font-size: 14pt; color: rgb(43 29 19 / 0.7);
+      margin: 0 0 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    h2 {
+      font-family: var(--font-display);
+      color: var(--espresso);
+      font-size: 20pt;
+      margin: 2rem 0 0.5rem;
+      line-height: 1.15;
+    }
+    h3 {
+      font-family: var(--font-display);
+      color: var(--espresso);
+      font-size: 14pt;
+      margin: 1.5rem 0 0.5rem;
+    }
+    h4 {
+      font-family: var(--font-body);
+      color: var(--terracotta);
+      font-size: 11pt; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 1.25rem 0 0.4rem;
+    }
+
+    p { margin: 0 0 0.85rem; }
+    strong { color: var(--espresso); font-weight: 700; }
+
+    .lede::first-letter {
+      float: left;
+      font-family: var(--font-display);
+      font-size: 3em; line-height: 0.85;
+      padding: 0.05em 0.15em 0 0;
+      color: var(--terracotta);
+    }
+
+    /* --- Code --- */
+    code, pre { font-family: var(--font-mono); font-size: 0.85em; }
+    p code, li code, td code, h4 code {
+      background: var(--paper);
+      color: var(--terracotta);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.82em;
+    }
+    pre {
+      background: var(--espresso);
+      color: #F6E9D7;
+      padding: 1rem 1.1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 9.5pt;
+      line-height: 1.5;
+      margin: 0.5rem 0 1.2rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+    .token-selector { color: #F1A88E; }
+    .token-prop     { color: #E7C16E; }
+    .token-value    { color: #B7C99B; }
+    .token-comment  { color: rgb(255 255 255 / 0.4); font-style: italic; }
+    .token-punct    { color: #d4b88a; }
+    .token-fn       { color: #9bc6e1; }
+    .token-tag      { color: #F1A88E; }
+    .token-attr     { color: #E7C16E; }
+    .token-string   { color: #B7C99B; }
+
+    /* --- Links --- */
+    a { color: var(--terracotta); text-decoration: none;
+        border-bottom: 1px dotted var(--terracotta); }
+
+    /* --- Lists --- */
+    ul, ol { padding-left: 1.25rem; margin: 0 0 1rem; }
+    li { margin-bottom: 0.35rem; }
+    li::marker { color: var(--terracotta); font-weight: 700; }
+
+    /* --- Callouts --- */
+    .callout {
+      border-left: 4px solid var(--terracotta);
+      background: var(--paper);
+      padding: 0.85rem 1.1rem;
+      margin: 1rem 0 1.5rem;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout.tip   { border-color: var(--sage); }
+    .callout.warn  { border-color: var(--mustard); }
+    .callout-title {
+      font-family: var(--font-display);
+      font-size: 11pt; color: var(--terracotta);
+      margin: 0 0 0.25rem;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+    .callout.tip  .callout-title { color: var(--sage); }
+    .callout.warn .callout-title { color: #a07419; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    /* --- Tables --- */
+    table {
+      width: 100%; border-collapse: collapse;
+      margin: 0.5rem 0 1.25rem; font-size: 10pt;
+    }
+    th, td {
+      text-align: left; padding: 0.45rem 0.65rem;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+    th {
+      background: var(--paper);
+      font-family: var(--font-body); font-weight: 700;
+      color: var(--espresso); text-transform: uppercase;
+      letter-spacing: 0.06em; font-size: 8.5pt;
+    }
+
+    /* --- TOC --- */
+    .toc { margin: 2rem 0 0; }
+    .toc h2 { margin-top: 0; }
+    .toc ol { list-style: none; padding: 0; counter-reset: toc; }
+    .toc li {
+      counter-increment: toc;
+      display: flex; align-items: baseline;
+      padding: 0.4rem 0;
+      border-bottom: 1px dotted var(--rule);
+      gap: 0.5rem;
+    }
+    .toc li::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: var(--font-display);
+      color: var(--terracotta);
+      font-size: 10pt; min-width: 1.75rem;
+    }
+    .toc .toc-title {
+      flex: 1; font-family: var(--font-display); font-size: 12pt;
+    }
+    .toc .toc-page {
+      font-family: var(--font-accent); font-style: italic;
+      color: rgb(43 29 19 / 0.6);
+    }
+
+    /* --- Diagram / box-model rendering --- */
+    .diagram {
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      background: var(--paper);
+      padding: 1rem;
+      border-radius: 8px;
+      line-height: 1.35;
+      white-space: pre;
+      overflow-x: auto;
+      color: var(--espresso);
+    }
+
+    /* --- Pull quotes --- */
+    blockquote {
+      font-family: var(--font-accent); font-style: italic;
+      font-size: 14pt; color: var(--terracotta);
+      line-height: 1.35;
+      border-left: 3px solid var(--terracotta);
+      padding-left: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    /* --- Card / footer rule --- */
+    .card {
+      background: var(--paper);
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      margin: 1rem 0 1.5rem;
+      border: 1px solid var(--rule);
+    }
+    .footer-rule {
+      border-top: 1px solid var(--rule);
+      margin-top: 2.5rem; padding-top: 0.6rem;
+      font-family: var(--font-accent); font-style: italic;
+      font-size: 10pt; color: rgb(43 29 19 / 0.55);
+      text-align: center;
+    }
+
+    /* --- Property grid --- */
+    .tag-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 1rem;
+      margin: 0.5rem 0 1.25rem;
+    }
+    .tag-grid > div {
+      padding: 0.4rem 0.6rem;
+      background: var(--paper);
+      border-radius: 6px;
+      font-size: 9.5pt;
+    }
+    .tag-grid code {
+      background: none; color: var(--terracotta);
+      padding: 0; font-weight: 600;
+    }
+
+    /* --- Color swatches --- */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      margin: 0.5rem 0 1.25rem;
+    }
+    .swatch {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.5rem 0.7rem;
+      background: var(--paper);
+      border-radius: 8px;
+      font-size: 9.5pt;
+    }
+    .chip {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 1px solid rgb(0 0 0 / 0.08);
+    }
+
+    /* --- Demo: visual flex/grid examples --- */
+    .demo {
+      background: var(--paper);
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin: 0.5rem 0 1.25rem;
+    }
+    .demo-row {
+      display: flex; gap: 0.5rem;
+    }
+    .demo-row > span {
+      background: color-mix(in srgb, var(--terracotta) 18%, white);
+      color: var(--espresso);
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      font-size: 9.5pt;
+      font-weight: 600;
+      flex: 1;
+      text-align: center;
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+    .demo-grid > span {
+      background: color-mix(in srgb, var(--sage) 22%, white);
+      color: var(--espresso);
+      padding: 0.6rem;
+      border-radius: 4px;
+      font-size: 9.5pt;
+      font-weight: 600;
+      text-align: center;
+    }
+    .demo-grid > span:first-child {
+      grid-column: span 2;
+      background: color-mix(in srgb, var(--terracotta) 22%, white);
+    }
+    .demo-caption {
+      font-family: var(--font-accent); font-style: italic;
+      font-size: 9.5pt; color: rgb(43 29 19 / 0.6);
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="doc">
+
+  <!-- ============ COVER ============ -->
+  <section class="cover">
+    <span class="badge">Frontend Cohort · Volume 02</span>
+
+    <h1>CSS</h1>
+    <p class="subtitle">the beginner's reference</p>
+
+    <div class="ornament">·  ·  ·</div>
+
+    <p class="for">A companion guide for</p>
+    <p class="program">Tasty Bites — Web Development from Scratch</p>
+
+    <p class="footer">Everything you need for Lessons 03 &amp; 04, plus modern CSS hacks and a full cheat sheet.</p>
+  </section>
+
+  <!-- ============ TOC ============ -->
+  <section class="toc">
+    <p class="chapter-eyebrow">Contents</p>
+    <h1 class="chapter">What's inside</h1>
+    <p class="chapter-intro">A complete tour of CSS for absolute beginners — the syntax, the color and font tools, the layout systems, and the modern features that make real websites feel polished.</p>
+
+    <ol>
+      <li><span class="toc-title">What CSS actually is</span><span class="toc-page">page 3</span></li>
+      <li><span class="toc-title">Three ways to add CSS</span><span class="toc-page">page 5</span></li>
+      <li><span class="toc-title">Selectors — picking what to style</span><span class="toc-page">page 6</span></li>
+      <li><span class="toc-title">Colors</span><span class="toc-page">page 9</span></li>
+      <li><span class="toc-title">Typography</span><span class="toc-page">page 11</span></li>
+      <li><span class="toc-title">Sizes and units</span><span class="toc-page">page 13</span></li>
+      <li><span class="toc-title">The box model</span><span class="toc-page">page 15</span></li>
+      <li><span class="toc-title">CSS custom properties (variables)</span><span class="toc-page">page 17</span></li>
+      <li><span class="toc-title">Backgrounds and borders</span><span class="toc-page">page 19</span></li>
+      <li><span class="toc-title">The cascade and specificity</span><span class="toc-page">page 20</span></li>
+      <li><span class="toc-title">Display — block, inline, none</span><span class="toc-page">page 21</span></li>
+      <li><span class="toc-title">Flexbox — rows and columns</span><span class="toc-page">page 22</span></li>
+      <li><span class="toc-title">CSS Grid — true 2D layout</span><span class="toc-page">page 25</span></li>
+      <li><span class="toc-title">Positioning</span><span class="toc-page">page 28</span></li>
+      <li><span class="toc-title">Responsive design and media queries</span><span class="toc-page">page 30</span></li>
+      <li><span class="toc-title">Pseudo-classes and pseudo-elements</span><span class="toc-page">page 32</span></li>
+      <li><span class="toc-title">Transitions, animations, transforms</span><span class="toc-page">page 34</span></li>
+      <li><span class="toc-title">Modern CSS — clamp, color-mix, :has</span><span class="toc-page">page 37</span></li>
+      <li><span class="toc-title">Tips and little hacks</span><span class="toc-page">page 39</span></li>
+      <li><span class="toc-title">Common mistakes</span><span class="toc-page">page 42</span></li>
+      <li><span class="toc-title">The complete CSS cheat sheet</span><span class="toc-page">page 43</span></li>
+      <li><span class="toc-title">Where to go next</span><span class="toc-page">page 46</span></li>
+    </ol>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 1. WHAT CSS IS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 01</p>
+    <h1 class="chapter">What CSS actually is</h1>
+    <p class="chapter-intro">If HTML is the skeleton, CSS is the skin, the clothes, the lighting, the makeup. Everything you see on a webpage that isn't structure comes from CSS.</p>
+
+    <p class="lede">CSS stands for <strong>Cascading Style Sheets</strong>. It's a separate language from HTML, with its own syntax, that exists to do one job: tell the browser how things should look. Colors, fonts, sizes, spacing, layout, animations — all CSS.</p>
+
+    <p>An HTML page with no CSS is fully functional. You can read every word. Every link works. But it'll look like a Word document from 1995 — Times New Roman, blue underlined links, no spacing. CSS is what turns that into a real-looking website.</p>
+
+    <blockquote>HTML asks "what is it?" CSS asks "what should it look like?" Keep those two questions in different files and your life gets dramatically easier.</blockquote>
+
+    <h2>The shape of a CSS rule</h2>
+<pre><code><span class="token-selector">h1</span> {
+  <span class="token-prop">color</span>: <span class="token-value">red</span>;
+  <span class="token-prop">font-size</span>: <span class="token-value">32px</span>;
+}</code></pre>
+
+    <p>Five things to spot:</p>
+    <ul>
+      <li><strong>Selector</strong> — <code>h1</code> — which elements to style</li>
+      <li><strong>Curly braces</strong> — wrap the style rules</li>
+      <li><strong>Property</strong> — <code>color</code>, <code>font-size</code> — what to change</li>
+      <li><strong>Value</strong> — <code>red</code>, <code>32px</code> — what to change it to</li>
+      <li><strong>Semicolon</strong> — separates one declaration from the next. <em>End every declaration with one.</em></li>
+    </ul>
+
+    <h2>How CSS gets applied</h2>
+    <p>When the browser opens an HTML page, it reads the page first and builds the DOM. Then it reads the CSS, matches each rule to elements in the DOM, and works out the final appearance. Then it paints the page on screen.</p>
+
+    <p>This happens fast enough that you don't notice it. But the order matters when we discuss <em>the cascade</em> later — that's how the browser decides which rule wins when two rules say different things about the same element.</p>
+
+    <div class="callout tip">
+      <p class="callout-title">Mental model</p>
+      <p>HTML is the noun. CSS is the adjective. JavaScript is the verb. <em>"Show a big red button that calls my friend."</em> Big and red = CSS. Button = HTML. Calls = JavaScript.</p>
+    </div>
+
+    <h2>What CSS can't do</h2>
+    <p>CSS is purely about appearance. It cannot:</p>
+    <ul>
+      <li>Change what text says (HTML's job)</li>
+      <li>Calculate or store anything (JavaScript's job)</li>
+      <li>Make a server request, save data, talk to an API (JavaScript)</li>
+    </ul>
+    <p>What CSS <em>can</em> do is surprisingly broad: animations, hover effects, basic interactions like show/hide menus, even some "logic" via <code>:has()</code> and <code>:not()</code>. But anything dynamic — clicks that load data, forms that talk to a server — needs JavaScript.</p>
+
+    <div class="footer-rule">— end of chapter one —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 2. THREE WAYS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 02</p>
+    <h1 class="chapter">Three ways to add CSS</h1>
+    <p class="chapter-intro">Same effect, different setups. Use the first — it's how real websites are built.</p>
+
+    <h2>1. External file — the right way</h2>
+    <p>Create a separate file ending in <code>.css</code> (e.g. <code>styles.css</code>). Link it from the page's <code>&lt;head&gt;</code>:</p>
+<pre><code><span class="token-comment">&lt;!-- in index.html --&gt;</span>
+<span class="token-tag">&lt;head&gt;</span>
+  <span class="token-tag">&lt;link</span> <span class="token-attr">rel</span>=<span class="token-string">"stylesheet"</span> <span class="token-attr">href</span>=<span class="token-string">"styles.css"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;/head&gt;</span></code></pre>
+
+    <p>Why this wins:</p>
+    <ul>
+      <li>One CSS file can style many HTML pages</li>
+      <li>The browser caches the file — visit page two, the CSS is already loaded</li>
+      <li>Searching and editing styles is easy when they're all in one place</li>
+    </ul>
+
+    <h2>2. Internal — inside <code>&lt;style&gt;</code> in the page</h2>
+<pre><code><span class="token-tag">&lt;head&gt;</span>
+  <span class="token-tag">&lt;style&gt;</span>
+    <span class="token-selector">h1</span> { <span class="token-prop">color</span>: <span class="token-value">red</span>; }
+  <span class="token-tag">&lt;/style&gt;</span>
+<span class="token-tag">&lt;/head&gt;</span></code></pre>
+
+    <p>OK for tiny experiments or single-page demos. Not what you want for a real project — each page would need its own copy of the styles.</p>
+
+    <h2>3. Inline — directly on the tag</h2>
+<pre><code><span class="token-tag">&lt;h1</span> <span class="token-attr">style</span>=<span class="token-string">"color: red; font-size: 32px;"</span><span class="token-tag">&gt;</span>Hello<span class="token-tag">&lt;/h1&gt;</span></code></pre>
+
+    <p>Almost never the answer. It's hard to maintain, impossible to reuse, and it wins over external CSS (which means it can break your design system in subtle ways). Avoid it.</p>
+
+    <div class="callout warn">
+      <p class="callout-title">The one exception</p>
+      <p>Inline styles are useful when JavaScript needs to set a value at runtime — for example, setting <code>style="--i: 5"</code> on cards so each one has its own animation delay. That's a legitimate use. Just don't write static color/font/spacing inline.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter two —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 3. SELECTORS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 03</p>
+    <h1 class="chapter">Selectors — picking what to style</h1>
+    <p class="chapter-intro">A selector says "find these elements and apply these styles." There are dozens of selectors, but six cover 90% of what you'll ever write.</p>
+
+    <h2>Element selector</h2>
+    <p>Targets every tag of that type.</p>
+<pre><code><span class="token-selector">p</span> { <span class="token-prop">color</span>: <span class="token-value">gray</span>; }     <span class="token-comment">/* every &lt;p&gt; on the page */</span>
+<span class="token-selector">h1</span> { <span class="token-prop">color</span>: <span class="token-value">navy</span>; }
+<span class="token-selector">img</span> { <span class="token-prop">width</span>: <span class="token-value">100%</span>; }</code></pre>
+
+    <h2>Class selector</h2>
+    <p>A <strong>class</strong> is a reusable label you put on a tag with <code>class="name"</code>. Target it with a leading dot.</p>
+<pre><code><span class="token-comment">/* HTML */</span>
+<span class="token-tag">&lt;p</span> <span class="token-attr">class</span>=<span class="token-string">"warning"</span><span class="token-tag">&gt;</span>Watch out!<span class="token-tag">&lt;/p&gt;</span>
+
+<span class="token-comment">/* CSS */</span>
+<span class="token-selector">.warning</span> {
+  <span class="token-prop">color</span>: <span class="token-value">red</span>;
+  <span class="token-prop">font-weight</span>: <span class="token-value">bold</span>;
+}</code></pre>
+
+    <p>Classes are the workhorse of CSS. <strong>Use them constantly.</strong> A tag can have many classes:</p>
+<pre><code><span class="token-tag">&lt;p</span> <span class="token-attr">class</span>=<span class="token-string">"warning big italic"</span><span class="token-tag">&gt;</span>...<span class="token-tag">&lt;/p&gt;</span></code></pre>
+
+    <h2>ID selector</h2>
+    <p>An <strong>id</strong> is like a class but must be <em>unique on the page</em>. Target it with <code>#</code>.</p>
+<pre><code><span class="token-comment">/* HTML */</span>
+<span class="token-tag">&lt;header</span> <span class="token-attr">id</span>=<span class="token-string">"main-header"</span><span class="token-tag">&gt;</span>...<span class="token-tag">&lt;/header&gt;</span>
+
+<span class="token-comment">/* CSS */</span>
+<span class="token-selector">#main-header</span> { <span class="token-prop">background</span>: <span class="token-value">black</span>; }</code></pre>
+    <p>Use IDs rarely — they have very high specificity (more on that in Chapter 10) and they don't reuse. Most of the time you want a class.</p>
+
+    <h2>Descendant selector</h2>
+    <p>Target elements <em>inside</em> other elements. Just put a space between the selectors.</p>
+<pre><code><span class="token-selector">article p</span> { <span class="token-prop">line-height</span>: <span class="token-value">1.6</span>; }
+<span class="token-selector">nav a</span> { <span class="token-prop">color</span>: <span class="token-value">white</span>; }
+<span class="token-selector">.card .title</span> { <span class="token-prop">font-size</span>: <span class="token-value">1.5rem</span>; }</code></pre>
+
+    <p>"Every <code>&lt;p&gt;</code> inside an <code>&lt;article&gt;</code>." "Every <code>&lt;a&gt;</code> inside a <code>&lt;nav&gt;</code>." This is what makes CSS feel like real engineering.</p>
+
+    <h2>Direct child selector</h2>
+    <p>The <code>&gt;</code> means "direct child only" — not grandchildren.</p>
+<pre><code><span class="token-selector">ul &gt; li</span> { <span class="token-prop">color</span>: <span class="token-value">blue</span>; }   <span class="token-comment">/* top-level li only, not nested */</span></code></pre>
+
+    <h2>Multiple selectors</h2>
+    <p>Apply the same rule to multiple selectors with a comma.</p>
+<pre><code><span class="token-selector">h1, h2, h3</span> {
+  <span class="token-prop">font-family</span>: <span class="token-value">'Inter'</span>, <span class="token-value">sans-serif</span>;
+}</code></pre>
+
+    <h2>Attribute selector</h2>
+    <p>Target tags by their attribute values.</p>
+<pre><code><span class="token-selector">input[type="email"]</span> { <span class="token-prop">border-color</span>: <span class="token-value">green</span>; }
+<span class="token-selector">a[href^="https://"]</span> { <span class="token-prop">color</span>: <span class="token-value">blue</span>; }   <span class="token-comment">/* starts with https:// */</span>
+<span class="token-selector">a[href$=".pdf"]</span> { <span class="token-prop">font-weight</span>: <span class="token-value">bold</span>; }   <span class="token-comment">/* ends with .pdf */</span></code></pre>
+
+    <h2>Universal selector</h2>
+<pre><code><span class="token-selector">*</span> { <span class="token-prop">box-sizing</span>: <span class="token-value">border-box</span>; }   <span class="token-comment">/* every single element */</span></code></pre>
+
+    <p>Used sparingly — usually only for one thing: setting <code>box-sizing: border-box</code> at the top of every stylesheet (you'll see why in the box-model chapter).</p>
+
+    <div class="callout tip">
+      <p class="callout-title">When in doubt, use a class</p>
+      <p>Classes are reusable, easy to add and remove, and have predictable specificity. They are the right answer 90% of the time. Reach for <code>id</code> only when you truly have a one-of-a-kind element.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter three —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 4. COLORS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 04</p>
+    <h1 class="chapter">Colors</h1>
+    <p class="chapter-intro">CSS lets you write colors five different ways. They all produce the same color — choose based on readability and convenience.</p>
+
+    <h2>The five ways</h2>
+<pre><code><span class="token-prop">color</span>: <span class="token-value">red</span>;                       <span class="token-comment">/* named */</span>
+<span class="token-prop">color</span>: <span class="token-value">#ff0000</span>;                   <span class="token-comment">/* hex */</span>
+<span class="token-prop">color</span>: <span class="token-value">#f00</span>;                       <span class="token-comment">/* short hex */</span>
+<span class="token-prop">color</span>: <span class="token-fn">rgb</span>(<span class="token-value">255</span>, <span class="token-value">0</span>, <span class="token-value">0</span>);            <span class="token-comment">/* red/green/blue */</span>
+<span class="token-prop">color</span>: <span class="token-fn">rgba</span>(<span class="token-value">255</span>, <span class="token-value">0</span>, <span class="token-value">0</span>, <span class="token-value">0.5</span>);       <span class="token-comment">/* + transparency */</span>
+<span class="token-prop">color</span>: <span class="token-fn">hsl</span>(<span class="token-value">0</span>, <span class="token-value">100%</span>, <span class="token-value">50%</span>);          <span class="token-comment">/* hue, saturation, lightness */</span>
+<span class="token-prop">color</span>: <span class="token-fn">hsla</span>(<span class="token-value">0</span>, <span class="token-value">100%</span>, <span class="token-value">50%</span>, <span class="token-value">0.5</span>);     <span class="token-comment">/* + transparency */</span></code></pre>
+
+    <h3>Hex codes — the common one</h3>
+    <p>Six hex digits: two for red, two for green, two for blue. <code>00</code> is none, <code>ff</code> is all. Online color pickers give you hex codes — that's what you'll paste 90% of the time.</p>
+
+    <h3>RGB and HSL</h3>
+    <p>Use <code>rgb()</code> or <code>hsl()</code> when you need to express a color in a form you can reason about. HSL is especially nice — change <em>lightness</em> to get a lighter or darker version of the same color without picking a brand-new hex.</p>
+
+    <h3>Transparency</h3>
+    <p>Add an <code>a</code> (alpha) value between 0 and 1:</p>
+<pre><code><span class="token-prop">background</span>: <span class="token-fn">rgba</span>(<span class="token-value">0</span>, <span class="token-value">0</span>, <span class="token-value">0</span>, <span class="token-value">0.5</span>);   <span class="token-comment">/* half-transparent black */</span></code></pre>
+
+    <h3>Common color properties</h3>
+<pre><code><span class="token-prop">color</span>: <span class="token-value">#2B1D13</span>;             <span class="token-comment">/* text color */</span>
+<span class="token-prop">background-color</span>: <span class="token-value">#FAF6EF</span>;
+<span class="token-prop">border-color</span>: <span class="token-value">#E4D9C5</span>;
+<span class="token-prop">outline-color</span>: <span class="token-value">#C2563A</span>;
+<span class="token-prop">caret-color</span>: <span class="token-value">#C2563A</span>;       <span class="token-comment">/* the text cursor */</span></code></pre>
+
+    <h2>The Tasty Bites palette</h2>
+    <p>The recipe project uses these five swatches — a warm food-magazine feel. Steal them.</p>
+
+    <div class="swatch-grid">
+      <div class="swatch"><span class="chip" style="background:#FAF6EF"></span><div><strong>Cream</strong> <code>#FAF6EF</code> · page background</div></div>
+      <div class="swatch"><span class="chip" style="background:#F3ECDF"></span><div><strong>Paper</strong> <code>#F3ECDF</code> · card surface</div></div>
+      <div class="swatch"><span class="chip" style="background:#2B1D13"></span><div><strong>Espresso</strong> <code>#2B1D13</code> · text</div></div>
+      <div class="swatch"><span class="chip" style="background:#C2563A"></span><div><strong>Terracotta</strong> <code>#C2563A</code> · accent</div></div>
+      <div class="swatch"><span class="chip" style="background:#7A8A6B"></span><div><strong>Sage</strong> <code>#7A8A6B</code> · secondary</div></div>
+      <div class="swatch"><span class="chip" style="background:#D4A24C"></span><div><strong>Mustard</strong> <code>#D4A24C</code> · highlight</div></div>
+    </div>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — never use pure black</p>
+      <p>Pure black (<code>#000</code>) looks harsh on screens. Use a very dark warm or cool color instead — like <code>#2B1D13</code> (espresso) or <code>#1F2937</code> (slate). Subtle, but every magazine and high-end site does this.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter four —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 5. TYPOGRAPHY ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 05</p>
+    <h1 class="chapter">Typography</h1>
+    <p class="chapter-intro">Fonts shape how a page <em>feels</em> more than any other CSS choice. Spend time here — it pays off forever.</p>
+
+    <h2>The properties you'll set most</h2>
+<pre><code><span class="token-prop">font-family</span>: <span class="token-value">'Inter'</span>, <span class="token-value">sans-serif</span>;
+<span class="token-prop">font-size</span>: <span class="token-value">1.1rem</span>;
+<span class="token-prop">font-weight</span>: <span class="token-value">600</span>;
+<span class="token-prop">font-style</span>: <span class="token-value">italic</span>;
+<span class="token-prop">line-height</span>: <span class="token-value">1.6</span>;
+<span class="token-prop">letter-spacing</span>: <span class="token-value">0.02em</span>;
+<span class="token-prop">text-align</span>: <span class="token-value">left</span>;          <span class="token-comment">/* or center, right, justify */</span>
+<span class="token-prop">text-transform</span>: <span class="token-value">uppercase</span>;   <span class="token-comment">/* or lowercase, capitalize */</span>
+<span class="token-prop">text-decoration</span>: <span class="token-value">underline</span>;   <span class="token-comment">/* or none, line-through */</span></code></pre>
+
+    <h2>font-family — the typeface</h2>
+    <p>Give a comma-separated list. The browser tries each one until it finds one installed. Always end with a generic family — <code>sans-serif</code>, <code>serif</code>, <code>monospace</code> — so you have a guaranteed fallback.</p>
+<pre><code><span class="token-prop">font-family</span>: <span class="token-value">'DM Serif Display'</span>, <span class="token-value">Georgia</span>, <span class="token-value">serif</span>;</code></pre>
+
+    <h2>Loading real fonts from Google Fonts</h2>
+    <p>System fonts (Georgia, Arial, Helvetica) work, but every modern site uses custom fonts. The easiest source: <strong>Google Fonts</strong> — free, fast, and reliable.</p>
+<pre><code><span class="token-comment">&lt;!-- in &lt;head&gt; --&gt;</span>
+<span class="token-tag">&lt;link</span> <span class="token-attr">rel</span>=<span class="token-string">"preconnect"</span> <span class="token-attr">href</span>=<span class="token-string">"https://fonts.googleapis.com"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;link</span> <span class="token-attr">rel</span>=<span class="token-string">"preconnect"</span> <span class="token-attr">href</span>=<span class="token-string">"https://fonts.gstatic.com"</span> <span class="token-attr">crossorigin</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;link</span> <span class="token-attr">rel</span>=<span class="token-string">"stylesheet"</span> <span class="token-attr">href</span>=<span class="token-string">"https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"</span><span class="token-tag">&gt;</span></code></pre>
+
+    <p>Then use the font in CSS:</p>
+<pre><code><span class="token-selector">body</span> { <span class="token-prop">font-family</span>: <span class="token-value">'Inter'</span>, <span class="token-value">sans-serif</span>; }</code></pre>
+
+    <p>The <code>&amp;display=swap</code> part tells the browser: "show the fallback font right away; swap in the real one when it loads." Without it, text can be invisible while the font downloads.</p>
+
+    <h2>font-weight — bold and light</h2>
+<pre><code><span class="token-prop">font-weight</span>: <span class="token-value">normal</span>;     <span class="token-comment">/* = 400 */</span>
+<span class="token-prop">font-weight</span>: <span class="token-value">bold</span>;       <span class="token-comment">/* = 700 */</span>
+<span class="token-prop">font-weight</span>: <span class="token-value">300</span>;        <span class="token-comment">/* light */</span>
+<span class="token-prop">font-weight</span>: <span class="token-value">900</span>;        <span class="token-comment">/* black */</span></code></pre>
+    <p>Weights are numbers 100 to 900 in steps of 100. The font you load has to include the weight you ask for — that's why the Google Fonts URL lists weights like <code>wght@400;600;700</code>.</p>
+
+    <h2>line-height — vertical breathing room</h2>
+    <p>The space between lines of text. Use a <strong>unitless number</strong> (the multiplier of the font size).</p>
+<pre><code><span class="token-prop">line-height</span>: <span class="token-value">1.5</span>;     <span class="token-comment">/* good for body text */</span>
+<span class="token-prop">line-height</span>: <span class="token-value">1.2</span>;     <span class="token-comment">/* tight, for big headings */</span>
+<span class="token-prop">line-height</span>: <span class="token-value">1.8</span>;     <span class="token-comment">/* airy, for long-form reading */</span></code></pre>
+
+    <h2>Editorial type pairings</h2>
+    <p>Pairing a serif headline with a sans-serif body is the magazine classic. The course uses:</p>
+
+    <table>
+      <thead><tr><th>Role</th><th>Font</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Headlines</td><td>DM Serif Display</td><td>Warm, editorial weight, thick/thin contrast</td></tr>
+        <tr><td>Body</td><td>Inter</td><td>Designed for screens; tall x-height, readable</td></tr>
+        <tr><td>Italic accent</td><td>Cormorant Garamond italic</td><td>Refined italic for bylines and pull quotes</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — text-wrap: balance</p>
+      <p>On headlines, add <code>text-wrap: balance</code>. The browser balances line lengths so you don't get one widow word on the last line. Stunning, free, modern.</p>
+<pre><code><span class="token-selector">h1</span> { <span class="token-prop">text-wrap</span>: <span class="token-value">balance</span>; }</code></pre>
+    </div>
+
+    <div class="footer-rule">— end of chapter five —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 6. SIZES AND UNITS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 06</p>
+    <h1 class="chapter">Sizes and units</h1>
+    <p class="chapter-intro">Pick the right unit and your layout breathes. Pick the wrong one and it looks weird at any other screen size.</p>
+
+    <h2>Absolute units</h2>
+    <table>
+      <thead><tr><th>Unit</th><th>What it is</th><th>When to use</th></tr></thead>
+      <tbody>
+        <tr><td><code>px</code></td><td>Pixels — a fixed dot</td><td>Borders, shadows, small details</td></tr>
+        <tr><td><code>in</code>, <code>cm</code>, <code>mm</code></td><td>Real-world units</td><td>Print stylesheets only</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Relative units (use these for most things)</h2>
+    <table>
+      <thead><tr><th>Unit</th><th>Relative to</th><th>When to use</th></tr></thead>
+      <tbody>
+        <tr><td><code>%</code></td><td>Parent's size</td><td>Widths inside containers</td></tr>
+        <tr><td><code>em</code></td><td>The element's own font size</td><td>Padding/margin on a component</td></tr>
+        <tr><td><code>rem</code></td><td>Root font size (<code>&lt;html&gt;</code>, usually 16px)</td><td>Most spacing, sizing, type</td></tr>
+        <tr><td><code>vw</code></td><td>1% of viewport width</td><td>Hero text, full-bleed sections</td></tr>
+        <tr><td><code>vh</code></td><td>1% of viewport height</td><td>Full-screen heros</td></tr>
+        <tr><td><code>ch</code></td><td>Width of "0" in the font</td><td>Max line widths for readability</td></tr>
+        <tr><td><code>fr</code></td><td>Fraction of grid free space</td><td>CSS Grid column sizing</td></tr>
+      </tbody>
+    </table>
+
+    <h2>The <code>rem</code> rule of thumb</h2>
+    <p>Use <code>rem</code> for almost everything. It scales with the user's browser font size, so users who set their browser to a larger size (eyesight, accessibility) get a larger version of your whole site — for free.</p>
+<pre><code><span class="token-comment">/* Better */</span>
+<span class="token-selector">.card</span> { <span class="token-prop">padding</span>: <span class="token-value">1.5rem</span>; }
+
+<span class="token-comment">/* Brittle */</span>
+<span class="token-selector">.card</span> { <span class="token-prop">padding</span>: <span class="token-value">24px</span>; }</code></pre>
+
+    <h2><code>clamp()</code> — fluid sizes between two limits</h2>
+    <p>This one function changed how modern sites handle responsive typography. Three arguments: minimum, ideal, maximum.</p>
+<pre><code><span class="token-prop">font-size</span>: <span class="token-fn">clamp</span>(<span class="token-value">1rem</span>, <span class="token-value">0.5vw + 0.9rem</span>, <span class="token-value">1.25rem</span>);
+<span class="token-prop">font-size</span>: <span class="token-fn">clamp</span>(<span class="token-value">2rem</span>, <span class="token-value">4vw + 1rem</span>, <span class="token-value">4.5rem</span>);   <span class="token-comment">/* hero headline */</span></code></pre>
+
+    <p>The browser smoothly interpolates between the minimum (small screens) and the maximum (huge screens). One rule replaces three media queries.</p>
+
+    <h2>Width and height</h2>
+<pre><code><span class="token-prop">width</span>: <span class="token-value">300px</span>;            <span class="token-comment">/* fixed width */</span>
+<span class="token-prop">width</span>: <span class="token-value">100%</span>;              <span class="token-comment">/* fill the parent */</span>
+<span class="token-prop">max-width</span>: <span class="token-value">720px</span>;        <span class="token-comment">/* cap the width, allow smaller */</span>
+<span class="token-prop">min-height</span>: <span class="token-value">100vh</span>;        <span class="token-comment">/* at least one screen tall */</span>
+<span class="token-prop">aspect-ratio</span>: <span class="token-value">16 / 9</span>;     <span class="token-comment">/* lock the shape */</span></code></pre>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — prefer max-width</p>
+      <p>Almost always use <code>max-width</code> instead of <code>width</code>. <code>max-width</code> says "no wider than this, but smaller is fine" — which is what you want on every screen size.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter six —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 7. BOX MODEL ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 07</p>
+    <h1 class="chapter">The box model</h1>
+    <p class="chapter-intro">Every HTML element is a rectangle made of four layers. Once you really understand this, CSS gets dramatically easier.</p>
+
+    <h2>The four layers, from inside out</h2>
+
+    <div class="diagram">┌───────────────────────────────────────────────────┐
+│         margin           (space OUTSIDE)          │
+│  ┌─────────────────────────────────────────────┐  │
+│  │         border         (the line)           │  │
+│  │  ┌───────────────────────────────────────┐  │  │
+│  │  │       padding       (space INSIDE)    │  │  │
+│  │  │  ┌─────────────────────────────────┐  │  │  │
+│  │  │  │      content                    │  │  │  │
+│  │  │  └─────────────────────────────────┘  │  │  │
+│  │  └───────────────────────────────────────┘  │  │
+│  └─────────────────────────────────────────────┘  │
+└───────────────────────────────────────────────────┘</div>
+
+    <ul>
+      <li><strong>Content</strong> — the actual text or image</li>
+      <li><strong>Padding</strong> — space between content and border (inside the box)</li>
+      <li><strong>Border</strong> — the line that surrounds the box</li>
+      <li><strong>Margin</strong> — space between the box and other boxes (outside)</li>
+    </ul>
+
+    <h2>Setting them</h2>
+<pre><code><span class="token-selector">.card</span> {
+  <span class="token-prop">padding</span>: <span class="token-value">16px</span>;
+  <span class="token-prop">border</span>: <span class="token-value">2px solid black</span>;
+  <span class="token-prop">margin</span>: <span class="token-value">20px</span>;
+}</code></pre>
+
+    <h3>Shorthand — set all four sides or each one</h3>
+<pre><code><span class="token-prop">margin</span>: <span class="token-value">10px</span>;                       <span class="token-comment">/* all 4 sides */</span>
+<span class="token-prop">margin</span>: <span class="token-value">10px 20px</span>;                  <span class="token-comment">/* top/bottom, left/right */</span>
+<span class="token-prop">margin</span>: <span class="token-value">10px 20px 5px 0</span>;            <span class="token-comment">/* top, right, bottom, left */</span>
+
+<span class="token-prop">margin-top</span>: <span class="token-value">10px</span>;
+<span class="token-prop">margin-inline</span>: <span class="token-value">auto</span>;                <span class="token-comment">/* left + right at once */</span>
+<span class="token-prop">margin-block</span>: <span class="token-value">2rem</span>;                 <span class="token-comment">/* top + bottom at once */</span></code></pre>
+
+    <p><code>margin-inline: auto</code> is a beautiful trick for horizontally centering a block element. Same as <code>margin: 0 auto</code> but more explicit.</p>
+
+    <h2>The one rule that fixes everything</h2>
+    <p>By default, <code>width</code> means the width of the content only. Padding and border are <em>added on top</em>. This trips up beginners: set a card to <code>width: 300px; padding: 20px;</code> and the actual rendered width is 340px.</p>
+
+    <p>Fix: tell the browser to include padding and border in the width calculation. Put this at the top of every stylesheet:</p>
+<pre><code><span class="token-selector">*</span> { <span class="token-prop">box-sizing</span>: <span class="token-value">border-box</span>; }</code></pre>
+
+    <p>The <code>*</code> means "every element." This single line removes an entire category of frustration. Always include it.</p>
+
+    <div class="callout warn">
+      <p class="callout-title">Margin collapsing — the one weird quirk</p>
+      <p>When two vertical margins meet (one block's bottom against another's top), they don't add — they collapse to the larger of the two. So a 20px bottom margin + 30px top margin = 30px total, not 50px. Doesn't happen with flex or grid containers. Worth knowing about.</p>
+    </div>
+
+    <h2>Inline vs block — only block elements obey margin/padding properly</h2>
+    <p>By default, block elements (<code>div</code>, <code>p</code>, <code>h1</code>) take a full line and respect width/height. Inline elements (<code>span</code>, <code>a</code>, <code>strong</code>) flow within text and ignore top/bottom margin. To make an inline element accept margin and width, set <code>display: inline-block</code>.</p>
+
+    <div class="footer-rule">— end of chapter seven —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 8. CUSTOM PROPERTIES ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 08</p>
+    <h1 class="chapter">CSS custom properties</h1>
+    <p class="chapter-intro">"Variables for CSS." Define a value once, reuse it everywhere. Change it once, every use updates.</p>
+
+    <h2>How they work</h2>
+<pre><code><span class="token-comment">/* Define on :root so they're available everywhere */</span>
+<span class="token-selector">:root</span> {
+  <span class="token-prop">--color-accent</span>: <span class="token-value">#C2563A</span>;
+  <span class="token-prop">--gap</span>: <span class="token-value">1.5rem</span>;
+}
+
+<span class="token-comment">/* Use with var() */</span>
+<span class="token-selector">a</span> { <span class="token-prop">color</span>: <span class="token-fn">var</span>(<span class="token-prop">--color-accent</span>); }
+<span class="token-selector">.grid</span> { <span class="token-prop">gap</span>: <span class="token-fn">var</span>(<span class="token-prop">--gap</span>); }</code></pre>
+
+    <p>Two rules:</p>
+    <ul>
+      <li>Custom property names start with <code>--</code></li>
+      <li>You retrieve them with <code>var(--name)</code></li>
+    </ul>
+
+    <h2>Why they're transformative</h2>
+    <p>Imagine 60 different places use <code>#C2563A</code> in your stylesheet. Now the client wants the brand color to be slightly more orange. Without variables: find &amp; replace 60 instances, hope you don't miss one. With variables: change one line, done.</p>
+
+    <h2>A real palette</h2>
+<pre><code><span class="token-selector">:root</span> {
+  <span class="token-comment">/* Colors */</span>
+  <span class="token-prop">--cream</span>:      <span class="token-value">#FAF6EF</span>;
+  <span class="token-prop">--paper</span>:      <span class="token-value">#F3ECDF</span>;
+  <span class="token-prop">--espresso</span>:   <span class="token-value">#2B1D13</span>;
+  <span class="token-prop">--terracotta</span>: <span class="token-value">#C2563A</span>;
+  <span class="token-prop">--sage</span>:       <span class="token-value">#7A8A6B</span>;
+  <span class="token-prop">--rule</span>:       <span class="token-value">#E4D9C5</span>;
+
+  <span class="token-comment">/* Fonts */</span>
+  <span class="token-prop">--font-display</span>: <span class="token-value">'DM Serif Display'</span>, <span class="token-value">serif</span>;
+  <span class="token-prop">--font-body</span>:    <span class="token-value">'Inter'</span>, <span class="token-value">sans-serif</span>;
+  <span class="token-prop">--font-accent</span>:  <span class="token-value">'Cormorant Garamond'</span>, <span class="token-value">serif</span>;
+
+  <span class="token-comment">/* Spacing scale */</span>
+  <span class="token-prop">--space-sm</span>: <span class="token-value">0.5rem</span>;
+  <span class="token-prop">--space</span>:    <span class="token-value">1rem</span>;
+  <span class="token-prop">--space-lg</span>: <span class="token-value">2rem</span>;
+}</code></pre>
+
+    <p>This <em>is</em> your design system. Every color, font, and spacing decision in one block at the top. The rest of the stylesheet just uses <code>var()</code>.</p>
+
+    <h2>Default values with <code>var()</code></h2>
+    <p>You can pass a fallback as a second argument — used if the variable isn't defined.</p>
+<pre><code><span class="token-prop">color</span>: <span class="token-fn">var</span>(<span class="token-prop">--my-color</span>, <span class="token-value">#333</span>);   <span class="token-comment">/* falls back to #333 */</span></code></pre>
+
+    <h2>Variables can be set on any element — and inherit</h2>
+    <p>You don't have to put them on <code>:root</code>. Set them on a card and they cascade down to its children. This is how you build a staggered animation:</p>
+<pre><code><span class="token-comment">/* HTML: &lt;article style="--i: 2"&gt;...&lt;/article&gt; */</span>
+
+<span class="token-selector">.card</span> {
+  <span class="token-prop">animation</span>: <span class="token-value">fade-up 0.6s ease forwards</span>;
+  <span class="token-prop">animation-delay</span>: <span class="token-fn">calc</span>(<span class="token-fn">var</span>(<span class="token-prop">--i</span>, <span class="token-value">0</span>) * <span class="token-value">80ms</span>);
+}</code></pre>
+
+    <p>Card 0 starts at 0ms, card 1 at 80ms, card 2 at 160ms. Without variables this kind of per-element customization is painful.</p>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — semantic names beat literal ones</p>
+      <p>Don't write <code>--red: #C2563A</code> — write <code>--color-accent: #C2563A</code>. If the brand color later becomes blue, the literal name lies. Semantic names age well.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter eight —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 9. BACKGROUNDS BORDERS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 09</p>
+    <h1 class="chapter">Backgrounds and borders</h1>
+    <p class="chapter-intro">Two surfaces that quietly make a card feel like a card.</p>
+
+    <h2>Background properties</h2>
+<pre><code><span class="token-prop">background-color</span>: <span class="token-value">#FAF6EF</span>;
+<span class="token-prop">background-image</span>: <span class="token-fn">url</span>(<span class="token-value">'hero.jpg'</span>);
+<span class="token-prop">background-size</span>: <span class="token-value">cover</span>;        <span class="token-comment">/* fill the box, crop if needed */</span>
+<span class="token-prop">background-position</span>: <span class="token-value">center</span>;
+<span class="token-prop">background-repeat</span>: <span class="token-value">no-repeat</span>;
+<span class="token-prop">background-attachment</span>: <span class="token-value">fixed</span>;   <span class="token-comment">/* don't scroll with the page */</span>
+
+<span class="token-comment">/* Shorthand */</span>
+<span class="token-prop">background</span>: <span class="token-value">#FAF6EF url(hero.jpg) center / cover no-repeat</span>;</code></pre>
+
+    <h2>Gradients — built into the background</h2>
+<pre><code><span class="token-comment">/* Linear */</span>
+<span class="token-prop">background</span>: <span class="token-fn">linear-gradient</span>(<span class="token-value">to right</span>, <span class="token-value">#FAF6EF</span>, <span class="token-value">#F3ECDF</span>);
+<span class="token-prop">background</span>: <span class="token-fn">linear-gradient</span>(<span class="token-value">135deg</span>, <span class="token-value">#C2563A</span>, <span class="token-value">#D4A24C</span>);
+
+<span class="token-comment">/* Radial — circular tint */</span>
+<span class="token-prop">background</span>: <span class="token-fn">radial-gradient</span>(<span class="token-value">circle at top</span>, <span class="token-value">#D4A24C 0%</span>, <span class="token-value">transparent 60%</span>);
+
+<span class="token-comment">/* Conic — pie slices */</span>
+<span class="token-prop">background</span>: <span class="token-fn">conic-gradient</span>(<span class="token-value">#C2563A</span>, <span class="token-value">#D4A24C</span>, <span class="token-value">#7A8A6B</span>, <span class="token-value">#C2563A</span>);</code></pre>
+
+    <h2>Borders</h2>
+<pre><code><span class="token-prop">border</span>: <span class="token-value">1px solid #E4D9C5</span>;
+<span class="token-prop">border-radius</span>: <span class="token-value">12px</span>;           <span class="token-comment">/* rounded corners */</span>
+<span class="token-prop">border-radius</span>: <span class="token-value">999px</span>;          <span class="token-comment">/* fully rounded pill */</span>
+<span class="token-prop">border-radius</span>: <span class="token-value">12px 12px 0 0</span>;    <span class="token-comment">/* top corners only */</span>
+
+<span class="token-prop">border-top</span>: <span class="token-value">2px solid var(--terracotta)</span>;
+<span class="token-prop">border-bottom</span>: <span class="token-value">1px dashed var(--rule)</span>;</code></pre>
+
+    <p>Border styles: <code>solid</code>, <code>dashed</code>, <code>dotted</code>, <code>double</code>, <code>none</code>.</p>
+
+    <h2>Shadows — depth without weight</h2>
+<pre><code><span class="token-prop">box-shadow</span>: <span class="token-value">0 4px 8px rgba(0, 0, 0, 0.1)</span>;
+<span class="token-prop">box-shadow</span>: <span class="token-value">0 12px 24px -12px rgb(43 29 19 / 0.12)</span>;   <span class="token-comment">/* soft lift */</span>
+
+<span class="token-comment">/* Layered shadows for realism */</span>
+<span class="token-prop">box-shadow</span>:
+  <span class="token-value">0 1px 2px rgb(43 29 19 / 0.04)</span>,
+  <span class="token-value">0 12px 24px -12px rgb(43 29 19 / 0.12)</span>;
+
+<span class="token-prop">text-shadow</span>: <span class="token-value">2px 2px 4px rgba(0,0,0,0.3)</span>;   <span class="token-comment">/* text only */</span></code></pre>
+
+    <p>Shadow values: <code>X Y blur spread color</code>. Negative X moves left, negative Y moves up.</p>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — never use pure black shadows</p>
+      <p>Tint shadows with your text color, dimmed way down. A shadow of <code>rgb(43 29 19 / 0.12)</code> (12% espresso) feels warm and integrated. Plain <code>rgba(0,0,0,0.1)</code> reads grey and dead. Magazine sites do this universally.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter nine —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 10. CASCADE SPECIFICITY ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 10</p>
+    <h1 class="chapter">The cascade and specificity</h1>
+    <p class="chapter-intro">When two rules conflict, the browser has to pick a winner. This is the only "logic" CSS does — and it's worth understanding.</p>
+
+    <h2>When two rules apply</h2>
+<pre><code><span class="token-selector">p</span> { <span class="token-prop">color</span>: <span class="token-value">blue</span>; }
+<span class="token-selector">.special</span> { <span class="token-prop">color</span>: <span class="token-value">red</span>; }</code></pre>
+<pre><code><span class="token-tag">&lt;p</span> <span class="token-attr">class</span>=<span class="token-string">"special"</span><span class="token-tag">&gt;</span>What color am I?<span class="token-tag">&lt;/p&gt;</span></code></pre>
+    <p>Answer: red. The class selector wins over the tag selector.</p>
+
+    <h2>The specificity ranking (rough)</h2>
+    <ol>
+      <li><strong>Inline <code>style="..."</code></strong> beats everything</li>
+      <li><strong>IDs</strong> (<code>#header</code>) beat classes</li>
+      <li><strong>Classes</strong> (<code>.card</code>) beat element names</li>
+      <li><strong>Element names</strong> (<code>p</code>) beat the universal selector</li>
+    </ol>
+
+    <p>When two rules are equally specific, <strong>the one written later wins</strong>. That's why the order of your stylesheet matters: later rules override earlier ones.</p>
+
+    <h2>Combined selectors raise specificity</h2>
+<pre><code><span class="token-selector">.card .title</span> { <span class="token-prop">color</span>: <span class="token-value">red</span>; }      <span class="token-comment">/* two classes */</span>
+<span class="token-selector">.title</span> { <span class="token-prop">color</span>: <span class="token-value">blue</span>; }            <span class="token-comment">/* one class */</span>
+
+<span class="token-comment">/* Inside a .card, .title becomes red.
+   The first rule has higher specificity. */</span></code></pre>
+
+    <h2>Inheritance — kids get parents' values (some properties only)</h2>
+    <p>Some properties — <code>color</code>, <code>font-family</code>, <code>line-height</code>, <code>text-align</code> — pass down to children automatically. Set <code>color</code> on <code>body</code> and every child inherits it (unless they override it). Properties like <code>margin</code>, <code>padding</code>, <code>border</code>, and <code>background</code> do <em>not</em> inherit.</p>
+
+    <h2>The DevTools rescue</h2>
+    <p>Right-click any element in the browser → <strong>Inspect</strong>. In the side panel you'll see every CSS rule that applies, in order, with the winning ones highlighted. When something looks wrong, open DevTools first — it tells you why.</p>
+
+    <div class="callout warn">
+      <p class="callout-title">Don't reach for <code>!important</code></p>
+      <p>You can override the cascade with <code>!important</code> at the end of any value. Don't. It cascades poorly and breaks your design system. If you need <code>!important</code>, your specificity is wrong — fix that instead.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter ten —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 11. DISPLAY ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 11</p>
+    <h1 class="chapter">Display — block, inline, none</h1>
+    <p class="chapter-intro">Every element has a default display type. Knowing the type tells you how it'll behave.</p>
+
+    <h2>The four basic types</h2>
+
+    <table>
+      <thead><tr><th>Value</th><th>Behavior</th><th>Defaults for</th></tr></thead>
+      <tbody>
+        <tr><td><code>block</code></td><td>Takes full width, starts on a new line</td><td><code>div</code>, <code>p</code>, <code>h1</code>, <code>section</code></td></tr>
+        <tr><td><code>inline</code></td><td>Only as wide as content, flows in text</td><td><code>span</code>, <code>a</code>, <code>strong</code>, <code>em</code></td></tr>
+        <tr><td><code>inline-block</code></td><td>Flows like inline, accepts width/padding like block</td><td>(set manually)</td></tr>
+        <tr><td><code>none</code></td><td>Removes the element entirely (no space taken)</td><td>(set manually)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Toggling visibility</h2>
+<pre><code><span class="token-prop">display</span>: <span class="token-value">none</span>;        <span class="token-comment">/* removed — no space */</span>
+<span class="token-prop">visibility</span>: <span class="token-value">hidden</span>;   <span class="token-comment">/* invisible — space preserved */</span>
+<span class="token-prop">opacity</span>: <span class="token-value">0</span>;            <span class="token-comment">/* see-through but still there */</span></code></pre>
+
+    <h2>The big two: <code>flex</code> and <code>grid</code></h2>
+    <p>Two display values do most of the layout work in modern CSS. They each get their own chapter next.</p>
+<pre><code><span class="token-selector">.row</span> { <span class="token-prop">display</span>: <span class="token-value">flex</span>; }     <span class="token-comment">/* 1D layout — row or column */</span>
+<span class="token-selector">.grid</span> { <span class="token-prop">display</span>: <span class="token-value">grid</span>; }   <span class="token-comment">/* 2D layout — rows AND columns */</span></code></pre>
+
+    <div class="footer-rule">— end of chapter eleven —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 12. FLEXBOX ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 12</p>
+    <h1 class="chapter">Flexbox — rows and columns</h1>
+    <p class="chapter-intro">A layout system for one direction at a time — a row OR a column. Most navbar/header/toolbar/footer layouts are Flexbox.</p>
+
+    <h2>The basic move</h2>
+<pre><code><span class="token-comment">/* HTML */</span>
+<span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-string">"row"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;div&gt;</span>A<span class="token-tag">&lt;/div&gt;</span>
+  <span class="token-tag">&lt;div&gt;</span>B<span class="token-tag">&lt;/div&gt;</span>
+  <span class="token-tag">&lt;div&gt;</span>C<span class="token-tag">&lt;/div&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span>
+
+<span class="token-comment">/* CSS */</span>
+<span class="token-selector">.row</span> {
+  <span class="token-prop">display</span>: <span class="token-value">flex</span>;
+  <span class="token-prop">gap</span>: <span class="token-value">1rem</span>;       <span class="token-comment">/* space between children */</span>
+}</code></pre>
+
+    <div class="demo">
+      <div class="demo-row">
+        <span>A</span><span>B</span><span>C</span>
+      </div>
+      <p class="demo-caption">Three children laid out in a row by their parent.</p>
+    </div>
+
+    <h2>Container properties — set on the parent</h2>
+
+    <h3><code>flex-direction</code></h3>
+<pre><code><span class="token-prop">flex-direction</span>: <span class="token-value">row</span>;             <span class="token-comment">/* default — left to right */</span>
+<span class="token-prop">flex-direction</span>: <span class="token-value">column</span>;          <span class="token-comment">/* top to bottom */</span>
+<span class="token-prop">flex-direction</span>: <span class="token-value">row-reverse</span>;     <span class="token-comment">/* right to left */</span></code></pre>
+
+    <h3><code>justify-content</code> — alignment along the main axis</h3>
+<pre><code><span class="token-prop">justify-content</span>: <span class="token-value">flex-start</span>;     <span class="token-comment">/* default */</span>
+<span class="token-prop">justify-content</span>: <span class="token-value">center</span>;
+<span class="token-prop">justify-content</span>: <span class="token-value">flex-end</span>;
+<span class="token-prop">justify-content</span>: <span class="token-value">space-between</span>;  <span class="token-comment">/* edges + equal gaps */</span>
+<span class="token-prop">justify-content</span>: <span class="token-value">space-around</span>;   <span class="token-comment">/* equal space around each */</span>
+<span class="token-prop">justify-content</span>: <span class="token-value">space-evenly</span>;</code></pre>
+
+    <h3><code>align-items</code> — alignment along the cross axis</h3>
+<pre><code><span class="token-prop">align-items</span>: <span class="token-value">stretch</span>;          <span class="token-comment">/* default — fill height */</span>
+<span class="token-prop">align-items</span>: <span class="token-value">center</span>;           <span class="token-comment">/* vertically center (rows) */</span>
+<span class="token-prop">align-items</span>: <span class="token-value">flex-start</span>;
+<span class="token-prop">align-items</span>: <span class="token-value">flex-end</span>;
+<span class="token-prop">align-items</span>: <span class="token-value">baseline</span>;</code></pre>
+
+    <h3><code>gap</code>, <code>flex-wrap</code></h3>
+<pre><code><span class="token-prop">gap</span>: <span class="token-value">1rem</span>;                       <span class="token-comment">/* space between children */</span>
+<span class="token-prop">flex-wrap</span>: <span class="token-value">wrap</span>;                  <span class="token-comment">/* wrap to next line if too wide */</span></code></pre>
+
+    <h2>Item properties — set on a child</h2>
+<pre><code><span class="token-prop">flex</span>: <span class="token-value">1</span>;            <span class="token-comment">/* grow to fill leftover space (equal share) */</span>
+<span class="token-prop">flex</span>: <span class="token-value">2</span>;            <span class="token-comment">/* twice the share of siblings with flex: 1 */</span>
+<span class="token-prop">flex</span>: <span class="token-value">0 0 200px</span>;    <span class="token-comment">/* don't grow, don't shrink, be 200px wide */</span>
+<span class="token-prop">align-self</span>: <span class="token-value">flex-end</span>;   <span class="token-comment">/* override align-items for this child only */</span>
+<span class="token-prop">order</span>: <span class="token-value">2</span>;             <span class="token-comment">/* reorder visually without changing HTML */</span></code></pre>
+
+    <h2>The classic header layout</h2>
+<pre><code><span class="token-comment">/* Logo left, nav right, vertically centered */</span>
+<span class="token-selector">header</span> {
+  <span class="token-prop">display</span>: <span class="token-value">flex</span>;
+  <span class="token-prop">justify-content</span>: <span class="token-value">space-between</span>;
+  <span class="token-prop">align-items</span>: <span class="token-value">center</span>;
+  <span class="token-prop">padding</span>: <span class="token-value">1rem 2rem</span>;
+}</code></pre>
+
+    <h2>Centering — finally easy</h2>
+    <p>The legendary "how do I center a div" question. With Flexbox:</p>
+<pre><code><span class="token-selector">.parent</span> {
+  <span class="token-prop">display</span>: <span class="token-value">flex</span>;
+  <span class="token-prop">justify-content</span>: <span class="token-value">center</span>;   <span class="token-comment">/* horizontal */</span>
+  <span class="token-prop">align-items</span>: <span class="token-value">center</span>;       <span class="token-comment">/* vertical */</span>
+  <span class="token-prop">min-height</span>: <span class="token-value">100vh</span>;
+}</code></pre>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — use <code>gap</code> instead of margins</p>
+      <p>Old Flexbox tutorials use <code>margin-right</code> on every child except the last. That's outdated. <code>gap</code> works in Flexbox and Grid and handles the last item automatically. Always use <code>gap</code>.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter twelve —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 13. GRID ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 13</p>
+    <h1 class="chapter">CSS Grid — true 2D layout</h1>
+    <p class="chapter-intro">Flexbox handles a row or a column. Grid handles both at once — a real grid of rows and columns. Card galleries, page layouts, magazine spreads.</p>
+
+    <h2>The basic move</h2>
+<pre><code><span class="token-selector">.gallery</span> {
+  <span class="token-prop">display</span>: <span class="token-value">grid</span>;
+  <span class="token-prop">grid-template-columns</span>: <span class="token-value">1fr 1fr 1fr</span>;   <span class="token-comment">/* 3 equal columns */</span>
+  <span class="token-prop">gap</span>: <span class="token-value">1.5rem</span>;
+}</code></pre>
+
+    <p><code>1fr</code> means "one fraction of the available space." Three <code>1fr</code> = three equal columns.</p>
+
+    <h2>Mix fixed and flexible</h2>
+<pre><code><span class="token-prop">grid-template-columns</span>: <span class="token-value">200px 1fr</span>;          <span class="token-comment">/* sidebar + main */</span>
+<span class="token-prop">grid-template-columns</span>: <span class="token-value">1fr 2fr 1fr</span>;         <span class="token-comment">/* middle is 2x */</span>
+<span class="token-prop">grid-template-columns</span>: <span class="token-value">repeat(4, 1fr)</span>;      <span class="token-comment">/* shortcut: 4 equal */</span></code></pre>
+
+    <h2>The killer feature: <code>auto-fit</code> + <code>minmax</code></h2>
+    <p>You rarely want to hardcode "3 columns." You want "as many columns as fit, each at least 18rem." That's this:</p>
+<pre><code><span class="token-prop">grid-template-columns</span>: <span class="token-fn">repeat</span>(<span class="token-value">auto-fill</span>, <span class="token-fn">minmax</span>(<span class="token-fn">min</span>(<span class="token-value">100%</span>, <span class="token-value">18rem</span>), <span class="token-value">1fr</span>));</code></pre>
+
+    <p>What this says:</p>
+    <ul>
+      <li><strong>repeat(auto-fill, ...)</strong> — make as many columns as fit</li>
+      <li><strong>minmax(18rem, 1fr)</strong> — each column is at least 18rem, but stretches to fill space</li>
+      <li><strong>min(100%, 18rem)</strong> — on a very narrow screen, drop to one full-width column instead of horizontal scroll</li>
+    </ul>
+
+    <p>Memorize this snippet. It's the responsive card grid every modern site uses.</p>
+
+    <div class="demo">
+      <div class="demo-grid">
+        <span>Featured</span><span>B</span><span>C</span><span>D</span>
+      </div>
+      <p class="demo-caption">Featured card spans 2 columns. Mobile? It collapses to one.</p>
+    </div>
+
+    <h2>Featured cards — items can span columns</h2>
+<pre><code><span class="token-selector">.featured</span> {
+  <span class="token-prop">grid-column</span>: <span class="token-value">span 2</span>;       <span class="token-comment">/* takes 2 columns */</span>
+}
+
+<span class="token-selector">.tall</span> {
+  <span class="token-prop">grid-row</span>: <span class="token-value">span 2</span>;          <span class="token-comment">/* takes 2 rows */</span>
+}
+
+<span class="token-selector">.exact</span> {
+  <span class="token-prop">grid-column</span>: <span class="token-value">2 / 4</span>;         <span class="token-comment">/* from line 2 to line 4 */</span>
+}</code></pre>
+
+    <h2>Grid rows — let the content decide</h2>
+    <p>You almost never need to set rows explicitly — Grid creates them as your items wrap. If you do need to:</p>
+<pre><code><span class="token-prop">grid-template-rows</span>: <span class="token-value">100px 1fr 50px</span>;
+<span class="token-prop">grid-auto-rows</span>: <span class="token-value">200px</span>;       <span class="token-comment">/* every auto-created row */</span></code></pre>
+
+    <h2>Named grid areas — for whole-page layout</h2>
+<pre><code><span class="token-selector">.layout</span> {
+  <span class="token-prop">display</span>: <span class="token-value">grid</span>;
+  <span class="token-prop">grid-template-columns</span>: <span class="token-value">200px 1fr</span>;
+  <span class="token-prop">grid-template-rows</span>: <span class="token-value">auto 1fr auto</span>;
+  <span class="token-prop">grid-template-areas</span>:
+    <span class="token-value">"header header"</span>
+    <span class="token-value">"sidebar main"</span>
+    <span class="token-value">"footer footer"</span>;
+}
+
+<span class="token-selector">header</span>  { <span class="token-prop">grid-area</span>: <span class="token-value">header</span>; }
+<span class="token-selector">.sidebar</span>{ <span class="token-prop">grid-area</span>: <span class="token-value">sidebar</span>; }
+<span class="token-selector">main</span>    { <span class="token-prop">grid-area</span>: <span class="token-value">main</span>; }
+<span class="token-selector">footer</span>  { <span class="token-prop">grid-area</span>: <span class="token-value">footer</span>; }</code></pre>
+
+    <p>The ASCII-art layout is literal CSS. Beautiful, readable, and self-documenting.</p>
+
+    <h2>When to use Flexbox vs Grid</h2>
+    <table>
+      <thead><tr><th>Use</th><th>Flexbox</th><th>Grid</th></tr></thead>
+      <tbody>
+        <tr><td>Header with logo + nav</td><td>✓</td><td></td></tr>
+        <tr><td>Navigation toolbar</td><td>✓</td><td></td></tr>
+        <tr><td>Recipe card gallery</td><td></td><td>✓</td></tr>
+        <tr><td>Sidebar + main + footer layout</td><td></td><td>✓</td></tr>
+        <tr><td>Form labels + inputs in a row</td><td>✓</td><td></td></tr>
+        <tr><td>Image grid with featured + tiles</td><td></td><td>✓</td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer-rule">— end of chapter thirteen —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 14. POSITION ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 14</p>
+    <h1 class="chapter">Positioning</h1>
+    <p class="chapter-intro">Move an element out of the normal flow — to overlay it, stick it to the top, or pin it to the corner.</p>
+
+    <h2>The five values</h2>
+
+    <table>
+      <thead><tr><th>Value</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><code>static</code></td><td>Default — flows in document order</td></tr>
+        <tr><td><code>relative</code></td><td>Like static but offset by <code>top</code>/<code>left</code>; siblings ignore the shift</td></tr>
+        <tr><td><code>absolute</code></td><td>Positioned relative to the nearest positioned ancestor</td></tr>
+        <tr><td><code>fixed</code></td><td>Pinned to the viewport — stays visible while scrolling</td></tr>
+        <tr><td><code>sticky</code></td><td>Acts relative until a threshold, then sticks</td></tr>
+      </tbody>
+    </table>
+
+    <h2><code>relative</code> — offset without disrupting siblings</h2>
+<pre><code><span class="token-selector">.badge</span> {
+  <span class="token-prop">position</span>: <span class="token-value">relative</span>;
+  <span class="token-prop">top</span>: <span class="token-value">-5px</span>;        <span class="token-comment">/* nudge up 5px */</span>
+}</code></pre>
+
+    <p>Useful as a container for absolutely-positioned children — see below.</p>
+
+    <h2><code>absolute</code> — float over the page</h2>
+<pre><code><span class="token-selector">.card</span> { <span class="token-prop">position</span>: <span class="token-value">relative</span>; }
+
+<span class="token-selector">.card .badge</span> {
+  <span class="token-prop">position</span>: <span class="token-value">absolute</span>;
+  <span class="token-prop">top</span>: <span class="token-value">1rem</span>;
+  <span class="token-prop">right</span>: <span class="token-value">1rem</span>;
+}</code></pre>
+
+    <p>The badge is removed from normal flow and pinned to the top-right corner of the nearest <em>positioned</em> ancestor (the <code>.card</code>). Perfect for "Featured," "New," "Sale" tags on a card.</p>
+
+    <h2><code>fixed</code> — pinned to the screen</h2>
+<pre><code><span class="token-selector">.fab</span> {     <span class="token-comment">/* a "floating action button" */</span>
+  <span class="token-prop">position</span>: <span class="token-value">fixed</span>;
+  <span class="token-prop">bottom</span>: <span class="token-value">2rem</span>;
+  <span class="token-prop">right</span>: <span class="token-value">2rem</span>;
+}</code></pre>
+
+    <p>Stays put while the page scrolls. Common for chat bubbles, "back to top" buttons, sticky cookie banners.</p>
+
+    <h2><code>sticky</code> — the magic one</h2>
+<pre><code><span class="token-selector">.section-title</span> {
+  <span class="token-prop">position</span>: <span class="token-value">sticky</span>;
+  <span class="token-prop">top</span>: <span class="token-value">0</span>;
+  <span class="token-prop">background</span>: <span class="token-value">var(--cream)</span>;
+}</code></pre>
+
+    <p>Scrolls normally until it hits the top, then sticks. Used for sticky headers, sticky table-of-contents sidebars. Underrated.</p>
+
+    <h2><code>z-index</code> — what's in front</h2>
+    <p>When elements overlap, <code>z-index</code> controls which appears on top. Higher = in front. Only works on positioned elements.</p>
+<pre><code><span class="token-prop">z-index</span>: <span class="token-value">10</span>;</code></pre>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — pin badges with absolute</p>
+      <p>Almost every "Featured", "New", "Sale" badge you see on a card is <code>position: absolute</code> on a <code>position: relative</code> card. Pattern worth memorizing.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter fourteen —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 15. RESPONSIVE ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 15</p>
+    <h1 class="chapter">Responsive design</h1>
+    <p class="chapter-intro">A site that looks good on a 6-inch phone AND a 27-inch desktop. The key tools: fluid units, media queries, and modern auto-collapsing layouts.</p>
+
+    <h2>Step one: stop fighting</h2>
+    <p>Modern CSS does a lot of responsive work automatically. Some changes you can make to set yourself up:</p>
+    <ul>
+      <li>Use <code>max-width</code> instead of <code>width</code>. Let content shrink.</li>
+      <li>Use <code>%</code>, <code>rem</code>, <code>clamp()</code> instead of fixed pixels.</li>
+      <li>Use the modern grid recipe (Chapter 13) — it auto-reflows.</li>
+      <li>Always include the viewport meta tag in your HTML.</li>
+    </ul>
+
+<pre><code><span class="token-tag">&lt;meta</span> <span class="token-attr">name</span>=<span class="token-string">"viewport"</span> <span class="token-attr">content</span>=<span class="token-string">"width=device-width, initial-scale=1"</span><span class="token-tag">&gt;</span></code></pre>
+
+    <h2>Media queries — different CSS at different sizes</h2>
+<pre><code><span class="token-selector">.card</span> { <span class="token-prop">font-size</span>: <span class="token-value">1rem</span>; }
+
+<span class="token-comment">/* When the screen is 768px wide or LESS */</span>
+<span class="token-selector">@media (max-width: 768px)</span> {
+  <span class="token-selector">.card</span> { <span class="token-prop">font-size</span>: <span class="token-value">0.875rem</span>; }
+}
+
+<span class="token-comment">/* When the screen is 1024px wide or MORE */</span>
+<span class="token-selector">@media (min-width: 1024px)</span> {
+  <span class="token-selector">.card</span> { <span class="token-prop">font-size</span>: <span class="token-value">1.125rem</span>; }
+}</code></pre>
+
+    <h2>Common breakpoints</h2>
+    <table>
+      <thead><tr><th>Size</th><th>Roughly means</th></tr></thead>
+      <tbody>
+        <tr><td>up to 640px</td><td>phone</td></tr>
+        <tr><td>up to 768px</td><td>large phone / small tablet</td></tr>
+        <tr><td>up to 1024px</td><td>tablet</td></tr>
+        <tr><td>over 1024px</td><td>laptop and desktop</td></tr>
+      </tbody>
+    </table>
+
+    <p>You don't need many. One or two breakpoints per design carries most sites.</p>
+
+    <h2>Mobile-first vs desktop-first</h2>
+    <p><strong>Mobile-first</strong> (recommended): write the small-screen styles first, then use <code>min-width</code> media queries to add complexity for bigger screens.</p>
+<pre><code><span class="token-selector">.card</span> { <span class="token-prop">padding</span>: <span class="token-value">1rem</span>; }
+
+<span class="token-selector">@media (min-width: 768px)</span> {
+  <span class="token-selector">.card</span> { <span class="token-prop">padding</span>: <span class="token-value">2rem</span>; }
+}</code></pre>
+
+    <p>Mobile is simpler. Adding more for big screens is more natural than removing for small ones.</p>
+
+    <h2>Test responsively</h2>
+    <p>In Chrome / Edge, right-click → <strong>Inspect</strong> → click the phone/tablet icon in DevTools. You can resize the viewport or pick a device preset. Always test at 375px (a phone) and the size you usually develop at.</p>
+
+    <h2>The "no media queries needed" trick</h2>
+    <p>Combined with the modern grid recipe, you'll often handle responsiveness entirely through CSS Grid + clamp() without a single media query:</p>
+<pre><code><span class="token-selector">.grid</span> {
+  <span class="token-prop">display</span>: <span class="token-value">grid</span>;
+  <span class="token-prop">grid-template-columns</span>: <span class="token-fn">repeat</span>(<span class="token-value">auto-fill</span>, <span class="token-fn">minmax</span>(<span class="token-fn">min</span>(<span class="token-value">100%</span>, <span class="token-value">18rem</span>), <span class="token-value">1fr</span>));
+  <span class="token-prop">gap</span>: <span class="token-fn">clamp</span>(<span class="token-value">1rem</span>, <span class="token-value">2vw</span>, <span class="token-value">2rem</span>);
+}
+
+<span class="token-selector">h1</span> {
+  <span class="token-prop">font-size</span>: <span class="token-fn">clamp</span>(<span class="token-value">2rem</span>, <span class="token-value">4vw + 1rem</span>, <span class="token-value">4.5rem</span>);
+}</code></pre>
+
+    <p>The grid auto-collapses, the type auto-scales. Less CSS, more elegance.</p>
+
+    <div class="footer-rule">— end of chapter fifteen —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 16. PSEUDO ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 16</p>
+    <h1 class="chapter">Pseudo-classes and pseudo-elements</h1>
+    <p class="chapter-intro">Style elements based on state (hovered, focused, checked) or pieces of an element (first letter, before/after).</p>
+
+    <h2>Pseudo-classes — single colon</h2>
+    <p>State the element is in.</p>
+
+    <table>
+      <thead><tr><th>Selector</th><th>When it matches</th></tr></thead>
+      <tbody>
+        <tr><td><code>:hover</code></td><td>Mouse is over the element</td></tr>
+        <tr><td><code>:focus</code></td><td>The element has keyboard focus</td></tr>
+        <tr><td><code>:active</code></td><td>Being clicked right now</td></tr>
+        <tr><td><code>:visited</code></td><td>Link has been visited</td></tr>
+        <tr><td><code>:disabled</code></td><td>Form field is disabled</td></tr>
+        <tr><td><code>:checked</code></td><td>Checkbox or radio is on</td></tr>
+        <tr><td><code>:first-child</code></td><td>First child of its parent</td></tr>
+        <tr><td><code>:last-child</code></td><td>Last child of its parent</td></tr>
+        <tr><td><code>:nth-child(n)</code></td><td>The nth child (e.g. <code>:nth-child(odd)</code>)</td></tr>
+        <tr><td><code>:not(.x)</code></td><td>Everything that isn't <code>.x</code></td></tr>
+        <tr><td><code>:empty</code></td><td>Element with no children</td></tr>
+        <tr><td><code>:placeholder-shown</code></td><td>Input is still showing its placeholder</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Hover effects — the bread and butter</h3>
+<pre><code><span class="token-selector">button</span> {
+  <span class="token-prop">background</span>: <span class="token-value">var(--terracotta)</span>;
+  <span class="token-prop">color</span>: <span class="token-value">white</span>;
+  <span class="token-prop">cursor</span>: <span class="token-value">pointer</span>;
+  <span class="token-prop">transition</span>: <span class="token-value">background 0.2s ease</span>;
+}
+
+<span class="token-selector">button:hover</span> {
+  <span class="token-prop">background</span>: <span class="token-value">#A23C2A</span>;     <span class="token-comment">/* darker */</span>
+}</code></pre>
+
+    <p>The <code>transition</code> property makes the hover change <em>glide</em> instead of snap. You'll see it covered in Chapter 17.</p>
+
+    <h3>Focus styles — please don't kill them</h3>
+    <p>Browsers show a focus ring when you tab to a focusable element. Don't remove it without replacing it — keyboard users rely on it.</p>
+<pre><code><span class="token-selector">input:focus</span> {
+  <span class="token-prop">outline</span>: <span class="token-value">none</span>;
+  <span class="token-prop">border-color</span>: <span class="token-value">var(--terracotta)</span>;
+  <span class="token-prop">box-shadow</span>: <span class="token-value">0 0 0 4px color-mix(in srgb, var(--terracotta) 15%, transparent)</span>;
+}</code></pre>
+
+    <h3><code>:nth-child</code> — striped rows, every other thing</h3>
+<pre><code><span class="token-selector">tr:nth-child(even)</span> { <span class="token-prop">background</span>: <span class="token-value">var(--paper)</span>; }
+<span class="token-selector">.card:nth-child(3n)</span>  { <span class="token-prop">color</span>: <span class="token-value">var(--sage)</span>; }   <span class="token-comment">/* every 3rd */</span></code></pre>
+
+    <h2>Pseudo-elements — double colon</h2>
+    <p>Style a part of an element that isn't a real element.</p>
+
+    <table>
+      <thead><tr><th>Selector</th><th>What it targets</th></tr></thead>
+      <tbody>
+        <tr><td><code>::before</code></td><td>An invisible element inserted before the content</td></tr>
+        <tr><td><code>::after</code></td><td>An invisible element inserted after the content</td></tr>
+        <tr><td><code>::first-letter</code></td><td>The first letter (drop caps!)</td></tr>
+        <tr><td><code>::first-line</code></td><td>The first line of text</td></tr>
+        <tr><td><code>::placeholder</code></td><td>The placeholder text in an input</td></tr>
+        <tr><td><code>::selection</code></td><td>Text the user has highlighted</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Drop caps</h3>
+<pre><code><span class="token-selector">p.lede::first-letter</span> {
+  <span class="token-prop">float</span>: <span class="token-value">left</span>;
+  <span class="token-prop">font-family</span>: <span class="token-value">var(--font-display)</span>;
+  <span class="token-prop">font-size</span>: <span class="token-value">3.2em</span>;
+  <span class="token-prop">line-height</span>: <span class="token-value">0.85</span>;
+  <span class="token-prop">padding</span>: <span class="token-value">0.05em 0.15em 0 0</span>;
+  <span class="token-prop">color</span>: <span class="token-value">var(--terracotta)</span>;
+}</code></pre>
+
+    <h3>Decorative <code>::before</code> / <code>::after</code></h3>
+<pre><code><span class="token-selector">.eyebrow::before</span> {
+  <span class="token-prop">content</span>: <span class="token-value">"— "</span>;
+  <span class="token-prop">color</span>: <span class="token-value">var(--terracotta)</span>;
+}</code></pre>
+
+    <p>The <code>content</code> property is required — even if it's empty (<code>content: ""</code>). The element doesn't exist without it.</p>
+
+    <div class="footer-rule">— end of chapter sixteen —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 17. TRANSITIONS ANIMATIONS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 17</p>
+    <h1 class="chapter">Transitions, animations, transforms</h1>
+    <p class="chapter-intro">Movement makes a site feel alive. Used sparingly, it's premium. Used too much, it's nauseating.</p>
+
+    <h2>transition — animate property changes</h2>
+<pre><code><span class="token-selector">button</span> {
+  <span class="token-prop">background</span>: <span class="token-value">var(--terracotta)</span>;
+  <span class="token-prop">transition</span>: <span class="token-value">background 0.2s ease</span>;
+}
+
+<span class="token-selector">button:hover</span> {
+  <span class="token-prop">background</span>: <span class="token-value">#A23C2A</span>;
+}</code></pre>
+
+    <p>Format: <code>property duration timing-function delay</code>.</p>
+
+    <h3>Animate multiple properties</h3>
+<pre><code><span class="token-prop">transition</span>: <span class="token-value">background 0.2s ease, transform 0.3s ease</span>;
+<span class="token-prop">transition</span>: <span class="token-value">all 0.2s ease</span>;   <span class="token-comment">/* every animatable property */</span></code></pre>
+
+    <h3>Timing functions</h3>
+    <p>How the speed curves over time.</p>
+    <table>
+      <thead><tr><th>Function</th><th>Feel</th></tr></thead>
+      <tbody>
+        <tr><td><code>linear</code></td><td>Robotic, even speed</td></tr>
+        <tr><td><code>ease</code></td><td>Default — gentle in and out</td></tr>
+        <tr><td><code>ease-in</code></td><td>Slow start, fast end</td></tr>
+        <tr><td><code>ease-out</code></td><td>Fast start, slow end</td></tr>
+        <tr><td><code>cubic-bezier(.2, .8, .2, 1)</code></td><td>Custom — the snappy magazine feel</td></tr>
+      </tbody>
+    </table>
+
+    <h2>transform — move, rotate, scale</h2>
+<pre><code><span class="token-prop">transform</span>: <span class="token-fn">translateY</span>(<span class="token-value">-4px</span>);          <span class="token-comment">/* nudge up */</span>
+<span class="token-prop">transform</span>: <span class="token-fn">translateX</span>(<span class="token-value">10px</span>);
+<span class="token-prop">transform</span>: <span class="token-fn">scale</span>(<span class="token-value">1.05</span>);                <span class="token-comment">/* gentle zoom */</span>
+<span class="token-prop">transform</span>: <span class="token-fn">rotate</span>(<span class="token-value">-3deg</span>);
+<span class="token-prop">transform</span>: <span class="token-fn">scale</span>(<span class="token-value">1.05</span>) <span class="token-fn">rotate</span>(<span class="token-value">-2deg</span>);   <span class="token-comment">/* combine */</span></code></pre>
+
+    <p>Transforms are fast — the browser uses the GPU. Always animate <code>transform</code> instead of <code>top</code>/<code>left</code> for movement.</p>
+
+    <h2>The card lift on hover</h2>
+<pre><code><span class="token-selector">.card</span> {
+  <span class="token-prop">transition</span>: <span class="token-value">transform 0.35s cubic-bezier(.2, .8, .2, 1),
+              box-shadow 0.35s ease</span>;
+}
+
+<span class="token-selector">.card:hover</span> {
+  <span class="token-prop">transform</span>: <span class="token-fn">translateY</span>(<span class="token-value">-4px</span>);
+  <span class="token-prop">box-shadow</span>: <span class="token-value">0 24px 48px -16px rgb(43 29 19 / 0.22)</span>;
+}</code></pre>
+
+    <h2>Image zoom inside a wrapper</h2>
+<pre><code><span class="token-selector">.card-image-wrap</span> { <span class="token-prop">overflow</span>: <span class="token-value">hidden</span>; }
+
+<span class="token-selector">.card-image-wrap img</span> {
+  <span class="token-prop">transition</span>: <span class="token-value">transform 0.5s ease</span>;
+}
+
+<span class="token-selector">.card:hover .card-image-wrap img</span> {
+  <span class="token-prop">transform</span>: <span class="token-fn">scale</span>(<span class="token-value">1.05</span>);
+}</code></pre>
+
+    <p>The image grows; the wrapper crops the overflow. Card feels alive without dancing around.</p>
+
+    <h2>@keyframes — full animations</h2>
+    <p>For things bigger than a hover state. Define a sequence, then apply it.</p>
+<pre><code><span class="token-selector">@keyframes fade-up</span> {
+  <span class="token-selector">from</span> {
+    <span class="token-prop">opacity</span>: <span class="token-value">0</span>;
+    <span class="token-prop">transform</span>: <span class="token-fn">translateY</span>(<span class="token-value">12px</span>);
+  }
+  <span class="token-selector">to</span> {
+    <span class="token-prop">opacity</span>: <span class="token-value">1</span>;
+    <span class="token-prop">transform</span>: <span class="token-fn">translateY</span>(<span class="token-value">0</span>);
+  }
+}
+
+<span class="token-selector">.card</span> {
+  <span class="token-prop">opacity</span>: <span class="token-value">0</span>;
+  <span class="token-prop">animation</span>: <span class="token-value">fade-up 0.6s ease forwards</span>;
+  <span class="token-prop">animation-delay</span>: <span class="token-fn">calc</span>(<span class="token-fn">var</span>(<span class="token-prop">--i</span>, <span class="token-value">0</span>) * <span class="token-value">80ms</span>);
+}</code></pre>
+
+    <p><code>forwards</code> means "keep the final state after the animation ends." Without it the element snaps back to its start.</p>
+
+    <h2>Respect reduced motion</h2>
+    <p>Some people get motion-sick from animation. Browsers expose their preference. Honor it:</p>
+<pre><code><span class="token-selector">@media (prefers-reduced-motion: reduce)</span> {
+  <span class="token-selector">*</span> {
+    <span class="token-prop">animation-duration</span>: <span class="token-value">0.001ms !important</span>;
+    <span class="token-prop">transition-duration</span>: <span class="token-value">0.001ms !important</span>;
+  }
+}</code></pre>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — use <code>cubic-bezier(.2, .8, .2, 1)</code></p>
+      <p>This particular curve has a snappy start and a soft landing. It's what most premium product sites use. Replace your <code>ease</code> with it and movements feel more expensive.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter seventeen —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 18. MODERN ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 18</p>
+    <h1 class="chapter">Modern CSS</h1>
+    <p class="chapter-intro">Features that landed in browsers in the last two years. Each one replaces a workaround that used to take ten lines of code.</p>
+
+    <h2>aspect-ratio — lock an element's shape</h2>
+<pre><code><span class="token-selector">img</span> {
+  <span class="token-prop">width</span>: <span class="token-value">100%</span>;
+  <span class="token-prop">aspect-ratio</span>: <span class="token-value">4 / 5</span>;     <span class="token-comment">/* portrait card */</span>
+  <span class="token-prop">object-fit</span>: <span class="token-value">cover</span>;     <span class="token-comment">/* crop to fill */</span>
+}</code></pre>
+
+    <p>Every card image now has the same shape regardless of source dimensions. No more uneven grids.</p>
+
+    <h2>color-mix() — blend colors on the fly</h2>
+<pre><code><span class="token-prop">background</span>: <span class="token-fn">color-mix</span>(<span class="token-fn">in srgb</span>, <span class="token-value">var(--terracotta) 12%</span>, <span class="token-value">transparent</span>);
+<span class="token-prop">background</span>: <span class="token-fn">color-mix</span>(<span class="token-fn">in srgb</span>, <span class="token-value">var(--terracotta)</span>, <span class="token-value">white 30%</span>);</code></pre>
+
+    <p>"12% terracotta on transparent" gives a soft tinted pill. Change the brand color and every tinted variant updates automatically. No more <code>--terracotta-100</code>, <code>--terracotta-200</code>, etc.</p>
+
+    <h2>:is() — group selectors</h2>
+<pre><code><span class="token-comment">/* Old — repetitive */</span>
+<span class="token-selector">article h1, article h2, article h3</span> { <span class="token-prop">margin-top</span>: <span class="token-value">1.5rem</span>; }
+
+<span class="token-comment">/* Modern — :is() */</span>
+<span class="token-selector">article :is(h1, h2, h3)</span> { <span class="token-prop">margin-top</span>: <span class="token-value">1.5rem</span>; }</code></pre>
+
+    <h2>:where() — same, but with zero specificity</h2>
+<pre><code><span class="token-selector">:where(article, section) p</span> { <span class="token-prop">line-height</span>: <span class="token-value">1.6</span>; }</code></pre>
+
+    <p>Useful for resets and base styles you want to be easy to override.</p>
+
+    <h2>:has() — parent selector</h2>
+    <p>Style an element based on its children. This was impossible in CSS until 2023.</p>
+<pre><code><span class="token-comment">/* Style the grid only when it contains an empty-state message */</span>
+<span class="token-selector">.recipe-grid:has(.empty)</span> {
+  <span class="token-prop">display</span>: <span class="token-value">block</span>;
+  <span class="token-prop">text-align</span>: <span class="token-value">center</span>;
+  <span class="token-prop">padding</span>: <span class="token-value">3rem 0</span>;
+}
+
+<span class="token-comment">/* Cards with a "new" badge get a special border */</span>
+<span class="token-selector">.card:has(.badge--new)</span> {
+  <span class="token-prop">outline</span>: <span class="token-value">2px solid var(--terracotta)</span>;
+}</code></pre>
+
+    <h2>text-wrap: balance</h2>
+<pre><code><span class="token-selector">h1, h2, h3</span> { <span class="token-prop">text-wrap</span>: <span class="token-value">balance</span>; }</code></pre>
+
+    <p>The browser balances line lengths across a heading. No more single-word last lines on hero text.</p>
+
+    <h2>CSS Nesting</h2>
+    <p>Write child rules inside parent rules — just like SASS, but native:</p>
+<pre><code><span class="token-selector">.card</span> {
+  <span class="token-prop">background</span>: <span class="token-value">white</span>;
+
+  <span class="token-selector">h3</span> {
+    <span class="token-prop">color</span>: <span class="token-value">var(--terracotta)</span>;
+  }
+
+  <span class="token-selector">&amp;:hover</span> {       <span class="token-comment">/* &amp; refers to the parent (.card) */</span>
+    <span class="token-prop">transform</span>: <span class="token-fn">translateY</span>(<span class="token-value">-4px</span>);
+  }
+}</code></pre>
+
+    <h2>Container queries — bonus feature</h2>
+    <p>Like media queries, but they respond to the size of a <em>parent container</em>, not the viewport. Powerful for component-driven design.</p>
+<pre><code><span class="token-selector">.card-wrap</span> { <span class="token-prop">container-type</span>: <span class="token-value">inline-size</span>; }
+
+<span class="token-selector">@container (min-width: 400px)</span> {
+  <span class="token-selector">.card</span> { <span class="token-prop">font-size</span>: <span class="token-value">1.2rem</span>; }
+}</code></pre>
+
+    <div class="footer-rule">— end of chapter eighteen —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 19. TIPS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 19</p>
+    <h1 class="chapter">Tips and little hacks</h1>
+    <p class="chapter-intro">Steal these. They're the difference between code that works and code that feels professional.</p>
+
+    <h3>Open DevTools and live</h3>
+    <p>Right-click → Inspect. Edit any property live. See every rule that applies. Add classes to elements without touching the file. Then copy the working version back. The browser is the best CSS playground.</p>
+
+    <h3>Use the universal <code>box-sizing</code> rule</h3>
+<pre><code><span class="token-selector">*</span> { <span class="token-prop">box-sizing</span>: <span class="token-value">border-box</span>; }</code></pre>
+    <p>First line of every stylesheet you'll ever write. Makes width include padding + border. Removes a whole class of bugs.</p>
+
+    <h3>Reset the body</h3>
+<pre><code><span class="token-selector">body</span> {
+  <span class="token-prop">margin</span>: <span class="token-value">0</span>;
+  <span class="token-prop">font-family</span>: <span class="token-value">var(--font-body)</span>;
+  <span class="token-prop">color</span>: <span class="token-value">var(--espresso)</span>;
+  <span class="token-prop">line-height</span>: <span class="token-value">1.6</span>;
+}</code></pre>
+    <p>Browsers add 8px of margin to <code>body</code> by default. Always zero it.</p>
+
+    <h3>Center horizontally with <code>margin: 0 auto</code></h3>
+<pre><code><span class="token-selector">.container</span> {
+  <span class="token-prop">max-width</span>: <span class="token-value">720px</span>;
+  <span class="token-prop">margin</span>: <span class="token-value">0 auto</span>;     <span class="token-comment">/* horizontal: auto = center */</span>
+}</code></pre>
+
+    <h3>Fully rounded pills</h3>
+<pre><code><span class="token-prop">border-radius</span>: <span class="token-value">999px</span>;</code></pre>
+    <p>For buttons, tags, search bars. Any big number — the browser caps at 50% — so <code>999px</code> works for any height.</p>
+
+    <h3>Limit reading width</h3>
+<pre><code><span class="token-selector">article</span> { <span class="token-prop">max-width</span>: <span class="token-value">65ch</span>; }</code></pre>
+    <p><code>ch</code> = width of one character. 60-75ch is the readability sweet spot for prose. Magazine sites swear by it.</p>
+
+    <h3>cursor: pointer on interactive things</h3>
+<pre><code><span class="token-selector">button, [role="button"]</span> { <span class="token-prop">cursor</span>: <span class="token-value">pointer</span>; }</code></pre>
+    <p>Tells the user "this is clickable." Free UX win.</p>
+
+    <h3>Inherit instead of repeating</h3>
+<pre><code><span class="token-selector">button, input</span> {
+  <span class="token-prop">font-family</span>: <span class="token-value">inherit</span>;
+  <span class="token-prop">font-size</span>: <span class="token-value">inherit</span>;
+}</code></pre>
+    <p>By default, form elements ignore the page font. Force them to inherit.</p>
+
+    <h3>Truncate long text with ellipsis</h3>
+<pre><code><span class="token-selector">.truncate</span> {
+  <span class="token-prop">white-space</span>: <span class="token-value">nowrap</span>;
+  <span class="token-prop">overflow</span>: <span class="token-value">hidden</span>;
+  <span class="token-prop">text-overflow</span>: <span class="token-value">ellipsis</span>;
+}</code></pre>
+
+    <h3>Two-line truncation</h3>
+<pre><code><span class="token-selector">.clamp-2</span> {
+  <span class="token-prop">display</span>: <span class="token-value">-webkit-box</span>;
+  <span class="token-prop">-webkit-line-clamp</span>: <span class="token-value">2</span>;
+  <span class="token-prop">-webkit-box-orient</span>: <span class="token-value">vertical</span>;
+  <span class="token-prop">overflow</span>: <span class="token-value">hidden</span>;
+}</code></pre>
+
+    <h3>Style placeholder text</h3>
+<pre><code><span class="token-selector">input::placeholder</span> {
+  <span class="token-prop">color</span>: <span class="token-fn">rgb</span>(<span class="token-value">43 29 19 / 0.4</span>);
+  <span class="token-prop">font-style</span>: <span class="token-value">italic</span>;
+}</code></pre>
+
+    <h3>Hide visually, keep for screen readers</h3>
+<pre><code><span class="token-selector">.sr-only</span> {
+  <span class="token-prop">position</span>: <span class="token-value">absolute</span>;
+  <span class="token-prop">width</span>: <span class="token-value">1px</span>; <span class="token-prop">height</span>: <span class="token-value">1px</span>;
+  <span class="token-prop">padding</span>: <span class="token-value">0</span>; <span class="token-prop">margin</span>: <span class="token-value">-1px</span>;
+  <span class="token-prop">overflow</span>: <span class="token-value">hidden</span>;
+  <span class="token-prop">clip</span>: <span class="token-fn">rect</span>(<span class="token-value">0, 0, 0, 0</span>);
+  <span class="token-prop">white-space</span>: <span class="token-value">nowrap</span>;
+  <span class="token-prop">border</span>: <span class="token-value">0</span>;
+}</code></pre>
+    <p>Use for icon-button labels: <code>&lt;span class="sr-only"&gt;Search&lt;/span&gt;</code> next to a magnifying-glass SVG.</p>
+
+    <h3>The "box-shadow stack" for realistic depth</h3>
+<pre><code><span class="token-prop">box-shadow</span>:
+  <span class="token-value">0 1px 2px rgb(0 0 0 / 0.04)</span>,
+  <span class="token-value">0 4px 8px rgb(0 0 0 / 0.06)</span>,
+  <span class="token-value">0 16px 32px -8px rgb(0 0 0 / 0.12)</span>;</code></pre>
+    <p>Three layered shadows feel realistic. One big shadow feels cheap.</p>
+
+    <h3>Backdrop blur — glassmorphism</h3>
+<pre><code><span class="token-selector">.glass</span> {
+  <span class="token-prop">background</span>: <span class="token-fn">rgba</span>(<span class="token-value">255, 255, 255, 0.6</span>);
+  <span class="token-prop">backdrop-filter</span>: <span class="token-fn">blur</span>(<span class="token-value">12px</span>);
+}</code></pre>
+
+    <h3>Smooth scroll on anchor links</h3>
+<pre><code><span class="token-selector">html</span> { <span class="token-prop">scroll-behavior</span>: <span class="token-value">smooth</span>; }</code></pre>
+
+    <h3>Use logical properties for international layouts</h3>
+<pre><code><span class="token-prop">margin-inline</span>: <span class="token-value">auto</span>;       <span class="token-comment">/* left + right */</span>
+<span class="token-prop">padding-block</span>: <span class="token-value">1rem</span>;       <span class="token-comment">/* top + bottom */</span>
+<span class="token-prop">border-inline-start</span>: ...;   <span class="token-comment">/* left in English, right in Arabic */</span></code></pre>
+
+    <h3>Group fonts and font-weights in one Google Fonts URL</h3>
+<pre><code>https://fonts.googleapis.com/css2?
+  family=DM+Serif+Display
+  &amp;family=Inter:wght@400;500;700
+  &amp;family=Cormorant+Garamond:ital@1
+  &amp;display=swap</code></pre>
+    <p>One <code>&lt;link&gt;</code>, multiple fonts. Faster to load.</p>
+
+    <h3>Use <code>aspect-ratio</code> + <code>object-fit</code> together</h3>
+    <p>Always pair them on images. Otherwise a wide source image will stretch the card.</p>
+<pre><code><span class="token-selector">img</span> {
+  <span class="token-prop">width</span>: <span class="token-value">100%</span>;
+  <span class="token-prop">aspect-ratio</span>: <span class="token-value">4 / 5</span>;
+  <span class="token-prop">object-fit</span>: <span class="token-value">cover</span>;
+}</code></pre>
+
+    <h3>Hover only on devices with a real pointer</h3>
+<pre><code><span class="token-selector">@media (hover: hover)</span> {
+  <span class="token-selector">.card:hover</span> { <span class="token-prop">transform</span>: <span class="token-fn">translateY</span>(<span class="token-value">-4px</span>); }
+}</code></pre>
+    <p>Phones don't really hover. This prevents the hover state from sticking on touch.</p>
+
+    <div class="footer-rule">— end of chapter nineteen —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 20. MISTAKES ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 20</p>
+    <h1 class="chapter">Common mistakes</h1>
+    <p class="chapter-intro">Every beginner runs into these. Knowing them by name makes them quick to fix.</p>
+
+    <h3>1. Missing semicolons</h3>
+    <p>Every declaration ends with <code>;</code>. Miss one and the next line silently fails.</p>
+
+    <h3>2. Forgetting <code>box-sizing: border-box</code></h3>
+    <p>Without it, padding adds to width. Cards overflow. Layouts break. Add the universal rule.</p>
+
+    <h3>3. Centering with <code>text-align: center</code> on a block</h3>
+    <p><code>text-align</code> centers text, not the element itself. To center a block: <code>margin: 0 auto</code> (with a width) or wrap it in a flex parent.</p>
+
+    <h3>4. Using <code>width: 100%</code> when you mean <code>max-width</code></h3>
+    <p><code>width: 100%</code> fights the parent's padding. <code>max-width</code> respects it.</p>
+
+    <h3>5. Pixel-perfect everything</h3>
+    <p>Designing only for the size of your monitor. Open DevTools, switch to mobile view, develop responsively from the start.</p>
+
+    <h3>6. Too many breakpoints</h3>
+    <p>You don't need different styles for every device. One or two breakpoints handles most designs.</p>
+
+    <h3>7. <code>!important</code> as a fix</h3>
+    <p>It papers over a specificity problem instead of solving it. Almost always wrong.</p>
+
+    <h3>8. Removing focus outlines without a replacement</h3>
+    <p><code>outline: none</code> with nothing in its place breaks keyboard navigation. Always replace, never just remove.</p>
+
+    <h3>9. Forgetting <code>cursor: pointer</code> on custom buttons</h3>
+    <p>Real <code>&lt;button&gt;</code> elements get it for free. Custom ones made from <code>div</code> don't.</p>
+
+    <h3>10. Overusing absolute positioning</h3>
+    <p>Reaching for <code>position: absolute</code> to lay things out instead of Flexbox / Grid is a beginner trap. Use absolute only for things truly out of flow — badges, overlays, popovers.</p>
+
+    <h3>11. Fighting the cascade with very specific selectors</h3>
+    <p>If you find yourself writing <code>article .card .body p span.note</code>, take a step back. Add a class to the span instead.</p>
+
+    <h3>12. Forgetting <code>:hover</code> needs a transition</h3>
+    <p>Without <code>transition</code>, hover effects snap on and off harshly. Add a transition every time.</p>
+
+    <h3>13. Animating <code>top</code>/<code>left</code> instead of <code>transform</code></h3>
+    <p><code>transform</code> animations run on the GPU and are buttery smooth. <code>top</code>/<code>left</code> ones run on the CPU and stutter. Always use transform for movement.</p>
+
+    <h3>14. Not testing in DevTools' device mode</h3>
+    <p>Phones are most of the internet's traffic. If you've only seen your site at 1440px wide, half your users see broken pages.</p>
+
+    <div class="footer-rule">— end of chapter twenty —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 21. CHEAT SHEET ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 21</p>
+    <h1 class="chapter">The complete CSS cheat sheet</h1>
+    <p class="chapter-intro">Every property and selector you've met in this course, in one place. Tape it to the wall.</p>
+
+    <h2>Selectors</h2>
+    <div class="tag-grid">
+      <div><code>*</code> universal</div>
+      <div><code>p</code> by tag name</div>
+      <div><code>.class</code> by class</div>
+      <div><code>#id</code> by id</div>
+      <div><code>a, b</code> multiple</div>
+      <div><code>a b</code> descendant</div>
+      <div><code>a > b</code> direct child</div>
+      <div><code>a + b</code> next sibling</div>
+      <div><code>[attr]</code> has attribute</div>
+      <div><code>[attr="x"]</code> exact attr</div>
+      <div><code>:hover</code> hovered</div>
+      <div><code>:focus</code> focused</div>
+      <div><code>:checked</code> checked</div>
+      <div><code>:disabled</code> disabled</div>
+      <div><code>:first-child</code> first kid</div>
+      <div><code>:nth-child(n)</code> nth kid</div>
+      <div><code>:not(.x)</code> not x</div>
+      <div><code>:is(a, b)</code> any of</div>
+      <div><code>:has(.x)</code> has child x</div>
+      <div><code>::before</code> pseudo before</div>
+      <div><code>::after</code> pseudo after</div>
+      <div><code>::first-letter</code> drop cap</div>
+      <div><code>::placeholder</code> input placeholder</div>
+      <div><code>::selection</code> highlighted text</div>
+    </div>
+
+    <h2>Color &amp; background</h2>
+    <div class="tag-grid">
+      <div><code>color</code></div>
+      <div><code>background</code></div>
+      <div><code>background-color</code></div>
+      <div><code>background-image</code></div>
+      <div><code>background-size</code></div>
+      <div><code>background-position</code></div>
+      <div><code>background-repeat</code></div>
+      <div><code>opacity</code></div>
+      <div><code>color-mix()</code></div>
+      <div><code>linear-gradient()</code></div>
+      <div><code>radial-gradient()</code></div>
+      <div><code>conic-gradient()</code></div>
+    </div>
+
+    <h2>Typography</h2>
+    <div class="tag-grid">
+      <div><code>font-family</code></div>
+      <div><code>font-size</code></div>
+      <div><code>font-weight</code></div>
+      <div><code>font-style</code></div>
+      <div><code>line-height</code></div>
+      <div><code>letter-spacing</code></div>
+      <div><code>word-spacing</code></div>
+      <div><code>text-align</code></div>
+      <div><code>text-decoration</code></div>
+      <div><code>text-transform</code></div>
+      <div><code>text-wrap</code></div>
+      <div><code>text-shadow</code></div>
+      <div><code>white-space</code></div>
+      <div><code>word-break</code></div>
+    </div>
+
+    <h2>Box model</h2>
+    <div class="tag-grid">
+      <div><code>width</code></div>
+      <div><code>height</code></div>
+      <div><code>max-width</code></div>
+      <div><code>min-width</code></div>
+      <div><code>max-height</code></div>
+      <div><code>min-height</code></div>
+      <div><code>margin</code></div>
+      <div><code>padding</code></div>
+      <div><code>border</code></div>
+      <div><code>border-radius</code></div>
+      <div><code>box-shadow</code></div>
+      <div><code>box-sizing</code></div>
+      <div><code>aspect-ratio</code></div>
+      <div><code>object-fit</code></div>
+    </div>
+
+    <h2>Display &amp; layout</h2>
+    <div class="tag-grid">
+      <div><code>display</code></div>
+      <div><code>position</code></div>
+      <div><code>top / right / bottom / left</code></div>
+      <div><code>z-index</code></div>
+      <div><code>overflow</code></div>
+      <div><code>visibility</code></div>
+      <div><code>float</code></div>
+      <div><code>clear</code></div>
+    </div>
+
+    <h2>Flexbox</h2>
+    <div class="tag-grid">
+      <div><code>display: flex</code></div>
+      <div><code>flex-direction</code></div>
+      <div><code>justify-content</code></div>
+      <div><code>align-items</code></div>
+      <div><code>align-content</code></div>
+      <div><code>align-self</code></div>
+      <div><code>flex-wrap</code></div>
+      <div><code>gap</code></div>
+      <div><code>flex</code></div>
+      <div><code>flex-grow</code></div>
+      <div><code>flex-shrink</code></div>
+      <div><code>order</code></div>
+    </div>
+
+    <h2>Grid</h2>
+    <div class="tag-grid">
+      <div><code>display: grid</code></div>
+      <div><code>grid-template-columns</code></div>
+      <div><code>grid-template-rows</code></div>
+      <div><code>grid-template-areas</code></div>
+      <div><code>grid-area</code></div>
+      <div><code>grid-column</code></div>
+      <div><code>grid-row</code></div>
+      <div><code>gap</code></div>
+      <div><code>justify-items</code></div>
+      <div><code>align-items</code></div>
+      <div><code>place-items</code></div>
+      <div><code>repeat()</code></div>
+      <div><code>minmax()</code></div>
+      <div><code>auto-fit / auto-fill</code></div>
+    </div>
+
+    <h2>Animation &amp; transitions</h2>
+    <div class="tag-grid">
+      <div><code>transition</code></div>
+      <div><code>transition-property</code></div>
+      <div><code>transition-duration</code></div>
+      <div><code>transition-timing-function</code></div>
+      <div><code>transform</code></div>
+      <div><code>translate()</code></div>
+      <div><code>scale()</code></div>
+      <div><code>rotate()</code></div>
+      <div><code>@keyframes</code></div>
+      <div><code>animation</code></div>
+      <div><code>animation-delay</code></div>
+      <div><code>animation-fill-mode</code></div>
+    </div>
+
+    <h2>Modern</h2>
+    <div class="tag-grid">
+      <div><code>--custom-property</code></div>
+      <div><code>var()</code></div>
+      <div><code>clamp()</code></div>
+      <div><code>min() / max()</code></div>
+      <div><code>color-mix()</code></div>
+      <div><code>:is() / :where() / :has()</code></div>
+      <div><code>aspect-ratio</code></div>
+      <div><code>backdrop-filter</code></div>
+      <div><code>scroll-behavior</code></div>
+      <div><code>container-type</code></div>
+    </div>
+
+    <h2>Media queries</h2>
+    <div class="tag-grid">
+      <div><code>@media (min-width: ...)</code></div>
+      <div><code>@media (max-width: ...)</code></div>
+      <div><code>@media (hover: hover)</code></div>
+      <div><code>@media (prefers-reduced-motion)</code></div>
+      <div><code>@media (prefers-color-scheme: dark)</code></div>
+      <div><code>@container (min-width: ...)</code></div>
+    </div>
+
+    <div class="footer-rule">— end of chapter twenty-one —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 22. WHERE NEXT ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 22</p>
+    <h1 class="chapter">Where to go next</h1>
+    <p class="chapter-intro">You can now style any webpage you can imagine. The journey from here.</p>
+
+    <h2>The natural next steps</h2>
+    <ol>
+      <li><strong>JavaScript</strong> — interactivity, dynamic content, form validation. <em>(Lessons 05–06.)</em></li>
+      <li><strong>TypeScript</strong> — JavaScript with safety rails. <em>(Lesson 07.)</em></li>
+      <li><strong>Tailwind CSS</strong> — utility-first styling. Faster once you know vanilla CSS. <em>(Lesson 08.)</em></li>
+      <li><strong>A JavaScript framework</strong> — React or Svelte. Components, state, real apps.</li>
+      <li><strong>CSS architecture</strong> — BEM, CUBE CSS, design tokens, design systems.</li>
+    </ol>
+
+    <h2>Resources worth bookmarking</h2>
+    <ul>
+      <li><strong>MDN Web Docs</strong> (developer.mozilla.org/CSS) — the official reference. Every property, every value.</li>
+      <li><strong>CSS-Tricks</strong> — great deep-dive articles on every CSS topic.</li>
+      <li><strong>web.dev</strong> — Google's modern CSS articles, always up to date.</li>
+      <li><strong>Can I Use</strong> (caniuse.com) — which browsers support a feature?</li>
+      <li><strong>CodePen</strong> — a playground to test CSS quickly.</li>
+      <li><strong>Coolors</strong> (coolors.co) — generate palettes.</li>
+      <li><strong>Google Fonts</strong> — free, fast, well-maintained typefaces.</li>
+    </ul>
+
+    <h2>Build, build, build</h2>
+    <p>The fastest way to internalize CSS is to copy designs you admire. Pick a real website you like — Bon Appétit, Stripe, Apple — open DevTools and inspect how they do it. Try to recreate one page from scratch. You'll discover gaps in your knowledge instantly, and you'll fill them by reading the docs.</p>
+
+    <blockquote>You don't learn CSS by memorizing it. You learn it by trying to build something specific, getting stuck, and looking up the one property you don't know.</blockquote>
+
+    <h2>Five small projects to try</h2>
+    <ol>
+      <li>A personal landing page — hero, photo, three sections, footer</li>
+      <li>A pricing page with three plan cards</li>
+      <li>A blog post with proper typography, max-width, drop cap</li>
+      <li>A photo gallery using CSS Grid with one featured image</li>
+      <li>A login form with focus states, hover effects, and validation styles</li>
+    </ol>
+
+    <p>Each is small enough to finish in an afternoon. Together they cover everything in this book.</p>
+
+    <div class="footer-rule">
+      — end —<br>
+      <span style="font-family: var(--font-display); font-size: 14pt; color: var(--terracotta); letter-spacing: 0.4em;">·  ·  ·</span><br>
+      Tasty Bites · Frontend Cohort
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

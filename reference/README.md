@@ -6,7 +6,13 @@ Printable companion guides for the Tasty Bites course. Open the PDF and print it
 
 - **[HTML-Reference.pdf](HTML-Reference.pdf)** — beginner's HTML reference covering everything from Lessons 01 + 02, plus practical tips and a complete tag cheat sheet. ~28 pages.
 
-  Source: [html-reference.html](html-reference.html) — fully styled with the Tasty Bites editorial design language.
+  Source: [html-reference.html](html-reference.html)
+
+- **[CSS-Reference.pdf](CSS-Reference.pdf)** — beginner's CSS reference covering everything from Lessons 03 + 04, plus modern CSS (custom properties, `clamp()`, `color-mix()`, `:has()`, animations, flexbox, grid) and a full property cheat sheet. ~46 pages.
+
+  Source: [css-reference.html](css-reference.html)
+
+Both are fully styled with the Tasty Bites editorial design language.
 
 ## How to regenerate the PDF
 
