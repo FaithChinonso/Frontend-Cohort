@@ -1,20 +1,24 @@
 /* --- Tasty Bites design tokens --- */
 
+/* CSS variables: define a value once here, reuse it anywhere with var(--name).
+   Change a color in one place and it updates everywhere on the page. */
 :root {
-  /* Palette */
-  --cream:      #FAF6EF;
-  --paper:      #F3ECDF;
-  --espresso:   #2B1D13;
-  --terracotta: #C2563A;
-  --sage:       #7A8A6B;
-  --rule:       #E4D9C5;
+  /* Palette (our color scheme) */
+  --cream:      #FAF6EF;  /* page background */
+  --paper:      #F3ECDF;  /* card / surface color */
+  --espresso:   #2B1D13;  /* main text color (soft dark brown, not pure black) */
+  --terracotta: #C2563A;  /* accent — links, titles, highlights */
+  --sage:       #7A8A6B;  /* secondary accent */
+  --rule:       #E4D9C5;  /* thin divider lines */
 
-  /* Type */
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
-  --font-accent:  'Cormorant Garamond', Georgia, serif;
+  /* Fonts */
+  --font-display: 'DM Serif Display', Georgia, serif;     /* big titles */
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;  /* normal text */
+  --font-accent:  'Cormorant Garamond', Georgia, serif;   /* italic byline */
 }
 
+/* box-sizing: border-box makes width include padding + border.
+   The * means "every element". Add this once at the top of every stylesheet. */
 * { box-sizing: border-box; }
 
 body {
@@ -22,8 +26,8 @@ body {
   background: var(--cream);
   color: var(--espresso);
   font-family: var(--font-body);
-  font-size: clamp(1rem, 0.4vw + 0.9rem, 1.1rem);
-  line-height: 1.65;
+  font-size: 1.05rem;
+  line-height: 1.65;        /* space between lines of text */
 }
 
 /* --- Header --- */
@@ -37,61 +41,59 @@ header {
 
 header h1 {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);
+  font-size: 2.25rem;
   margin: 0 0 0.5rem;
   letter-spacing: -0.01em;
 }
 
 nav a {
   color: var(--cream);
-  text-decoration: none;
+  text-decoration: none;    /* remove the underline links have by default */
   margin: 0 0.75rem;
   font-weight: 500;
   letter-spacing: 0.02em;
 }
 
+/* :hover styles an element only while the mouse is over it */
 nav a:hover { text-decoration: underline; }
 
 /* --- Main + article --- */
 
 main {
-  max-width: 760px;
-  margin: 2.5rem auto;
+  max-width: 760px;         /* stop the content getting too wide on big screens */
+  margin: 2.5rem auto;      /* "auto" left/right centers the block horizontally */
   padding: 0 1rem;
 }
 
 article {
   background: var(--paper);
-  padding: clamp(1.5rem, 4vw, 3rem);
-  border-radius: 14px;
-  box-shadow:
-    0 1px 2px rgb(43 29 19 / 0.04),
-    0 12px 24px -12px rgb(43 29 19 / 0.12);
+  padding: 2.25rem;
+  border-radius: 14px;      /* rounded corners */
+  box-shadow: 0 8px 20px rgba(43, 29, 19, 0.12);  /* soft shadow under the card */
 }
 
 .eyebrow {
   color: var(--terracotta);
   font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+  text-transform: uppercase;     /* ALL CAPS */
+  letter-spacing: 0.14em;        /* extra space between letters */
   font-weight: 600;
   margin: 0 0 0.5rem;
 }
 
 article h1 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
+  font-size: 2.75rem;
   color: var(--terracotta);
   line-height: 1.05;
   margin: 0.25rem 0 0.5rem;
-  text-wrap: balance;
 }
 
 .meta {
   font-family: var(--font-accent);
   font-style: italic;
   font-size: 1.1rem;
-  color: rgb(43 29 19 / 0.65);
+  color: rgba(43, 29, 19, 0.65);   /* faded brown text */
   margin: 0 0 1.5rem;
 }
 
@@ -101,20 +103,11 @@ article h1 {
   margin: 0 0 1.5rem;
 }
 
-.description::first-letter {
-  float: left;
-  font-family: var(--font-display);
-  font-size: 3.2em;
-  line-height: 0.9;
-  padding: 0.05em 0.15em 0 0;
-  color: var(--terracotta);
-}
-
 article h2 {
   font-family: var(--font-display);
   color: var(--espresso);
-  font-size: clamp(1.4rem, 1.5vw + 1rem, 1.85rem);
-  border-bottom: 1px solid var(--rule);
+  font-size: 1.6rem;
+  border-bottom: 1px solid var(--rule);   /* thin line under the heading */
   padding-bottom: 0.4rem;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
@@ -124,8 +117,8 @@ article h2 {
 
 .hero img {
   width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
+  aspect-ratio: 3 / 2;      /* lock the shape to 3-wide by 2-tall... */
+  object-fit: cover;        /* ...and crop the image to fill it (no stretching) */
   border-radius: 10px;
   display: block;
   margin: 1rem 0;
@@ -138,14 +131,11 @@ ul, ol {
   line-height: 1.85;
 }
 
-ul li::marker { color: var(--terracotta); }
-ol li::marker { color: var(--terracotta); font-weight: 700; }
-
 /* --- Footer --- */
 
 footer {
   text-align: center;
-  color: rgb(43 29 19 / 0.55);
+  color: rgba(43, 29, 19, 0.55);
   font-size: 0.875rem;
   margin: 2rem 0;
 }

@@ -169,6 +169,19 @@ A **form** is how users send data to a website — searching, signing up, loggin
 <input type="email" id="email" name="email" placeholder="you@example.com" required />
 ```
 
+### Grouping each field
+
+In the solution you'll see each label + input pair wrapped in a plain `<div>`:
+
+```html
+<div>
+  <label for="name">Your name:</label>
+  <input type="text" id="name" name="name" required />
+</div>
+```
+
+The `<div>` groups the two together as one "row." It has no meaning of its own — it's just a container that makes the form easier to lay out later with CSS.
+
 ---
 
 ## 4. Multi-page sites
@@ -208,7 +221,7 @@ Open `starter/`. You'll find two files: `index.html` and `recipe.html`. Each has
   - A welcome message
   - A `<ul>` of recipe names, each one a link (`<a>`) pointing to `recipe.html`
   - A subscribe form with: an email input (required), a name input, a category dropdown (Breakfast/Lunch/Dinner), and a submit button
-- Add a `<footer>` with copyright text
+- Add a `<footer>` with copyright text. Tip: write the © symbol with `&copy;` — that's an HTML *entity*, a special code for a character that's hard to type. (`&amp;` gives `&`, `&lt;` gives `<`, and so on.)
 
 Compare with `solution/` when you're done.
 

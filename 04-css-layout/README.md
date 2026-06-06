@@ -130,19 +130,33 @@ Grid is for 2D layouts — when you want a real grid of items, like cards in a g
 
 `1fr` means "1 fraction of available space." So `1fr 1fr 1fr` = three equal columns. You could also write `2fr 1fr` for one column twice as wide as the other.
 
-### The killer feature: auto-fit
+The items fill the columns automatically — left to right, then they wrap to the next row. You don't position each one by hand.
 
-You usually don't want to hardcode "3 columns." You want "as many columns as fit, at least 250px wide each."
+### Making one item bigger
+
+You can tell a single item to span more than one column:
 
 ```css
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+.featured {
+  grid-column: span 2;   /* this item takes up 2 columns instead of 1 */
 }
 ```
 
-This single line gives you a responsive grid for free. On a wide screen you get 4 columns; on a narrow screen the items wrap to 1 column. **Memorize this snippet.**
+### Going to one column on mobile
+
+Three columns are too cramped on a phone. We fix that with a **media query** (next section) that switches the grid to a single column:
+
+```css
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;   /* one column — everything stacks */
+  }
+}
+```
+
+That's the whole plan for our homepage: three columns on desktop, one column on phones.
+
+> **Going further (optional):** there's a one-line trick — `repeat(auto-fit, minmax(250px, 1fr))` — that makes "as many columns as fit" without a media query. It's powerful but the syntax is dense, so we're sticking with explicit columns for now.
 
 ---
 
@@ -277,7 +291,7 @@ A small but luxurious touch. Wrap the image in a div, hide the overflow, and sca
 }
 
 .card-image-wrap img {
-  transition: transform 0.45s ease;
+  transition: transform 0.4s ease;
 }
 
 .recipe-card:hover .card-image-wrap img {
@@ -305,75 +319,26 @@ Real magazines don't make every card the same size. The featured story gets more
 <article class="recipe-card">...</article>
 ```
 
-The featured card stays double-wide on desktop and **automatically falls back** to a single column on mobile because `minmax()` decides there's no room for two columns. No media query needed — the grid handles it.
-
----
-
-## 9. Two more selectors you'll love — `:is()` and `color-mix()`
-
-### `:is()` — avoid repeating yourself
-
-When you want the same rule to apply to multiple selectors:
+On desktop the featured card stays double-wide. On mobile, our grid switches to a single column (see the media query in section 4), so we also reset the featured card back to one column there:
 
 ```css
-/* Old way — repetitive */
-h1, h2, h3 {
-  font-family: 'DM Serif Display', serif;
-}
-
-article h1, article h2, article h3 {
-  margin-top: 1.5rem;
-}
-
-/* With :is() — cleaner */
-:is(article, section) :is(h1, h2, h3) {
-  margin-top: 1.5rem;
+@media (max-width: 640px) {
+  .recipe-card--featured {
+    grid-column: auto;   /* back to a normal single-column card on phones */
+  }
 }
 ```
 
-`:is(a, b, c)` matches any of `a`, `b`, or `c`. It's just shorthand, but on a big stylesheet it adds up.
+### A soft tinted pill
 
-### `color-mix()` — tint a color without inventing a new variable
-
-Need a "20% terracotta on cream" background for a soft category pill? Don't add another palette variable — mix them:
+The category label sits on a faint terracotta background. We get that "faint" look with `rgba()` — the same red/green/blue as terracotta but at low opacity:
 
 ```css
 .category {
-  background: color-mix(in srgb, var(--terracotta) 12%, transparent);
+  background: rgba(194, 86, 58, 0.12);   /* terracotta at 12% — a soft wash */
   color: var(--terracotta);
 }
 ```
-
-This takes 12% of your terracotta and mixes it with transparent (giving a subtle wash). Change `--terracotta` once and every tinted pill updates automatically. **Hugely useful for hover states, disabled buttons, and soft accents.**
-
----
-
-## 10. Staggered animations — cards fade in one after another
-
-A signature touch on premium sites — cards don't all pop in at once, they cascade:
-
-```css
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.recipe-card {
-  opacity: 0;
-  animation: fade-up 0.6s ease forwards;
-  animation-delay: calc(var(--i, 0) * 80ms);
-}
-```
-
-Then set `--i` per card in the HTML:
-
-```html
-<article class="recipe-card" style="--i: 0">...</article>
-<article class="recipe-card" style="--i: 1">...</article>
-<article class="recipe-card" style="--i: 2">...</article>
-```
-
-Card 0 fades in immediately, card 1 after 80ms, card 2 after 160ms. Small detail, big "wow."
 
 ---
 
@@ -389,17 +354,16 @@ Open `starter/`. You'll find:
 
 1. Make the header a flex container — logo left, nav right, vertically centered.
 2. Style `.intro` — centered text, a small-caps eyebrow line above the heading.
-3. Style `.recipe-grid` as a grid using `repeat(auto-fill, minmax(min(100%, 18rem), 1fr))` and a `clamp()` gap.
-4. Make `.recipe-card--featured` span 2 columns (it'll automatically collapse on mobile).
+3. Style `.recipe-grid` as a grid with three equal columns: `grid-template-columns: 1fr 1fr 1fr` and `gap: 1.5rem`.
+4. Make `.recipe-card--featured` span 2 columns with `grid-column: span 2`.
 5. Style each `.recipe-card` — paper background, rounded corners, espresso-tinted soft shadow, a `transition` for lift+shadow, and hover lift (`translateY(-4px)`).
-6. Style `.card-image-wrap` — `overflow: hidden`, rounded top corners. Inside, the `img` gets `aspect-ratio: 4/5`, `object-fit: cover`, and a transition.
+6. Style `.card-image-wrap` — `overflow: hidden`. Inside, the `img` gets `aspect-ratio: 4/5`, `object-fit: cover`, and a transition.
 7. On `.recipe-card:hover .card-image-wrap img`, apply `transform: scale(1.05)` for the zoom effect.
-8. Style `.category` as a small pill using `color-mix()` for the soft terracotta background.
+8. Style `.category` as a small pill with a soft terracotta background: `background: rgba(194, 86, 58, 0.12)`.
 9. Style `.meta` (the byline) — Cormorant Garamond italic, smaller, muted espresso.
-10. Add the **staggered fade-in** keyframe + use `--i` on each card. The HTML already passes `style="--i: 0"`, `style="--i: 1"`, etc.
-11. Add a media query at 640px that stacks the header vertically.
+10. Add a media query at 640px that: stacks the header vertically, switches the grid to one column (`grid-template-columns: 1fr`), and resets the featured card (`grid-column: auto`).
 
-Resize from wide to narrow — the grid should reflow, the featured card should drop to single-width, and the header should stack.
+Resize from wide to narrow — the grid should drop to a single column, the featured card should become full-width, and the header should stack.
 
 Compare with `solution/`.
 
@@ -418,14 +382,14 @@ Compare with `solution/`.
   flex-wrap: wrap;
 }
 
-/* Grid — modern responsive */
+/* Grid — three equal columns */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
-  gap: clamp(1rem, 2vw, 2rem);
+  grid-template-columns: 1fr 1fr 1fr;   /* 1fr = 1 equal share */
+  gap: 1.5rem;
 }
 
-/* Featured card spans 2 cols (collapses on mobile via minmax) */
+/* Make one item span 2 columns */
 .card--featured { grid-column: span 2; }
 
 /* Image polish */
@@ -434,24 +398,14 @@ Compare with `solution/`.
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  transition: transform 0.45s ease;
+  transition: transform 0.4s ease;
 }
 .card:hover .card-image-wrap img { transform: scale(1.05); }
 
-/* Tinted pill via color-mix() */
+/* Soft tinted pill (terracotta at 12%) */
 .pill {
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  background: rgba(194, 86, 58, 0.12);
   color: var(--accent);
-}
-
-/* Staggered fade-in */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.card {
-  animation: fade-up 0.6s ease forwards;
-  animation-delay: calc(var(--i, 0) * 80ms);
 }
 
 /* Hover */
@@ -460,9 +414,9 @@ button:hover { background: blue; cursor: pointer; }
 /* Smooth changes */
 button { transition: all 0.2s ease; }
 
-/* Mobile */
+/* Mobile — one column on phones */
 @media (max-width: 640px) {
-  /* phone-only styles here */
+  .grid { grid-template-columns: 1fr; }
 }
 ```
 

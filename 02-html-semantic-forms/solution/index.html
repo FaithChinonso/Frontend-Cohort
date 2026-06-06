@@ -5,19 +5,23 @@
   </head>
   <body>
 
+    <!-- <header>: the top of the page — site title + navigation -->
     <header>
       <h1>Tasty Bites</h1>
-      <nav>
+      <nav>                            <!-- <nav>: a group of navigation links -->
         <a href="index.html">Home</a>
         <a href="recipe.html">Recipes</a>
       </nav>
     </header>
 
+    <!-- <main>: the main content of the page (only one per page) -->
     <main>
       <p>Welcome to Tasty Bites — simple recipes anyone can cook.</p>
 
+      <!-- <section>: a themed group of content -->
       <section>
         <h2>Latest recipes</h2>
+        <!-- <ul>: a bulleted list. Each <li> is one item, here a link. -->
         <ul>
           <li><a href="recipe.html">Spaghetti Carbonara</a></li>
           <li><a href="recipe.html">Chicken Tikka Masala</a></li>
@@ -27,19 +31,25 @@
 
       <section>
         <h2>Subscribe to our newsletter</h2>
+        <!-- <form>: collects input from the user -->
         <form>
+          <!-- Each label + input is grouped in a <div> (one form "row") -->
           <div>
+            <!-- label's for="name" matches the input's id="name" — clicking the
+                 label focuses the field, and screen readers read them together -->
             <label for="name">Your name:</label>
             <input type="text" id="name" name="name" placeholder="Jane Doe" required />
           </div>
 
           <div>
             <label for="email">Email address:</label>
+            <!-- type="email" makes the browser check for a valid email -->
             <input type="email" id="email" name="email" placeholder="you@example.com" required />
           </div>
 
           <div>
             <label for="category">Favorite category:</label>
+            <!-- <select> is a dropdown; each <option> is a choice -->
             <select id="category" name="category">
               <option value="breakfast">Breakfast</option>
               <option value="lunch">Lunch</option>
@@ -47,11 +57,12 @@
             </select>
           </div>
 
-          <button type="submit">Subscribe</button>
+          <button type="submit">Subscribe</button>   <!-- sends the form -->
         </form>
       </section>
     </main>
 
+    <!-- <footer>: the bottom of the page. &copy; prints the © symbol. -->
     <footer>
       <p>&copy; 2026 Tasty Bites. All rights reserved.</p>
     </footer>

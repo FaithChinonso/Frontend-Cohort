@@ -1,19 +1,23 @@
-/* --- Tasty Bites tokens --- */
+/* --- Tasty Bites design tokens --- */
 
+/* CSS variables: define a value once here, reuse it anywhere with var(--name).
+   Change a color in one place and it updates everywhere on the page. */
 :root {
-  --cream:      #FAF6EF;
-  --paper:      #F3ECDF;
-  --espresso:   #2B1D13;
-  --terracotta: #C2563A;
-  --sage:       #7A8A6B;
-  --mustard:    #D4A24C;
-  --rule:       #E4D9C5;
+  /* Palette */
+  --cream:      #FAF6EF;  /* page background */
+  --paper:      #F3ECDF;  /* card / surface color */
+  --espresso:   #2B1D13;  /* main text color */
+  --terracotta: #C2563A;  /* accent — links, titles, highlights */
+  --sage:       #7A8A6B;  /* secondary accent */
+  --rule:       #E4D9C5;  /* thin divider lines */
 
+  /* Fonts */
   --font-display: 'DM Serif Display', Georgia, serif;
   --font-body:    'Inter', system-ui, -apple-system, sans-serif;
   --font-accent:  'Cormorant Garamond', Georgia, serif;
 }
 
+/* box-sizing: border-box makes width include padding + border. */
 * { box-sizing: border-box; }
 
 body {
@@ -21,33 +25,35 @@ body {
   background: var(--cream);
   color: var(--espresso);
   font-family: var(--font-body);
-  font-size: clamp(1rem, 0.4vw + 0.9rem, 1.1rem);
+  font-size: 1.05rem;
   line-height: 1.65;
 }
 
 /* --- Header --- */
 
+/* display: flex lets us lay the logo and nav out in a row.
+   justify-content: space-between pushes them to opposite ends. */
 header {
   background: var(--terracotta);
   color: var(--cream);
-  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  padding: 1.5rem 2rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between;   /* logo on the left, nav on the right */
+  align-items: center;              /* line them up vertically */
   gap: 1rem;
 }
 
 header h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+  font-size: 1.875rem;
   letter-spacing: -0.01em;
 }
 
 nav {
-  display: flex;
+  display: flex;            /* lay the links out in a row */
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap;          /* let links wrap to a new line if there's no room */
 }
 
 nav a {
@@ -55,12 +61,12 @@ nav a {
   text-decoration: none;
   font-weight: 500;
   padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  transition: background 0.2s ease;
+  border-radius: 999px;     /* fully rounded pill shape */
+  transition: background 0.2s ease;   /* fade the background change smoothly */
 }
 
 nav a:hover {
-  background: color-mix(in srgb, white 18%, transparent);
+  background: rgba(255, 255, 255, 0.18);   /* faint white highlight on hover */
 }
 
 /* --- Intro --- */
@@ -82,77 +88,76 @@ nav a:hover {
 
 .intro h2 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3vw + 1rem, 3rem);
+  font-size: 2.5rem;
   color: var(--espresso);
   margin: 0 0 0.5rem;
-  text-wrap: balance;
   line-height: 1.1;
 }
 
 .intro p {
-  color: rgb(43 29 19 / 0.65);
+  color: rgba(43, 29, 19, 0.65);
   margin: 0;
 }
 
 /* --- Main + grid --- */
 
 main {
-  max-width: min(80rem, 92vw);
-  margin: 0 auto;
+  max-width: 80rem;
+  margin: 0 auto;          /* center the content */
   padding: 0 1rem 3rem;
 }
 
+/* CSS Grid lays items out in rows AND columns.
+   - display: grid turns on the grid.
+   - grid-template-columns: 1fr 1fr 1fr makes 3 equal columns.
+     "1fr" means "1 share of the leftover space", so 3 of them = 3 equal widths.
+   - The cards fill the columns automatically, left to right, then wrap to the next row.
+   - gap is the space between cards. */
 .recipe-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
-  gap: clamp(1rem, 2vw, 2rem);
+  grid-template-columns: 1fr 1fr 1fr;   /* 3 equal columns */
+  gap: 1.5rem;
 }
+
+/* The featured card is positioned to take up 2 columns instead of 1. */
+.recipe-card--featured { grid-column: span 2; }
 
 /* --- Recipe card --- */
 
 .recipe-card {
   background: var(--paper);
   border-radius: 14px;
-  overflow: hidden;
-  box-shadow:
-    0 1px 2px rgb(43 29 19 / 0.04),
-    0 12px 24px -12px rgb(43 29 19 / 0.12);
-  transition: transform 0.35s cubic-bezier(.2, .8, .2, 1),
-              box-shadow 0.35s ease;
-
-  opacity: 0;
-  animation: fade-up 0.6s ease forwards;
-  animation-delay: calc(var(--i, 0) * 80ms);
+  overflow: hidden;        /* keep the image's corners rounded like the card */
+  box-shadow: 0 8px 20px rgba(43, 29, 19, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;  /* animate the hover */
 }
 
+/* On hover, lift the card up slightly and deepen the shadow. */
 .recipe-card:hover {
   transform: translateY(-4px);
-  box-shadow:
-    0 2px 4px rgb(43 29 19 / 0.05),
-    0 24px 48px -16px rgb(43 29 19 / 0.22);
+  box-shadow: 0 14px 30px rgba(43, 29, 19, 0.2);
 }
 
-.recipe-card--featured { grid-column: span 2; }
-
-/* --- Card image with zoom on hover --- */
+/* --- Card image --- */
 
 .card-image-wrap {
-  overflow: hidden;
+  overflow: hidden;        /* crop the image when it zooms in on hover */
   background: var(--rule);
 }
 
 .card-image-wrap img {
   width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  aspect-ratio: 4 / 5;     /* lock every card image to the same tall shape... */
+  object-fit: cover;       /* ...and crop to fill without stretching */
   display: block;
-  transition: transform 0.6s cubic-bezier(.2, .8, .2, 1);
+  transition: transform 0.4s ease;
 }
 
 .recipe-card--featured .card-image-wrap img {
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 3 / 2;     /* the wide featured card uses a wider image */
 }
 
+/* When the card is hovered, gently zoom its image in. */
 .recipe-card:hover .card-image-wrap img {
   transform: scale(1.05);
 }
@@ -165,15 +170,14 @@ main {
 
 .card-body h3 {
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 1vw + 1rem, 1.5rem);
+  font-size: 1.35rem;
   color: var(--espresso);
   margin: 0.5rem 0 0.25rem;
   line-height: 1.2;
-  text-wrap: balance;
 }
 
 .card-body p {
-  color: rgb(43 29 19 / 0.75);
+  color: rgba(43, 29, 19, 0.75);
   margin: 0.5rem 0 1rem;
   font-size: 0.95rem;
   line-height: 1.55;
@@ -192,7 +196,7 @@ main {
 
 .category {
   display: inline-block;
-  background: color-mix(in srgb, var(--terracotta) 12%, transparent);
+  background: rgba(194, 86, 58, 0.12);   /* faint terracotta tint */
   color: var(--terracotta);
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -206,26 +210,17 @@ main {
   font-family: var(--font-accent);
   font-style: italic;
   font-size: 1rem;
-  color: rgb(43 29 19 / 0.6);
+  color: rgba(43, 29, 19, 0.6);
   margin: 0.25rem 0 0.5rem !important;
-}
-
-/* --- Animations --- */
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* --- Recipe page (recipe.html) --- */
 
 article {
   background: var(--paper);
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: 2.25rem;
   border-radius: 14px;
-  box-shadow:
-    0 1px 2px rgb(43 29 19 / 0.04),
-    0 12px 24px -12px rgb(43 29 19 / 0.12);
+  box-shadow: 0 8px 20px rgba(43, 29, 19, 0.12);
   margin-top: 2rem;
 }
 
@@ -240,17 +235,16 @@ article .eyebrow {
 
 article h1 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
+  font-size: 2.75rem;
   color: var(--terracotta);
   line-height: 1.05;
   margin: 0.25rem 0 0.5rem;
-  text-wrap: balance;
 }
 
 article h2 {
   font-family: var(--font-display);
   color: var(--espresso);
-  font-size: clamp(1.4rem, 1.5vw + 1rem, 1.85rem);
+  font-size: 1.6rem;
   border-bottom: 1px solid var(--rule);
   padding-bottom: 0.4rem;
   margin-top: 2.5rem;
@@ -263,15 +257,6 @@ article .description {
   margin: 0 0 1.5rem;
 }
 
-article .description::first-letter {
-  float: left;
-  font-family: var(--font-display);
-  font-size: 3.2em;
-  line-height: 0.9;
-  padding: 0.05em 0.15em 0 0;
-  color: var(--terracotta);
-}
-
 .hero img {
   width: 100%;
   aspect-ratio: 3 / 2;
@@ -281,46 +266,30 @@ article .description::first-letter {
   margin: 1rem 0;
 }
 
-article :is(ul, ol) {
+article ul, article ol {
   padding-left: 1.5rem;
   line-height: 1.85;
-}
-
-article :is(ul, ol) li::marker {
-  color: var(--terracotta);
-  font-weight: 700;
 }
 
 /* --- Footer --- */
 
 footer {
   text-align: center;
-  color: rgb(43 29 19 / 0.55);
+  color: rgba(43, 29, 19, 0.55);
   font-size: 0.875rem;
   padding: 2rem 0;
 }
 
 /* --- Mobile --- */
 
+/* A media query applies these styles only on screens 640px wide or smaller. */
 @media (max-width: 640px) {
   header {
-    flex-direction: column;
+    flex-direction: column;   /* stack the logo and nav instead of side-by-side */
     text-align: center;
     gap: 0.75rem;
   }
-  .recipe-card--featured { grid-column: auto; }
+  .recipe-grid { grid-template-columns: 1fr; }   /* one column on phones */
+  .recipe-card--featured { grid-column: auto; }  /* featured card stops spanning */
   .recipe-card--featured .card-image-wrap img { aspect-ratio: 4 / 5; }
-}
-
-/* --- Reduced motion (respect users who prefer it) --- */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-  .recipe-card { opacity: 1; }
 }

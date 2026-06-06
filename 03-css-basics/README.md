@@ -218,24 +218,7 @@ margin-bottom: 20px;
 
 Same shorthand works for `padding` and `border`.
 
-### Width and height — and `clamp()` for the modern flex
-
-Hardcoded sizes work, but real pages need to look good at every screen size. The modern way:
-
-```css
-/* OLD: brittle */
-h1 { font-size: 48px; }
-
-/* MODERN: fluid — scales smoothly between min and max */
-h1 { font-size: clamp(2rem, 4vw + 1rem, 4.5rem); }
-```
-
-`clamp(MIN, IDEAL, MAX)` takes three values:
-- The smallest the value can ever be (on tiny phones)
-- The "ideal" value, often expressed with `vw` (viewport-width units)
-- The largest it can ever be (on huge desktops)
-
-The browser smoothly interpolates between them. **Use `clamp()` for headline sizes** — one rule replaces three media queries.
+### Width and height
 
 ```css
 .card {
@@ -243,6 +226,9 @@ The browser smoothly interpolates between them. **Use `clamp()` for headline siz
   height: 200px;
 }
 ```
+
+For text sizes, we'll use `rem` units (e.g. `font-size: 2.75rem;`). `rem` scales with the
+user's browser settings, which is friendlier than a fixed `px` value.
 
 By default, `width` only counts the **content**, not padding/border. To make `width` include padding and border (much more intuitive), add this once at the top of your stylesheet:
 
@@ -391,13 +377,12 @@ Make the page look good:
 5. Style the `<header>`: terracotta background, cream text, padding, center the title.
 6. Style the `<nav>` links: cream color, no underline, spacing.
 7. Center `<main>` with `max-width: 760px` and horizontal padding.
-8. Give `<article>` a paper background, generous padding, soft `border-radius`, and a subtle espresso-tinted box shadow (`0 12px 24px -12px rgb(43 29 19 / 0.12)`).
-9. Style the recipe title (`article h1`): `font-family: var(--font-display)`, `font-size: clamp(2rem, 4vw + 1rem, 3.25rem)`, terracotta color, balanced line-height.
+8. Give `<article>` a paper background, generous padding, soft `border-radius`, and a subtle espresso-tinted box shadow (`box-shadow: 0 8px 20px rgba(43, 29, 19, 0.12)`).
+9. Style the recipe title (`article h1`): `font-family: var(--font-display)`, `font-size: 2.75rem`, terracotta color, tight line-height (`1.05`).
 10. Style `.meta` (the byline row): Cormorant Garamond italic, smaller, muted espresso.
 11. Replace the `h2` underline with a `--rule` hairline `border-bottom` and add small-caps eyebrow style (`text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.9rem;`).
-12. Make the hero image fill the article width with a slight `border-radius`.
-13. **Bonus:** add a drop cap on `.description::first-letter` — float left, large, terracotta, in the display font.
-14. Style the `<footer>` — small, centered, muted espresso.
+12. Make the hero image fill the article width with a slight `border-radius`. Use `aspect-ratio: 3 / 2` and `object-fit: cover` so the image always keeps the same shape (we crop instead of stretch).
+13. Style the `<footer>` — small, centered, muted espresso.
 
 Compare with `solution/styles.css` when you're done.
 
@@ -435,10 +420,7 @@ max-width: 720px;
 }
 a { color: var(--accent); }
 
-/* Fluid sizing — replaces media queries for type */
-h1 { font-size: clamp(2rem, 4vw + 1rem, 4.5rem); }
-
-/* Always include this */
+/* Always include this — makes width include padding + border */
 * { box-sizing: border-box; }
 ```
 

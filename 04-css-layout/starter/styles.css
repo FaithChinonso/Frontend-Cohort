@@ -1,12 +1,12 @@
 /* --- Tasty Bites tokens (from Section 03) --- */
 
+/* CSS variables: define a value once here, reuse it with var(--name). */
 :root {
   --cream:      #FAF6EF;
   --paper:      #F3ECDF;
   --espresso:   #2B1D13;
   --terracotta: #C2563A;
   --sage:       #7A8A6B;
-  --mustard:    #D4A24C;
   --rule:       #E4D9C5;
 
   --font-display: 'DM Serif Display', Georgia, serif;
@@ -21,75 +21,83 @@ body {
   background: var(--cream);
   color: var(--espresso);
   font-family: var(--font-body);
-  font-size: clamp(1rem, 0.4vw + 0.9rem, 1.1rem);
+  font-size: 1.05rem;
   line-height: 1.65;
 }
 
 
 /* --- TODO 1: Make <header> a flex container ---
-   - background var(--terracotta), cream text, padding 1.5rem clamp(1rem, 4vw, 3rem)
-   - display: flex, justify-content: space-between, align-items: center
-   - h1: font-family var(--font-display), font-size clamp(1.5rem, 2vw + 1rem, 2.25rem), margin 0
-   - nav a: cream, no underline, margin 0 0.75rem, hover underline */
+   display: flex lets the logo and nav sit in a row.
+   - background var(--terracotta), cream text, padding: 1.5rem 2rem
+   - display: flex, justify-content: space-between (logo left, nav right),
+     align-items: center, gap: 1rem
+   - header h1: font-family var(--font-display), font-size: 1.875rem, margin: 0
+   - nav: display: flex, gap: 0.5rem, flex-wrap: wrap
+   - nav a: cream, text-decoration: none, padding: 0.35rem 0.75rem, border-radius: 999px
+   - nav a:hover: background rgba(255, 255, 255, 0.18) */
 
 
 
 /* --- TODO 2: Style .intro ---
    - text-align: center, margin: 3rem 0 2.5rem
-   - .eyebrow: small caps, terracotta, letter-spacing 0.14em, font-size 0.85rem
-   - h2: display font, fluid clamp(2rem, 3vw + 1rem, 3rem), terracotta, text-wrap: balance */
+   - .intro .eyebrow: terracotta, text-transform: uppercase, letter-spacing: 0.18em,
+     font-size: 0.85rem
+   - .intro h2: display font, font-size: 2.5rem, espresso color, line-height: 1.1 */
 
 
 
 /* --- TODO 3: Center <main> ---
-   - max-width: min(80rem, 92vw), margin: 0 auto, padding: 0 1rem */
+   - max-width: 80rem, margin: 0 auto, padding: 0 1rem 3rem */
 
 
 
-/* --- TODO 4: .recipe-grid as responsive grid ---
+/* --- TODO 4: .recipe-grid as a grid ---
+   CSS Grid lays items out in rows AND columns.
    - display: grid
-   - grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr))
-   - gap: clamp(1rem, 2vw, 2rem) */
+   - grid-template-columns: 1fr 1fr 1fr   (3 equal columns; "1fr" = 1 share of the space)
+   - gap: 1.5rem   (space between cards)
+   The cards fill the columns left-to-right, then wrap to the next row by themselves. */
 
 
 
 /* --- TODO 5: Featured card spans 2 columns ---
-   - .recipe-card--featured { grid-column: span 2; }
-   - inside @media (max-width: 640px), reset to auto */
+   - .recipe-card--featured { grid-column: span 2; }   (takes up 2 columns instead of 1)
+   - Later, inside the mobile @media block, reset it to grid-column: auto. */
 
 
 
 /* --- TODO 6: Style .recipe-card ---
    - background: var(--paper)
    - border-radius: 14px
-   - overflow: hidden (so image-wrap corners follow)
-   - box-shadow: 0 1px 2px rgb(43 29 19 / 0.04), 0 12px 24px -12px rgb(43 29 19 / 0.12)
-   - transition: transform 0.35s ease, box-shadow 0.35s ease
-   - On hover: translateY(-4px) + stronger shadow */
+   - overflow: hidden   (so the image corners follow the rounded card)
+   - box-shadow: 0 8px 20px rgba(43, 29, 19, 0.12)
+   - transition: transform 0.3s ease, box-shadow 0.3s ease
+   - On hover: transform: translateY(-4px) and a stronger shadow
+     box-shadow: 0 14px 30px rgba(43, 29, 19, 0.2) */
 
 
 
 /* --- TODO 7: Image wrap + zoom ---
    - .card-image-wrap { overflow: hidden; }
    - .card-image-wrap img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
-                             display: block; transition: transform 0.45s ease; }
+                             display: block; transition: transform 0.4s ease; }
    - On .recipe-card:hover .card-image-wrap img { transform: scale(1.05); }
-   - For .recipe-card--featured .card-image-wrap img, change aspect-ratio to 3/2. */
+   - For .recipe-card--featured .card-image-wrap img, change aspect-ratio to 3 / 2. */
 
 
 
 /* --- TODO 8: .card-body ---
    - padding: 1.25rem 1.25rem 1.5rem
-   - h3: font-family var(--font-display), font-size clamp(1.2rem, 1vw + 1rem, 1.5rem),
-         color: var(--espresso), margin: 0.5rem 0 0.25rem, text-wrap: balance
-   - p (not .meta): color: rgb(43 29 19 / 0.75), margin: 0.5rem 0 1rem
-   - a: color var(--terracotta), no underline, font-weight 600; hover underline */
+   - h3: font-family var(--font-display), font-size: 1.35rem,
+         color: var(--espresso), margin: 0.5rem 0 0.25rem
+   - p (not .meta): color: rgba(43, 29, 19, 0.75), margin: 0.5rem 0 1rem
+   - a: color var(--terracotta), text-decoration: none, font-weight: 600; hover underline */
 
 
 
 /* --- TODO 9: .category pill ---
    - display: inline-block
-   - background: color-mix(in srgb, var(--terracotta) 12%, transparent)
+   - background: rgba(194, 86, 58, 0.12)   (faint terracotta tint)
    - color: var(--terracotta)
    - font-size: 0.72rem
    - text-transform: uppercase
@@ -100,37 +108,32 @@ body {
 
 
 
-/* --- TODO 10: .meta ---
+/* --- TODO 10: .meta (the byline) ---
    - font-family: var(--font-accent)
    - font-style: italic
-   - font-size: 0.95rem
-   - color: rgb(43 29 19 / 0.6)
+   - font-size: 1rem
+   - color: rgba(43, 29, 19, 0.6)
    - margin: 0.25rem 0 0.5rem */
 
 
 
-/* --- TODO 11: Staggered fade-in animation ---
-   - Define @keyframes fade-up { from: opacity 0, translateY(12px); to: opacity 1, translateY(0); }
-   - .recipe-card { opacity: 0; animation: fade-up 0.6s ease forwards;
-                    animation-delay: calc(var(--i, 0) * 80ms); } */
+/* --- TODO 11: Recipe page additions (recipe.html) ---
+   Reuse the same approach as Section 03:
+   - article: paper background, padding: 2.25rem, border-radius: 14px,
+     box-shadow: 0 8px 20px rgba(43, 29, 19, 0.12)
+   - article h1: terracotta, display font, font-size: 2.75rem, line-height: 1.05
+   - article h2: display font, font-size: 1.6rem, border-bottom: 1px solid var(--rule)
+   - .hero img: width 100%, aspect-ratio 3 / 2, object-fit: cover, border-radius: 10px */
 
 
 
-/* --- TODO 12: Recipe page additions (recipe.html) ---
-   Use the same approach as Section 03 — but bring in:
-   - article h1: terracotta, display font, fluid clamp size, balanced line height
-   - .description::first-letter drop cap (float left, big, terracotta)
-   - article h2: display font, hairline border-bottom in --rule
-   - .hero img: width 100%, aspect-ratio 3/2, object-fit cover, border-radius 10px */
+/* --- TODO 12: Footer ---
+   - text-align: center, color: rgba(43, 29, 19, 0.55), font-size: 0.875rem, padding: 2rem 0 */
 
 
 
-/* --- TODO 13: Footer ---
-   - text-align: center, color rgb(43 29 19 / 0.55), font-size 0.875rem, padding 2rem 0 */
-
-
-
-/* --- TODO 14: Mobile (max-width: 640px) ---
-   - header: flex-direction: column, text-align center, gap 0.5rem
+/* --- TODO 13: Mobile (max-width: 640px) ---
+   A media query applies styles only on small screens.
+   - header: flex-direction: column, text-align: center, gap: 0.75rem
+   - .recipe-grid: grid-template-columns: 1fr   (stack into one column)
    - .recipe-card--featured: grid-column: auto */
-

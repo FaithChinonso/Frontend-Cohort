@@ -1,58 +1,62 @@
-/* TODO 1: Add the universal box-sizing rule.
+/* TODO 1: Add the universal box-sizing rule so width includes padding + border.
    * { box-sizing: border-box; } */
 
 
 /* TODO 2: Define the Tasty Bites palette as CSS variables on :root.
-   --cream, --paper, --espresso, --terracotta, --sage, --rule */
+   A CSS variable looks like --name: value; and you reuse it with var(--name).
+   Add: --cream #FAF6EF, --paper #F3ECDF, --espresso #2B1D13,
+        --terracotta #C2563A, --sage #7A8A6B, --rule #E4D9C5 */
 
 
 /* TODO 3: Define font-family variables (--font-display, --font-body, --font-accent). */
 
 
-/* TODO 4: Style the <body> — cream background, espresso text, Inter font,
-   line-height: 1.65, zero margin. */
+/* TODO 4: Style the <body> — cream background, espresso text, Inter font (var(--font-body)),
+   font-size: 1.05rem, line-height: 1.65, margin: 0. */
 
 
-/* TODO 5: Style the <header> — terracotta background, cream text, padding,
-   center the text. Style header h1 with the display font. */
+/* TODO 5: Style the <header> — terracotta background, cream text, padding: 1.75rem 1.5rem,
+   text-align: center. Style header h1 with the display font, font-size: 2.25rem. */
 
 
-/* TODO 6: Style nav links — cream color, no text-decoration, spacing, hover underline. */
+/* TODO 6: Style nav links — cream color, text-decoration: none, margin: 0 0.75rem.
+   On hover (nav a:hover) add an underline. */
 
 
-/* TODO 7: Center <main> — max-width 760px, margin: 2.5rem auto, padding: 0 1rem. */
+/* TODO 7: Center <main> — max-width: 760px, margin: 2.5rem auto, padding: 0 1rem. */
 
 
-/* TODO 8: Style <article> — paper background, generous padding (clamp(1.5rem, 4vw, 3rem)),
-   border-radius: 14px, espresso-tinted box-shadow:
-     0 1px 2px rgb(43 29 19 / 0.04), 0 12px 24px -12px rgb(43 29 19 / 0.12) */
+/* TODO 8: Style <article> — paper background, padding: 2.25rem, border-radius: 14px,
+   and a soft shadow: box-shadow: 0 8px 20px rgba(43, 29, 19, 0.12). */
 
 
-/* TODO 9: Style .eyebrow — small caps, terracotta, letter-spacing 0.12em, margin-bottom 0.5rem. */
+/* TODO 9: Style .eyebrow — terracotta, text-transform: uppercase,
+   letter-spacing: 0.14em, font-size: 0.85rem, margin-bottom: 0.5rem. */
 
 
-/* TODO 10: Style article h1 — display font, fluid size with clamp(2rem, 4vw + 1rem, 3.25rem),
+/* TODO 10: Style article h1 — display font, font-size: 2.75rem,
    terracotta color, line-height: 1.05, margin: 0.25rem 0 0.5rem. */
 
 
-/* TODO 11: Style .meta — Cormorant Garamond italic, color rgb(43 29 19 / 0.65),
-   font-size 1.05rem, margin-bottom 1.5rem. */
+/* TODO 11: Style .meta (the byline) — accent font, font-style: italic,
+   color: rgba(43, 29, 19, 0.65), font-size: 1.1rem, margin-bottom: 1.5rem. */
 
 
-/* TODO 12: Style article h2 — display font, espresso, with a hairline border-bottom
-   in --rule, padding-bottom: 0.4rem, margin-top: 2.5rem. */
+/* TODO 12: Style article h2 — display font, espresso color, font-size: 1.6rem,
+   a thin line under it: border-bottom: 1px solid var(--rule),
+   padding-bottom: 0.4rem, margin-top: 2.5rem. */
 
 
-/* TODO 13: Style .description — relaxed line-height, slight bottom margin.
-   BONUS: drop cap on .description::first-letter (float left, font-family var(--font-display),
-   font-size: 3.2em, line-height: 0.9, padding 0.05em 0.15em 0 0, color var(--terracotta)). */
+/* TODO 13: Style .description — line-height: 1.7, margin-bottom: 1.5rem. */
 
 
-/* TODO 14: Style .hero img — width 100%, border-radius 10px, aspect-ratio 3/2,
-   object-fit cover, display block, margin: 1rem 0. */
+/* TODO 14: Style .hero img — width: 100%, aspect-ratio: 3 / 2, object-fit: cover,
+   border-radius: 10px, display: block, margin: 1rem 0.
+   (aspect-ratio locks the shape; object-fit: cover crops to fill without stretching.) */
 
 
-/* TODO 15: Style ul, ol — padding-left 1.5rem, line-height 1.8. */
+/* TODO 15: Style ul, ol — padding-left: 1.5rem, line-height: 1.85. */
 
 
-/* TODO 16: Style <footer> — centered, espresso 60% opacity, smaller font, margin 2rem 0. */
+/* TODO 16: Style <footer> — text-align: center, color: rgba(43, 29, 19, 0.55),
+   font-size: 0.875rem, margin: 2rem 0. */
