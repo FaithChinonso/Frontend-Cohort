@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML — The Beginner's Reference</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap">
+
+  <style>
+    :root {
+      --cream:      #FAF6EF;
+      --paper:      #F3ECDF;
+      --espresso:   #2B1D13;
+      --terracotta: #C2563A;
+      --sage:       #7A8A6B;
+      --mustard:    #D4A24C;
+      --rule:       #E4D9C5;
+
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --font-accent:  'Cormorant Garamond', Georgia, serif;
+      --font-mono:    'JetBrains Mono', Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    @page {
+      size: A4;
+      margin: 18mm 16mm;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--cream);
+      color: var(--espresso);
+      font-family: var(--font-body);
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+
+    .doc {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* --- Page break helpers --- */
+    .page-break { page-break-after: always; }
+    h1, h2, h3 { break-after: avoid; }
+    pre, .callout, .card, table { break-inside: avoid; }
+
+    /* --- Cover --- */
+    .cover {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      page-break-after: always;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(60% 40% at 50% 0%, color-mix(in srgb, var(--mustard) 22%, transparent), transparent 70%),
+        radial-gradient(50% 40% at 50% 100%, color-mix(in srgb, var(--terracotta) 18%, transparent), transparent 70%);
+      z-index: 0;
+    }
+    .cover > * { position: relative; z-index: 1; }
+    .cover .badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--terracotta);
+      color: var(--terracotta);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+    .cover h1 {
+      font-family: var(--font-display);
+      font-size: 64pt;
+      line-height: 0.95;
+      color: var(--espresso);
+      margin: 0 0 1rem;
+      text-wrap: balance;
+    }
+    .cover .subtitle {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-size: 18pt;
+      color: var(--terracotta);
+      margin: 0 0 3rem;
+    }
+    .cover .for {
+      font-size: 11pt;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgb(43 29 19 / 0.55);
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+    }
+    .cover .program {
+      font-family: var(--font-display);
+      font-size: 16pt;
+      color: var(--espresso);
+      margin: 0 0 2rem;
+    }
+    .cover .ornament {
+      font-family: var(--font-display);
+      color: var(--terracotta);
+      font-size: 24pt;
+      letter-spacing: 1rem;
+      margin: 1.5rem 0;
+    }
+    .cover .footer {
+      position: absolute;
+      bottom: 2rem;
+      left: 0;
+      right: 0;
+      font-family: var(--font-accent);
+      font-style: italic;
+      color: rgb(43 29 19 / 0.55);
+      font-size: 11pt;
+      z-index: 1;
+    }
+
+    /* --- Headings --- */
+    h1.chapter {
+      font-family: var(--font-display);
+      font-size: 32pt;
+      color: var(--terracotta);
+      line-height: 1.05;
+      margin: 0 0 0.25rem;
+      text-wrap: balance;
+    }
+    .chapter-eyebrow {
+      color: var(--sage);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      font-weight: 600;
+      margin: 0 0 0.6rem;
+    }
+    .chapter-intro {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-size: 14pt;
+      color: rgb(43 29 19 / 0.7);
+      margin: 0 0 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    h2 {
+      font-family: var(--font-display);
+      color: var(--espresso);
+      font-size: 20pt;
+      margin: 2rem 0 0.5rem;
+      line-height: 1.15;
+    }
+    h3 {
+      font-family: var(--font-display);
+      color: var(--espresso);
+      font-size: 14pt;
+      margin: 1.5rem 0 0.5rem;
+    }
+    h4 {
+      font-family: var(--font-body);
+      color: var(--terracotta);
+      font-size: 11pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 1.25rem 0 0.4rem;
+    }
+
+    p { margin: 0 0 0.85rem; }
+    strong { color: var(--espresso); font-weight: 700; }
+
+    /* --- Drop cap on first paragraph of intro --- */
+    .lede::first-letter {
+      float: left;
+      font-family: var(--font-display);
+      font-size: 3em;
+      line-height: 0.85;
+      padding: 0.05em 0.15em 0 0;
+      color: var(--terracotta);
+    }
+
+    /* --- Inline code & code blocks --- */
+    code, pre {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+    }
+    p code, li code, td code {
+      background: var(--paper);
+      color: var(--terracotta);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.82em;
+    }
+    pre {
+      background: var(--espresso);
+      color: #F6E9D7;
+      padding: 1rem 1.1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 9.5pt;
+      line-height: 1.5;
+      margin: 0.5rem 0 1.2rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+    .token-tag    { color: #F1A88E; }
+    .token-attr   { color: #E7C16E; }
+    .token-string { color: #B7C99B; }
+    .token-comment{ color: rgb(255 255 255 / 0.4); font-style: italic; }
+    .token-punct  { color: #d4b88a; }
+
+    /* --- Links --- */
+    a { color: var(--terracotta); text-decoration: none; border-bottom: 1px dotted var(--terracotta); }
+
+    /* --- Lists --- */
+    ul, ol { padding-left: 1.25rem; margin: 0 0 1rem; }
+    li { margin-bottom: 0.35rem; }
+    li::marker { color: var(--terracotta); font-weight: 700; }
+
+    /* --- Callouts --- */
+    .callout {
+      border-left: 4px solid var(--terracotta);
+      background: var(--paper);
+      padding: 0.85rem 1.1rem;
+      margin: 1rem 0 1.5rem;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout.tip   { border-color: var(--sage); }
+    .callout.warn  { border-color: var(--mustard); }
+    .callout-title {
+      font-family: var(--font-display);
+      font-size: 11pt;
+      color: var(--terracotta);
+      margin: 0 0 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+    .callout.tip  .callout-title { color: var(--sage); }
+    .callout.warn .callout-title { color: #a07419; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    /* --- Table --- */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.5rem 0 1.25rem;
+      font-size: 10pt;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.45rem 0.65rem;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+    th {
+      background: var(--paper);
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--espresso);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 8.5pt;
+    }
+
+    /* --- TOC --- */
+    .toc { margin: 2rem 0 0; }
+    .toc h2 { margin-top: 0; }
+    .toc ol {
+      list-style: none;
+      padding: 0;
+      counter-reset: toc;
+    }
+    .toc li {
+      counter-increment: toc;
+      display: flex;
+      align-items: baseline;
+      padding: 0.4rem 0;
+      border-bottom: 1px dotted var(--rule);
+      gap: 0.5rem;
+    }
+    .toc li::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: var(--font-display);
+      color: var(--terracotta);
+      font-size: 10pt;
+      min-width: 1.75rem;
+    }
+    .toc .toc-title {
+      flex: 1;
+      font-family: var(--font-display);
+      font-size: 12pt;
+    }
+    .toc .toc-page {
+      font-family: var(--font-accent);
+      font-style: italic;
+      color: rgb(43 29 19 / 0.6);
+    }
+
+    /* --- Diagram / box rendering --- */
+    .diagram {
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      background: var(--paper);
+      padding: 1rem;
+      border-radius: 8px;
+      line-height: 1.35;
+      white-space: pre;
+      overflow-x: auto;
+      color: var(--espresso);
+    }
+
+    /* --- Pull quotes --- */
+    blockquote {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-size: 14pt;
+      color: var(--terracotta);
+      line-height: 1.35;
+      border-left: 3px solid var(--terracotta);
+      padding-left: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    /* --- Card / sidebar --- */
+    .card {
+      background: var(--paper);
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      margin: 1rem 0 1.5rem;
+      border: 1px solid var(--rule);
+    }
+
+    /* --- Footer per chapter --- */
+    .footer-rule {
+      border-top: 1px solid var(--rule);
+      margin-top: 2.5rem;
+      padding-top: 0.6rem;
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-size: 10pt;
+      color: rgb(43 29 19 / 0.55);
+      text-align: center;
+    }
+
+    /* --- Tag reference grid --- */
+    .tag-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 1rem;
+      margin: 0.5rem 0 1.25rem;
+    }
+    .tag-grid > div {
+      padding: 0.4rem 0.6rem;
+      background: var(--paper);
+      border-radius: 6px;
+      font-size: 9.5pt;
+    }
+    .tag-grid code {
+      background: none;
+      color: var(--terracotta);
+      padding: 0;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="doc">
+
+  <!-- ============ COVER ============ -->
+  <section class="cover">
+    <span class="badge">Frontend Cohort · Volume 01</span>
+
+    <h1>HTML</h1>
+    <p class="subtitle">the beginner's reference</p>
+
+    <div class="ornament">·  ·  ·</div>
+
+    <p class="for">A companion guide for</p>
+    <p class="program">Tasty Bites — Web Development from Scratch</p>
+
+    <p class="footer">Everything you need for Lessons 01 &amp; 02, plus tips you'll keep using forever.</p>
+  </section>
+
+
+  <!-- ============ TOC ============ -->
+  <section class="toc">
+    <p class="chapter-eyebrow">Contents</p>
+    <h1 class="chapter">What's inside</h1>
+    <p class="chapter-intro">A complete tour of HTML for absolute beginners — the grammar, the tags you'll use every day, and the little tricks that make pages feel polished.</p>
+
+    <ol>
+      <li><span class="toc-title">What HTML actually is</span><span class="toc-page">page 3</span></li>
+      <li><span class="toc-title">Tags, elements, and attributes</span><span class="toc-page">page 4</span></li>
+      <li><span class="toc-title">The page skeleton</span><span class="toc-page">page 6</span></li>
+      <li><span class="toc-title">The everyday tags</span><span class="toc-page">page 7</span></li>
+      <li><span class="toc-title">Lists — bullets and numbers</span><span class="toc-page">page 11</span></li>
+      <li><span class="toc-title">Semantic HTML</span><span class="toc-page">page 12</span></li>
+      <li><span class="toc-title">div, span, and friends</span><span class="toc-page">page 14</span></li>
+      <li><span class="toc-title">Forms — letting users type</span><span class="toc-page">page 15</span></li>
+      <li><span class="toc-title">Tables — for actual tabular data</span><span class="toc-page">page 19</span></li>
+      <li><span class="toc-title">Multi-page sites</span><span class="toc-page">page 20</span></li>
+      <li><span class="toc-title">Tips &amp; little hacks</span><span class="toc-page">page 21</span></li>
+      <li><span class="toc-title">Common mistakes</span><span class="toc-page">page 25</span></li>
+      <li><span class="toc-title">The complete tag cheat sheet</span><span class="toc-page">page 26</span></li>
+      <li><span class="toc-title">Where to go next</span><span class="toc-page">page 28</span></li>
+    </ol>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 1. WHAT IS HTML ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 01</p>
+    <h1 class="chapter">What HTML actually is</h1>
+    <p class="chapter-intro">If a webpage were a person, HTML would be the skeleton — the structure under everything you see.</p>
+
+    <p class="lede">HTML stands for <strong>HyperText Markup Language</strong>. It's not really a "programming" language — you don't write logic or do math in it. You describe what's on a page: <em>here is a heading, here is a paragraph, here is an image</em>. The browser reads your description and draws the result.</p>
+
+    <p>Every website on the internet — Google, YouTube, your bank's homepage — starts as HTML. The colors, fonts, and layout you see come from CSS. The interactivity (buttons that respond, forms that validate) comes from JavaScript. But the structure underneath? Always HTML.</p>
+
+    <blockquote>HTML is to a webpage what the script is to a movie. Not the costumes, not the lighting — the words that tell the story.</blockquote>
+
+    <h2>How a browser reads HTML</h2>
+    <p>When you save a file ending in <code>.html</code> and open it in a browser, the browser reads it top to bottom, builds a model of the page in memory (the DOM — Document Object Model), and paints it on screen. Change the file, refresh the browser, see the new version. That's the entire feedback loop.</p>
+
+    <div class="callout tip">
+      <p class="callout-title">Quick mental model</p>
+      <p>HTML is the noun. CSS is the adjective. JavaScript is the verb. <em>"Show a red button that calls my friend."</em> Red = CSS, button = HTML, calls = JavaScript.</p>
+    </div>
+
+    <h2>You need almost nothing to start</h2>
+    <ul>
+      <li>A code editor — <a>VS Code</a> is free and what professionals use</li>
+      <li>A web browser — Chrome, Edge, Firefox, Safari all work</li>
+      <li>A folder anywhere on your computer to save your files in</li>
+    </ul>
+    <p>No installation of HTML itself. The browser already speaks it.</p>
+
+    <div class="footer-rule">— end of chapter one —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 2. TAGS ELEMENTS ATTRIBUTES ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 02</p>
+    <h1 class="chapter">Tags, elements, and attributes</h1>
+    <p class="chapter-intro">Three words that get used almost interchangeably — but each one means something slightly different.</p>
+
+    <h2>A tag is a word in angle brackets</h2>
+<pre><code><span class="token-tag">&lt;p&gt;</span>Hello world<span class="token-tag">&lt;/p&gt;</span></code></pre>
+
+    <p>That whole thing — opening tag, content, closing tag — is an <strong>element</strong>. The element's name is <code>p</code> (for paragraph). Most elements come in pairs: an opening tag <code>&lt;p&gt;</code> and a closing tag <code>&lt;/p&gt;</code> with content in the middle.</p>
+
+    <h2>A few tags close themselves</h2>
+    <p>Some elements have no content — they exist as one tag. The classic example:</p>
+<pre><code><span class="token-tag">&lt;img</span> <span class="token-attr">src</span>=<span class="token-string">"cat.jpg"</span> <span class="token-attr">alt</span>=<span class="token-string">"A sleepy cat"</span><span class="token-tag">&gt;</span></code></pre>
+    <p>You'll also see them written as <code>&lt;img ... /&gt;</code> with a slash before the closing bracket. Both are valid. Other self-closing tags: <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;meta&gt;</code>.</p>
+
+    <h2>Attributes — extra info on a tag</h2>
+    <p>In the image above, <code>src</code> and <code>alt</code> are <strong>attributes</strong>. They go inside the opening tag and follow this pattern:</p>
+<pre><code><span class="token-attr">name</span>=<span class="token-string">"value"</span></code></pre>
+    <p>You'll meet dozens of attributes, but they all follow that shape. The most important ones early on:</p>
+
+    <table>
+      <thead>
+        <tr><th>Attribute</th><th>Used on</th><th>What it does</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>href</code></td><td><code>&lt;a&gt;</code></td><td>The URL the link points to</td></tr>
+        <tr><td><code>src</code></td><td><code>&lt;img&gt;</code>, <code>&lt;script&gt;</code></td><td>Source — where the file lives</td></tr>
+        <tr><td><code>alt</code></td><td><code>&lt;img&gt;</code></td><td>Text shown if the image fails (and read aloud by screen readers)</td></tr>
+        <tr><td><code>id</code></td><td>Any tag</td><td>A unique label for that one element</td></tr>
+        <tr><td><code>class</code></td><td>Any tag</td><td>A reusable label, used by CSS and JS</td></tr>
+        <tr><td><code>title</code></td><td>Any tag</td><td>Tooltip text on hover</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Nesting — tags inside tags</h2>
+    <p>Tags wrap around each other. The only rule is: close them in reverse order of opening.</p>
+<pre><code><span class="token-comment">&lt;!-- Right --&gt;</span>
+<span class="token-tag">&lt;p&gt;</span>I love <span class="token-tag">&lt;strong&gt;</span>chocolate cake<span class="token-tag">&lt;/strong&gt;</span> a lot.<span class="token-tag">&lt;/p&gt;</span>
+
+<span class="token-comment">&lt;!-- Wrong --&gt;</span>
+<span class="token-tag">&lt;p&gt;</span>I love <span class="token-tag">&lt;strong&gt;</span>chocolate<span class="token-tag">&lt;/p&gt;</span> cake<span class="token-tag">&lt;/strong&gt;</span></code></pre>
+    <p>Browsers are forgiving — they'll usually render the wrong version anyway — but messy nesting causes bugs that take hours to find. Always close tags in the right order.</p>
+
+    <div class="callout">
+      <p class="callout-title">A note on quotes</p>
+      <p>Attribute values can use <code>"double"</code> or <code>'single'</code> quotes — pick one and stick with it. Double quotes are conventional.</p>
+    </div>
+
+    <h2>Comments — notes the browser ignores</h2>
+<pre><code><span class="token-comment">&lt;!-- This is a comment. The browser ignores it. --&gt;
+&lt;!-- Use them to leave yourself notes or hide code temporarily. --&gt;</span></code></pre>
+
+    <div class="footer-rule">— end of chapter two —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 3. PAGE SKELETON ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 03</p>
+    <h1 class="chapter">The page skeleton</h1>
+    <p class="chapter-intro">Every HTML file you ever write starts with the same handful of lines. Type them once, memorize them, move on.</p>
+
+    <h2>The starter template</h2>
+<pre><code><span class="token-tag">&lt;!DOCTYPE html&gt;</span>
+<span class="token-tag">&lt;html</span> <span class="token-attr">lang</span>=<span class="token-string">"en"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;head&gt;</span>
+    <span class="token-tag">&lt;meta</span> <span class="token-attr">charset</span>=<span class="token-string">"UTF-8"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;meta</span> <span class="token-attr">name</span>=<span class="token-string">"viewport"</span> <span class="token-attr">content</span>=<span class="token-string">"width=device-width, initial-scale=1"</span><span class="token-tag">&gt;</span>
+    <span class="token-tag">&lt;title&gt;</span>My Page<span class="token-tag">&lt;/title&gt;</span>
+  <span class="token-tag">&lt;/head&gt;</span>
+  <span class="token-tag">&lt;body&gt;</span>
+    <span class="token-comment">&lt;!-- Everything you see on the page goes here --&gt;</span>
+  <span class="token-tag">&lt;/body&gt;</span>
+<span class="token-tag">&lt;/html&gt;</span></code></pre>
+
+    <h2>What each line means</h2>
+    <table>
+      <thead>
+        <tr><th>Line</th><th>Why it's there</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Tells the browser "this is modern HTML." Always first. Always.</td></tr>
+        <tr><td><code>&lt;html lang="en"&gt;</code></td><td>Wraps the whole document. <code>lang</code> helps screen readers and search engines.</td></tr>
+        <tr><td><code>&lt;head&gt;</code></td><td>Info <em>about</em> the page — not shown on the page itself.</td></tr>
+        <tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Lets your page use any character (emoji, accents, Chinese, anything).</td></tr>
+        <tr><td><code>&lt;meta name="viewport"&gt;</code></td><td>Tells phones to render the page at the right size. Without it, mobile sites look tiny.</td></tr>
+        <tr><td><code>&lt;title&gt;</code></td><td>The text in the browser tab and in Google search results.</td></tr>
+        <tr><td><code>&lt;body&gt;</code></td><td>Everything the user actually sees lives here.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <p class="callout-title">Hack — Emmet's "!" shortcut</p>
+      <p>In VS Code, type a single <code>!</code> on an empty line and press <strong>Tab</strong>. The whole skeleton above appears instantly. This works in any HTML file — try it now.</p>
+    </div>
+
+    <h2>The save → refresh loop</h2>
+    <ol>
+      <li>Edit the file in VS Code</li>
+      <li>Save (<code>Ctrl+S</code> on Windows, <code>Cmd+S</code> on Mac)</li>
+      <li>Switch to the browser and refresh (<code>F5</code> or <code>Ctrl+R</code>)</li>
+    </ol>
+    <p>That's the entire web-development workflow at this stage. You'll do this thousands of times.</p>
+
+    <div class="footer-rule">— end of chapter three —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 4. EVERYDAY TAGS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 04</p>
+    <h1 class="chapter">The everyday tags</h1>
+    <p class="chapter-intro">If you only learn ten tags, learn these. Together they cover 80% of what you'll ever write.</p>
+
+    <h2>Headings — <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code></h2>
+<pre><code><span class="token-tag">&lt;h1&gt;</span>The most important heading on the page<span class="token-tag">&lt;/h1&gt;</span>
+<span class="token-tag">&lt;h2&gt;</span>A section heading<span class="token-tag">&lt;/h2&gt;</span>
+<span class="token-tag">&lt;h3&gt;</span>A sub-section<span class="token-tag">&lt;/h3&gt;</span>
+<span class="token-tag">&lt;h4&gt;</span>Smaller still<span class="token-tag">&lt;/h4&gt;</span></code></pre>
+    <p><code>h1</code> is the biggest, <code>h6</code> the smallest. <strong>Use only one <code>&lt;h1&gt;</code> per page</strong> — usually the page title. Don't pick a heading level for its size (CSS will handle that) — pick it for its importance in the outline.</p>
+
+    <h2>Paragraphs — <code>&lt;p&gt;</code></h2>
+<pre><code><span class="token-tag">&lt;p&gt;</span>This is one paragraph of text.<span class="token-tag">&lt;/p&gt;</span>
+<span class="token-tag">&lt;p&gt;</span>And here is another. Each paragraph appears on its own line.<span class="token-tag">&lt;/p&gt;</span></code></pre>
+    <p>The browser ignores whitespace inside HTML — extra spaces, line breaks, and tabs all collapse to a single space. That's why every paragraph needs its own <code>&lt;p&gt;</code> wrapper.</p>
+
+    <h2>Links — <code>&lt;a&gt;</code></h2>
+<pre><code><span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"https://google.com"</span><span class="token-tag">&gt;</span>Go to Google<span class="token-tag">&lt;/a&gt;</span>
+<span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"about.html"</span><span class="token-tag">&gt;</span>About this site<span class="token-tag">&lt;/a&gt;</span>
+<span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"mailto:hello@me.com"</span><span class="token-tag">&gt;</span>Email me<span class="token-tag">&lt;/a&gt;</span>
+<span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"#about"</span><span class="token-tag">&gt;</span>Jump to the About section<span class="token-tag">&lt;/a&gt;</span></code></pre>
+
+    <p>Four kinds of <code>href</code> values you'll use constantly:</p>
+    <ul>
+      <li><strong>Full URL</strong> — <code>https://...</code> — go to another site</li>
+      <li><strong>Relative path</strong> — <code>about.html</code> — another file in the same folder</li>
+      <li><strong>Mail link</strong> — <code>mailto:...</code> — opens the user's email client</li>
+      <li><strong>Anchor</strong> — <code>#id</code> — scroll to an element with that <code>id</code></li>
+    </ul>
+
+    <div class="callout warn">
+      <p class="callout-title">Security hack — external links</p>
+      <p>When you open a link in a new tab with <code>target="_blank"</code>, always add <code>rel="noopener noreferrer"</code>:</p>
+<pre><code><span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"https://google.com"</span> <span class="token-attr">target</span>=<span class="token-string">"_blank"</span> <span class="token-attr">rel</span>=<span class="token-string">"noopener noreferrer"</span><span class="token-tag">&gt;</span>Google<span class="token-tag">&lt;/a&gt;</span></code></pre>
+      <p>Without it, the linked page can manipulate yours via JavaScript. Modern browsers default to safe behavior, but adding it is the professional habit.</p>
+    </div>
+
+    <h2>Images — <code>&lt;img&gt;</code></h2>
+<pre><code><span class="token-tag">&lt;img</span> <span class="token-attr">src</span>=<span class="token-string">"pasta.jpg"</span> <span class="token-attr">alt</span>=<span class="token-string">"A bowl of carbonara"</span> <span class="token-attr">width</span>=<span class="token-string">"400"</span><span class="token-tag">&gt;</span></code></pre>
+    <ul>
+      <li><code>src</code> — path to the image file (relative or full URL)</li>
+      <li><code>alt</code> — describes the image for blind users and shows if loading fails. <strong>Never skip this.</strong></li>
+      <li><code>width</code> / <code>height</code> — optional, in pixels. Setting them prevents the page from "jumping" as the image loads.</li>
+    </ul>
+
+    <h2>Bold and italic — <code>&lt;strong&gt;</code> and <code>&lt;em&gt;</code></h2>
+<pre><code><span class="token-tag">&lt;p&gt;</span>This is <span class="token-tag">&lt;strong&gt;</span>very important<span class="token-tag">&lt;/strong&gt;</span> and this is <span class="token-tag">&lt;em&gt;</span>emphasized<span class="token-tag">&lt;/em&gt;</span>.<span class="token-tag">&lt;/p&gt;</span></code></pre>
+    <p><code>&lt;strong&gt;</code> renders as <strong>bold</strong>. <code>&lt;em&gt;</code> renders as <em>italic</em>. You'll also see <code>&lt;b&gt;</code> and <code>&lt;i&gt;</code> — they look the same, but they mean "just style this" instead of "this carries extra meaning." Prefer <code>strong</code>/<code>em</code> for content; screen readers emphasize them when reading aloud.</p>
+
+    <h2>Line break — <code>&lt;br&gt;</code></h2>
+<pre><code><span class="token-tag">&lt;p&gt;</span>Roses are red<span class="token-tag">&lt;br&gt;</span>Violets are blue<span class="token-tag">&lt;/p&gt;</span></code></pre>
+    <p>Use sparingly — usually a new paragraph is better. <code>&lt;br&gt;</code> is right for poetry, mailing addresses, song lyrics. Don't use it to add visual space between paragraphs — that's CSS's job.</p>
+
+    <h2>Horizontal rule — <code>&lt;hr&gt;</code></h2>
+    <p>A thematic break in the content — like the line at the end of a scene in a novel.</p>
+<pre><code><span class="token-tag">&lt;p&gt;</span>End of part one.<span class="token-tag">&lt;/p&gt;</span>
+<span class="token-tag">&lt;hr&gt;</span>
+<span class="token-tag">&lt;p&gt;</span>Beginning of part two.<span class="token-tag">&lt;/p&gt;</span></code></pre>
+
+    <div class="footer-rule">— end of chapter four —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 5. LISTS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 05</p>
+    <h1 class="chapter">Lists — bullets and numbers</h1>
+    <p class="chapter-intro">When you have a list of things, use a list. It's a common beginner mistake to use a stack of paragraphs instead.</p>
+
+    <h2>Unordered list — <code>&lt;ul&gt;</code></h2>
+    <p>Bulleted. Order doesn't matter. Shopping lists, tags, navigation menus.</p>
+<pre><code><span class="token-tag">&lt;ul&gt;</span>
+  <span class="token-tag">&lt;li&gt;</span>Tomatoes<span class="token-tag">&lt;/li&gt;</span>
+  <span class="token-tag">&lt;li&gt;</span>Basil<span class="token-tag">&lt;/li&gt;</span>
+  <span class="token-tag">&lt;li&gt;</span>Olive oil<span class="token-tag">&lt;/li&gt;</span>
+<span class="token-tag">&lt;/ul&gt;</span></code></pre>
+
+    <h2>Ordered list — <code>&lt;ol&gt;</code></h2>
+    <p>Numbered. Order matters. Cooking steps, instructions, rankings.</p>
+<pre><code><span class="token-tag">&lt;ol&gt;</span>
+  <span class="token-tag">&lt;li&gt;</span>Boil water<span class="token-tag">&lt;/li&gt;</span>
+  <span class="token-tag">&lt;li&gt;</span>Add salt<span class="token-tag">&lt;/li&gt;</span>
+  <span class="token-tag">&lt;li&gt;</span>Drop in the pasta<span class="token-tag">&lt;/li&gt;</span>
+<span class="token-tag">&lt;/ol&gt;</span></code></pre>
+    <p><strong>You don't type the numbers yourself.</strong> The browser numbers them automatically. Reorder the list and the numbers re-number.</p>
+
+    <h2>Nested lists</h2>
+    <p>A list inside a list. Useful for sub-points.</p>
+<pre><code><span class="token-tag">&lt;ul&gt;</span>
+  <span class="token-tag">&lt;li&gt;</span>Fruits
+    <span class="token-tag">&lt;ul&gt;</span>
+      <span class="token-tag">&lt;li&gt;</span>Apple<span class="token-tag">&lt;/li&gt;</span>
+      <span class="token-tag">&lt;li&gt;</span>Banana<span class="token-tag">&lt;/li&gt;</span>
+    <span class="token-tag">&lt;/ul&gt;</span>
+  <span class="token-tag">&lt;/li&gt;</span>
+  <span class="token-tag">&lt;li&gt;</span>Vegetables<span class="token-tag">&lt;/li&gt;</span>
+<span class="token-tag">&lt;/ul&gt;</span></code></pre>
+
+    <h2>Description lists — <code>&lt;dl&gt;</code></h2>
+    <p>A lesser-known list for term / definition pairs. Perfect for glossaries, FAQs, recipe metadata.</p>
+<pre><code><span class="token-tag">&lt;dl&gt;</span>
+  <span class="token-tag">&lt;dt&gt;</span>Al dente<span class="token-tag">&lt;/dt&gt;</span>
+  <span class="token-tag">&lt;dd&gt;</span>Pasta cooked so it's still firm to the bite.<span class="token-tag">&lt;/dd&gt;</span>
+
+  <span class="token-tag">&lt;dt&gt;</span>Mise en place<span class="token-tag">&lt;/dt&gt;</span>
+  <span class="token-tag">&lt;dd&gt;</span>Having all your ingredients prepped before you start.<span class="token-tag">&lt;/dd&gt;</span>
+<span class="token-tag">&lt;/dl&gt;</span></code></pre>
+
+    <div class="callout tip">
+      <p class="callout-title">When to use which list</p>
+      <p><strong>Order matters?</strong> <code>&lt;ol&gt;</code>. <strong>Just a collection?</strong> <code>&lt;ul&gt;</code>. <strong>Pairs of term + meaning?</strong> <code>&lt;dl&gt;</code>. Don't fake a list with paragraphs — search engines and screen readers can tell the difference.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter five —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 6. SEMANTIC HTML ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 06</p>
+    <h1 class="chapter">Semantic HTML</h1>
+    <p class="chapter-intro">"Semantic" means "having meaning." Choose tags that describe what something IS, not just how it should look.</p>
+
+    <h2>Two pages, same look — different meaning</h2>
+<pre><code><span class="token-comment">&lt;!-- Bad — every box is a generic div --&gt;</span>
+<span class="token-tag">&lt;div&gt;</span>The top of the page<span class="token-tag">&lt;/div&gt;</span>
+<span class="token-tag">&lt;div&gt;</span>Main content<span class="token-tag">&lt;/div&gt;</span>
+<span class="token-tag">&lt;div&gt;</span>The footer<span class="token-tag">&lt;/div&gt;</span>
+
+<span class="token-comment">&lt;!-- Good — tags carry meaning --&gt;</span>
+<span class="token-tag">&lt;header&gt;</span>The top of the page<span class="token-tag">&lt;/header&gt;</span>
+<span class="token-tag">&lt;main&gt;</span>Main content<span class="token-tag">&lt;/main&gt;</span>
+<span class="token-tag">&lt;footer&gt;</span>The footer<span class="token-tag">&lt;/footer&gt;</span></code></pre>
+
+    <p>Visually identical. But the second version tells <strong>the browser, screen readers, and search engines</strong> what each section is for. That matters because:</p>
+    <ul>
+      <li>Blind users navigating by screen reader can jump between sections (<em>"go to main content"</em>)</li>
+      <li>Google ranks pages with clear structure higher</li>
+      <li>Your future self reads the code faster</li>
+    </ul>
+
+    <h2>The semantic tags to know</h2>
+    <table>
+      <thead><tr><th>Tag</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>&lt;header&gt;</code></td><td>Top of a page or section — logo, page title, nav</td></tr>
+        <tr><td><code>&lt;nav&gt;</code></td><td>A group of navigation links</td></tr>
+        <tr><td><code>&lt;main&gt;</code></td><td>The main unique content of the page. <strong>One per page.</strong></td></tr>
+        <tr><td><code>&lt;section&gt;</code></td><td>A themed group of content (a chapter, a recipe section)</td></tr>
+        <tr><td><code>&lt;article&gt;</code></td><td>A self-contained piece — a blog post, a recipe, a tweet</td></tr>
+        <tr><td><code>&lt;aside&gt;</code></td><td>Tangentially related content — sidebar, pull quote</td></tr>
+        <tr><td><code>&lt;footer&gt;</code></td><td>Bottom of a page or section — copyright, contact, social links</td></tr>
+        <tr><td><code>&lt;figure&gt;</code> + <code>&lt;figcaption&gt;</code></td><td>An image (or other content) with a caption</td></tr>
+        <tr><td><code>&lt;time&gt;</code></td><td>A date or time, machine-readable via the <code>datetime</code> attribute</td></tr>
+      </tbody>
+    </table>
+
+    <h2>A real page outline</h2>
+<pre><code><span class="token-tag">&lt;body&gt;</span>
+  <span class="token-tag">&lt;header&gt;</span>
+    <span class="token-tag">&lt;h1&gt;</span>Tasty Bites<span class="token-tag">&lt;/h1&gt;</span>
+    <span class="token-tag">&lt;nav&gt;</span>
+      <span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"/"</span><span class="token-tag">&gt;</span>Home<span class="token-tag">&lt;/a&gt;</span>
+      <span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"/recipes"</span><span class="token-tag">&gt;</span>Recipes<span class="token-tag">&lt;/a&gt;</span>
+    <span class="token-tag">&lt;/nav&gt;</span>
+  <span class="token-tag">&lt;/header&gt;</span>
+
+  <span class="token-tag">&lt;main&gt;</span>
+    <span class="token-tag">&lt;article&gt;</span>
+      <span class="token-tag">&lt;h2&gt;</span>Carbonara<span class="token-tag">&lt;/h2&gt;</span>
+      <span class="token-tag">&lt;section&gt;</span><span class="token-tag">&lt;h3&gt;</span>Ingredients<span class="token-tag">&lt;/h3&gt;</span> ... <span class="token-tag">&lt;/section&gt;</span>
+      <span class="token-tag">&lt;section&gt;</span><span class="token-tag">&lt;h3&gt;</span>Steps<span class="token-tag">&lt;/h3&gt;</span> ... <span class="token-tag">&lt;/section&gt;</span>
+    <span class="token-tag">&lt;/article&gt;</span>
+  <span class="token-tag">&lt;/main&gt;</span>
+
+  <span class="token-tag">&lt;footer&gt;</span>
+    <span class="token-tag">&lt;p&gt;</span>&amp;copy; 2026 Tasty Bites<span class="token-tag">&lt;/p&gt;</span>
+  <span class="token-tag">&lt;/footer&gt;</span>
+<span class="token-tag">&lt;/body&gt;</span></code></pre>
+
+    <blockquote>If a tag exists for what you're describing, use it. <code>div</code> is what you reach for when nothing else fits.</blockquote>
+
+    <div class="footer-rule">— end of chapter six —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 7. DIV SPAN ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 07</p>
+    <h1 class="chapter">div, span, and friends</h1>
+    <p class="chapter-intro">Sometimes you need a wrapper that has no meaning — just a box to group things or style. That's what div and span are for.</p>
+
+    <h2><code>&lt;div&gt;</code> — a generic block</h2>
+    <p>A "block" element takes up the full width of its container and starts on a new line. <code>&lt;div&gt;</code> wraps related stuff together so CSS or JS can target it.</p>
+<pre><code><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-string">"recipe-card"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;img</span> <span class="token-attr">src</span>=<span class="token-string">"pasta.jpg"</span> <span class="token-attr">alt</span>=<span class="token-string">"Carbonara"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;h3&gt;</span>Carbonara<span class="token-tag">&lt;/h3&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></code></pre>
+
+    <h2><code>&lt;span&gt;</code> — a generic inline piece</h2>
+    <p>An "inline" element only takes up as much space as its content and sits within a line of text. Use <code>&lt;span&gt;</code> to highlight a piece of text without changing its flow.</p>
+<pre><code><span class="token-tag">&lt;p&gt;</span>Price: <span class="token-tag">&lt;span</span> <span class="token-attr">class</span>=<span class="token-string">"price"</span><span class="token-tag">&gt;</span>$12.99<span class="token-tag">&lt;/span&gt;</span><span class="token-tag">&lt;/p&gt;</span></code></pre>
+
+    <h2>Block vs inline — the mental model</h2>
+    <div class="diagram">┌──────────────────────────────────────────────────┐
+│  BLOCK element (h1, p, div, section, ...)        │
+│  ── takes a full line                            │
+└──────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│  Another BLOCK element                            │
+└──────────────────────────────────────────────────┘
+
+This is a paragraph with an [INLINE span] inside it
+flowing along with the regular text.</div>
+
+    <div class="callout">
+      <p class="callout-title">Rule of thumb</p>
+      <p>Reach for a semantic tag first. If none fits, reach for <code>&lt;div&gt;</code> (block) or <code>&lt;span&gt;</code> (inline). Never use them when something more meaningful would do.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter seven —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 8. FORMS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 08</p>
+    <h1 class="chapter">Forms — letting users type</h1>
+    <p class="chapter-intro">Whenever a user types, picks, or clicks something to send data back — that's a form. Logins, searches, signups, contact pages, comment boxes. All the same building blocks.</p>
+
+    <h2>The minimum form</h2>
+<pre><code><span class="token-tag">&lt;form&gt;</span>
+  <span class="token-tag">&lt;label</span> <span class="token-attr">for</span>=<span class="token-string">"email"</span><span class="token-tag">&gt;</span>Email address<span class="token-tag">&lt;/label&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"email"</span> <span class="token-attr">id</span>=<span class="token-string">"email"</span> <span class="token-attr">name</span>=<span class="token-string">"email"</span><span class="token-tag">&gt;</span>
+
+  <span class="token-tag">&lt;button</span> <span class="token-attr">type</span>=<span class="token-string">"submit"</span><span class="token-tag">&gt;</span>Sign up<span class="token-tag">&lt;/button&gt;</span>
+<span class="token-tag">&lt;/form&gt;</span></code></pre>
+
+    <p>Three pieces to know: <strong>input</strong>, <strong>label</strong>, <strong>button</strong>.</p>
+
+    <h2>Input types — set with <code>type="..."</code></h2>
+    <table>
+      <thead><tr><th>Type</th><th>What you get</th></tr></thead>
+      <tbody>
+        <tr><td><code>text</code></td><td>Plain single-line text (default)</td></tr>
+        <tr><td><code>email</code></td><td>Email-shaped text. Phones show <code>@</code> on the keyboard.</td></tr>
+        <tr><td><code>password</code></td><td>Hides characters as dots</td></tr>
+        <tr><td><code>number</code></td><td>Numbers only, with up/down arrows</td></tr>
+        <tr><td><code>tel</code></td><td>Phone numbers — shows the number keypad on mobile</td></tr>
+        <tr><td><code>url</code></td><td>Validates as a URL</td></tr>
+        <tr><td><code>date</code></td><td>Native date picker calendar</td></tr>
+        <tr><td><code>time</code></td><td>Time picker</td></tr>
+        <tr><td><code>color</code></td><td>Native color picker</td></tr>
+        <tr><td><code>range</code></td><td>A slider</td></tr>
+        <tr><td><code>file</code></td><td>File upload dialog</td></tr>
+        <tr><td><code>checkbox</code></td><td>A tickbox</td></tr>
+        <tr><td><code>radio</code></td><td>Pick one of many (group with the same <code>name</code>)</td></tr>
+        <tr><td><code>search</code></td><td>Search box (with a clear "x" in some browsers)</td></tr>
+        <tr><td><code>submit</code></td><td>A submit button</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Why labels matter</h2>
+    <p>The <code>&lt;label&gt;</code> tag connects descriptive text to an input. Connect them by matching the label's <code>for</code> attribute to the input's <code>id</code>.</p>
+<pre><code><span class="token-tag">&lt;label</span> <span class="token-attr">for</span>=<span class="token-string">"username"</span><span class="token-tag">&gt;</span>Username<span class="token-tag">&lt;/label&gt;</span>
+<span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"text"</span> <span class="token-attr">id</span>=<span class="token-string">"username"</span> <span class="token-attr">name</span>=<span class="token-string">"username"</span><span class="token-tag">&gt;</span></code></pre>
+
+    <p>Why bother?</p>
+    <ul>
+      <li><strong>Clicking the label focuses the input</strong> — bigger target, less friction</li>
+      <li><strong>Screen readers read the label</strong> when reading the input</li>
+      <li><strong>SEO and accessibility audits</strong> reward you</li>
+    </ul>
+
+    <h2>Useful input attributes</h2>
+    <table>
+      <thead><tr><th>Attribute</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><code>placeholder</code></td><td>Grey hint text shown until the user types</td></tr>
+        <tr><td><code>required</code></td><td>Form won't submit unless this is filled</td></tr>
+        <tr><td><code>value</code></td><td>Default value</td></tr>
+        <tr><td><code>maxlength</code> / <code>minlength</code></td><td>Character limits</td></tr>
+        <tr><td><code>min</code> / <code>max</code> / <code>step</code></td><td>For number, date, range</td></tr>
+        <tr><td><code>pattern</code></td><td>A regex the value must match</td></tr>
+        <tr><td><code>autocomplete</code></td><td>Tell browsers what to autofill: <code>email</code>, <code>name</code>, <code>tel</code>, <code>current-password</code></td></tr>
+        <tr><td><code>autofocus</code></td><td>Focus this field automatically on page load</td></tr>
+        <tr><td><code>disabled</code></td><td>Greyed out, can't be edited or submitted</td></tr>
+        <tr><td><code>readonly</code></td><td>Visible value, not editable, still submitted</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Other form controls</h2>
+
+    <h3>Multi-line text — <code>&lt;textarea&gt;</code></h3>
+<pre><code><span class="token-tag">&lt;label</span> <span class="token-attr">for</span>=<span class="token-string">"msg"</span><span class="token-tag">&gt;</span>Your message<span class="token-tag">&lt;/label&gt;</span>
+<span class="token-tag">&lt;textarea</span> <span class="token-attr">id</span>=<span class="token-string">"msg"</span> <span class="token-attr">name</span>=<span class="token-string">"message"</span> <span class="token-attr">rows</span>=<span class="token-string">"5"</span><span class="token-tag">&gt;&lt;/textarea&gt;</span></code></pre>
+
+    <h3>Dropdown — <code>&lt;select&gt;</code></h3>
+<pre><code><span class="token-tag">&lt;label</span> <span class="token-attr">for</span>=<span class="token-string">"meal"</span><span class="token-tag">&gt;</span>Favorite meal<span class="token-tag">&lt;/label&gt;</span>
+<span class="token-tag">&lt;select</span> <span class="token-attr">id</span>=<span class="token-string">"meal"</span> <span class="token-attr">name</span>=<span class="token-string">"meal"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;option</span> <span class="token-attr">value</span>=<span class="token-string">"breakfast"</span><span class="token-tag">&gt;</span>Breakfast<span class="token-tag">&lt;/option&gt;</span>
+  <span class="token-tag">&lt;option</span> <span class="token-attr">value</span>=<span class="token-string">"lunch"</span> <span class="token-attr">selected</span><span class="token-tag">&gt;</span>Lunch<span class="token-tag">&lt;/option&gt;</span>
+  <span class="token-tag">&lt;option</span> <span class="token-attr">value</span>=<span class="token-string">"dinner"</span><span class="token-tag">&gt;</span>Dinner<span class="token-tag">&lt;/option&gt;</span>
+<span class="token-tag">&lt;/select&gt;</span></code></pre>
+
+    <h3>Checkboxes and radios</h3>
+<pre><code><span class="token-comment">&lt;!-- Checkboxes — pick zero or many --&gt;</span>
+<span class="token-tag">&lt;label&gt;&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"checkbox"</span> <span class="token-attr">name</span>=<span class="token-string">"diet"</span> <span class="token-attr">value</span>=<span class="token-string">"vegan"</span><span class="token-tag">&gt;</span> Vegan<span class="token-tag">&lt;/label&gt;</span>
+<span class="token-tag">&lt;label&gt;&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"checkbox"</span> <span class="token-attr">name</span>=<span class="token-string">"diet"</span> <span class="token-attr">value</span>=<span class="token-string">"gluten-free"</span><span class="token-tag">&gt;</span> Gluten-free<span class="token-tag">&lt;/label&gt;</span>
+
+<span class="token-comment">&lt;!-- Radios — pick exactly one. Same name = same group. --&gt;</span>
+<span class="token-tag">&lt;label&gt;&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"radio"</span> <span class="token-attr">name</span>=<span class="token-string">"size"</span> <span class="token-attr">value</span>=<span class="token-string">"small"</span><span class="token-tag">&gt;</span> Small<span class="token-tag">&lt;/label&gt;</span>
+<span class="token-tag">&lt;label&gt;&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"radio"</span> <span class="token-attr">name</span>=<span class="token-string">"size"</span> <span class="token-attr">value</span>=<span class="token-string">"large"</span><span class="token-tag">&gt;</span> Large<span class="token-tag">&lt;/label&gt;</span></code></pre>
+
+    <div class="callout tip">
+      <p class="callout-title">Trick — wrap inputs in labels</p>
+      <p>For checkboxes and radios, putting the <code>&lt;input&gt;</code> <em>inside</em> the <code>&lt;label&gt;</code> means you can skip <code>for</code>/<code>id</code> entirely. Clicking the label still focuses the input.</p>
+    </div>
+
+    <h3>Group related fields — <code>&lt;fieldset&gt;</code></h3>
+<pre><code><span class="token-tag">&lt;fieldset&gt;</span>
+  <span class="token-tag">&lt;legend&gt;</span>Size<span class="token-tag">&lt;/legend&gt;</span>
+  <span class="token-tag">&lt;label&gt;&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"radio"</span> <span class="token-attr">name</span>=<span class="token-string">"size"</span><span class="token-tag">&gt;</span> Small<span class="token-tag">&lt;/label&gt;</span>
+  <span class="token-tag">&lt;label&gt;&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"radio"</span> <span class="token-attr">name</span>=<span class="token-string">"size"</span><span class="token-tag">&gt;</span> Medium<span class="token-tag">&lt;/label&gt;</span>
+  <span class="token-tag">&lt;label&gt;&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"radio"</span> <span class="token-attr">name</span>=<span class="token-string">"size"</span><span class="token-tag">&gt;</span> Large<span class="token-tag">&lt;/label&gt;</span>
+<span class="token-tag">&lt;/fieldset&gt;</span></code></pre>
+    <p><code>&lt;fieldset&gt;</code> draws a box around related fields. <code>&lt;legend&gt;</code> labels the group.</p>
+
+    <h3>Buttons</h3>
+<pre><code><span class="token-tag">&lt;button</span> <span class="token-attr">type</span>=<span class="token-string">"submit"</span><span class="token-tag">&gt;</span>Send<span class="token-tag">&lt;/button&gt;</span>
+<span class="token-tag">&lt;button</span> <span class="token-attr">type</span>=<span class="token-string">"reset"</span><span class="token-tag">&gt;</span>Clear<span class="token-tag">&lt;/button&gt;</span>
+<span class="token-tag">&lt;button</span> <span class="token-attr">type</span>=<span class="token-string">"button"</span><span class="token-tag">&gt;</span>Do something<span class="token-tag">&lt;/button&gt;</span></code></pre>
+    <p>Three button types. Inside a form, the default is <code>submit</code> — so always set <code>type="button"</code> on any button that <em>shouldn't</em> submit the form (otherwise Enter in any input will trigger it).</p>
+
+    <div class="footer-rule">— end of chapter eight —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 9. TABLES ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 09</p>
+    <h1 class="chapter">Tables — for actual tabular data</h1>
+    <p class="chapter-intro">Tables are for data in rows and columns. Not for layout. Layout uses CSS Grid and Flexbox.</p>
+
+    <h2>The shape of a table</h2>
+<pre><code><span class="token-tag">&lt;table&gt;</span>
+  <span class="token-tag">&lt;thead&gt;</span>
+    <span class="token-tag">&lt;tr&gt;</span>
+      <span class="token-tag">&lt;th&gt;</span>Recipe<span class="token-tag">&lt;/th&gt;</span>
+      <span class="token-tag">&lt;th&gt;</span>Time<span class="token-tag">&lt;/th&gt;</span>
+      <span class="token-tag">&lt;th&gt;</span>Category<span class="token-tag">&lt;/th&gt;</span>
+    <span class="token-tag">&lt;/tr&gt;</span>
+  <span class="token-tag">&lt;/thead&gt;</span>
+  <span class="token-tag">&lt;tbody&gt;</span>
+    <span class="token-tag">&lt;tr&gt;</span>
+      <span class="token-tag">&lt;td&gt;</span>Carbonara<span class="token-tag">&lt;/td&gt;</span>
+      <span class="token-tag">&lt;td&gt;</span>25 min<span class="token-tag">&lt;/td&gt;</span>
+      <span class="token-tag">&lt;td&gt;</span>Dinner<span class="token-tag">&lt;/td&gt;</span>
+    <span class="token-tag">&lt;/tr&gt;</span>
+  <span class="token-tag">&lt;/tbody&gt;</span>
+<span class="token-tag">&lt;/table&gt;</span></code></pre>
+
+    <table>
+      <thead><tr><th>Tag</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td><code>&lt;table&gt;</code></td><td>The outer wrapper</td></tr>
+        <tr><td><code>&lt;thead&gt;</code></td><td>The header row group</td></tr>
+        <tr><td><code>&lt;tbody&gt;</code></td><td>The data row group</td></tr>
+        <tr><td><code>&lt;tr&gt;</code></td><td>Table row</td></tr>
+        <tr><td><code>&lt;th&gt;</code></td><td>Header cell (bold + centered by default)</td></tr>
+        <tr><td><code>&lt;td&gt;</code></td><td>Data cell</td></tr>
+        <tr><td><code>&lt;caption&gt;</code></td><td>Optional title for the table</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <p class="callout-title">Don't use tables for layout</p>
+      <p>Years ago, designers built whole webpage layouts using nested tables. Don't. Tables tell screen readers <em>"this is tabular data"</em> — which confuses everything when it's actually a sidebar. Use CSS for layout, tables for data.</p>
+    </div>
+
+    <div class="footer-rule">— end of chapter nine —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 10. MULTI PAGE ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 10</p>
+    <h1 class="chapter">Multi-page sites</h1>
+    <p class="chapter-intro">Real websites have more than one page. You make them by creating more HTML files and linking them.</p>
+
+    <h2>One folder, several files</h2>
+    <div class="diagram">my-site/
+├── index.html        ← the homepage (always named "index.html")
+├── about.html
+├── contact.html
+└── images/
+    ├── logo.png
+    └── hero.jpg</div>
+
+    <p>Use <code>&lt;a&gt;</code> to link between them:</p>
+<pre><code><span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"about.html"</span><span class="token-tag">&gt;</span>About us<span class="token-tag">&lt;/a&gt;</span>
+<span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"images/logo.png"</span><span class="token-tag">&gt;</span>View our logo<span class="token-tag">&lt;/a&gt;</span></code></pre>
+
+    <h2>Why <code>index.html</code> is special</h2>
+    <p>When someone visits a folder URL (like <code>mysite.com/</code> or <code>mysite.com/recipes/</code>), the server looks for a file called <code>index.html</code> and serves it. That's why your homepage is always named <code>index.html</code>.</p>
+
+    <h2>Paths — relative vs absolute</h2>
+    <table>
+      <thead><tr><th>Path</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td><code>about.html</code></td><td>Same folder as the current file</td></tr>
+        <tr><td><code>recipes/carbonara.html</code></td><td>Subfolder named <code>recipes</code></td></tr>
+        <tr><td><code>../about.html</code></td><td>One folder UP, then about.html. <code>..</code> means "parent folder."</td></tr>
+        <tr><td><code>/about.html</code></td><td>"Root" of the site — starts at the top no matter where you are</td></tr>
+        <tr><td><code>https://example.com/</code></td><td>An absolute URL — a full address to anywhere on the web</td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer-rule">— end of chapter ten —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 11. TIPS AND HACKS ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 11</p>
+    <h1 class="chapter">Tips &amp; little hacks</h1>
+    <p class="chapter-intro">Small habits that separate clean HTML from messy HTML. Steal these and your code will feel professional from day one.</p>
+
+    <h3>Use Emmet shortcuts in VS Code</h3>
+    <p>VS Code has built-in Emmet — type a tag name and press <strong>Tab</strong>:</p>
+    <ul>
+      <li><code>p</code> → <code>&lt;p&gt;&lt;/p&gt;</code></li>
+      <li><code>ul&gt;li*3</code> → an unordered list with 3 list items</li>
+      <li><code>nav&gt;a*4</code> → a nav with 4 anchor tags</li>
+      <li><code>.recipe-card</code> → <code>&lt;div class="recipe-card"&gt;&lt;/div&gt;</code></li>
+      <li><code>#header</code> → <code>&lt;div id="header"&gt;&lt;/div&gt;</code></li>
+      <li><code>!</code> → the full HTML5 skeleton</li>
+      <li><code>lorem20</code> → 20 words of placeholder Latin</li>
+    </ul>
+
+    <h3>Always set the language</h3>
+    <p>The <code>lang</code> attribute on <code>&lt;html&gt;</code> tells screen readers what language to pronounce — and tells search engines what language the page is.</p>
+<pre><code><span class="token-tag">&lt;html</span> <span class="token-attr">lang</span>=<span class="token-string">"en"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;html</span> <span class="token-attr">lang</span>=<span class="token-string">"en-US"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;html</span> <span class="token-attr">lang</span>=<span class="token-string">"es"</span><span class="token-tag">&gt;</span></code></pre>
+
+    <h3>Always include the viewport meta tag</h3>
+<pre><code><span class="token-tag">&lt;meta</span> <span class="token-attr">name</span>=<span class="token-string">"viewport"</span> <span class="token-attr">content</span>=<span class="token-string">"width=device-width, initial-scale=1"</span><span class="token-tag">&gt;</span></code></pre>
+    <p>Without it, mobile browsers render your page at desktop width and zoom out — making everything tiny.</p>
+
+    <h3>Always write <code>alt</code> text</h3>
+    <p>For meaningful images: describe what's in it.</p>
+    <p>For decorative images (icons, dividers): use empty <code>alt=""</code> so screen readers skip them.</p>
+<pre><code><span class="token-comment">&lt;!-- Meaningful --&gt;</span>
+<span class="token-tag">&lt;img</span> <span class="token-attr">src</span>=<span class="token-string">"chef.jpg"</span> <span class="token-attr">alt</span>=<span class="token-string">"Chef Anna mixing pasta"</span><span class="token-tag">&gt;</span>
+
+<span class="token-comment">&lt;!-- Decorative --&gt;</span>
+<span class="token-tag">&lt;img</span> <span class="token-attr">src</span>=<span class="token-string">"sparkle.svg"</span> <span class="token-attr">alt</span>=<span class="token-string">""</span><span class="token-tag">&gt;</span></code></pre>
+
+    <h3>HTML entities — write special characters</h3>
+    <p>Some characters can't be typed directly because the browser would think they're HTML. Use entities — they start with <code>&amp;</code> and end with <code>;</code>:</p>
+    <table>
+      <thead><tr><th>Entity</th><th>Renders as</th><th>Use for</th></tr></thead>
+      <tbody>
+        <tr><td><code>&amp;amp;</code></td><td>&amp;</td><td>The literal ampersand</td></tr>
+        <tr><td><code>&amp;lt;</code> / <code>&amp;gt;</code></td><td>&lt; &gt;</td><td>Less than / greater than</td></tr>
+        <tr><td><code>&amp;copy;</code></td><td>©</td><td>Copyright</td></tr>
+        <tr><td><code>&amp;trade;</code></td><td>™</td><td>Trademark</td></tr>
+        <tr><td><code>&amp;reg;</code></td><td>®</td><td>Registered</td></tr>
+        <tr><td><code>&amp;nbsp;</code></td><td>&nbsp;</td><td>A non-breaking space (text won't wrap here)</td></tr>
+        <tr><td><code>&amp;mdash;</code></td><td>—</td><td>An em dash</td></tr>
+        <tr><td><code>&amp;ndash;</code></td><td>–</td><td>An en dash</td></tr>
+        <tr><td><code>&amp;hellip;</code></td><td>…</td><td>Ellipsis</td></tr>
+      </tbody>
+    </table>
+    <p>Tip: emoji work natively now — you can just paste them. <code>&lt;p&gt;Hello 🎉&lt;/p&gt;</code> works fine.</p>
+
+    <h3>Make phone numbers and emails tappable</h3>
+<pre><code><span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"tel:+1234567890"</span><span class="token-tag">&gt;</span>Call us<span class="token-tag">&lt;/a&gt;</span>
+<span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"mailto:hello@me.com?subject=Hi"</span><span class="token-tag">&gt;</span>Email<span class="token-tag">&lt;/a&gt;</span>
+<span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"sms:+1234567890"</span><span class="token-tag">&gt;</span>Text us<span class="token-tag">&lt;/a&gt;</span></code></pre>
+    <p>On phones, these open the dialer, mail app, and messages app respectively.</p>
+
+    <h3>Force a download instead of opening</h3>
+<pre><code><span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"recipe.pdf"</span> <span class="token-attr">download</span><span class="token-tag">&gt;</span>Download recipe<span class="token-tag">&lt;/a&gt;</span>
+<span class="token-tag">&lt;a</span> <span class="token-attr">href</span>=<span class="token-string">"recipe.pdf"</span> <span class="token-attr">download</span>=<span class="token-string">"carbonara-recipe.pdf"</span><span class="token-tag">&gt;</span>Download<span class="token-tag">&lt;/a&gt;</span></code></pre>
+    <p>The <code>download</code> attribute makes the browser save instead of open. Add a value to rename the file on save.</p>
+
+    <h3>Data attributes — stash data on any tag</h3>
+    <p>Any attribute starting with <code>data-</code> is your own custom data. JavaScript can read it back. CSS can use it for styling.</p>
+<pre><code><span class="token-tag">&lt;button</span> <span class="token-attr">data-category</span>=<span class="token-string">"dinner"</span> <span class="token-attr">data-recipe-id</span>=<span class="token-string">"42"</span><span class="token-tag">&gt;</span>
+  Carbonara
+<span class="token-tag">&lt;/button&gt;</span></code></pre>
+
+    <h3>Native expand/collapse — <code>&lt;details&gt;</code></h3>
+<pre><code><span class="token-tag">&lt;details&gt;</span>
+  <span class="token-tag">&lt;summary&gt;</span>Click to see the recipe<span class="token-tag">&lt;/summary&gt;</span>
+  <span class="token-tag">&lt;p&gt;</span>Boil pasta. Mix eggs and cheese. Combine.<span class="token-tag">&lt;/p&gt;</span>
+<span class="token-tag">&lt;/details&gt;</span></code></pre>
+    <p>A toggleable section that works without any JavaScript. Great for FAQs, optional details, mobile menus.</p>
+
+    <h3>The <code>&lt;dialog&gt;</code> element — native modals</h3>
+<pre><code><span class="token-tag">&lt;dialog</span> <span class="token-attr">id</span>=<span class="token-string">"my-modal"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;p&gt;</span>Are you sure?<span class="token-tag">&lt;/p&gt;</span>
+  <span class="token-tag">&lt;button</span> <span class="token-attr">onclick</span>=<span class="token-string">"this.closest('dialog').close()"</span><span class="token-tag">&gt;</span>Cancel<span class="token-tag">&lt;/button&gt;</span>
+<span class="token-tag">&lt;/dialog&gt;</span></code></pre>
+    <p>A real dialog box, focus-trapped, ESC closes it, all without JS libraries.</p>
+
+    <h3>Mark important text — <code>&lt;mark&gt;</code></h3>
+<pre><code><span class="token-tag">&lt;p&gt;</span>Don't skip the <span class="token-tag">&lt;mark&gt;</span>resting time<span class="token-tag">&lt;/mark&gt;</span> — it matters.<span class="token-tag">&lt;/p&gt;</span></code></pre>
+    <p>Renders with a highlighter-like background. Good for search results too.</p>
+
+    <h3>Show keyboard shortcuts — <code>&lt;kbd&gt;</code></h3>
+<pre><code><span class="token-tag">&lt;p&gt;</span>Press <span class="token-tag">&lt;kbd&gt;</span>Ctrl<span class="token-tag">&lt;/kbd&gt;</span> + <span class="token-tag">&lt;kbd&gt;</span>S<span class="token-tag">&lt;/kbd&gt;</span> to save.<span class="token-tag">&lt;/p&gt;</span></code></pre>
+
+    <h3>Group form fields visually</h3>
+    <p>Wrap label + input pairs in a <code>&lt;div&gt;</code> so CSS can space them out:</p>
+<pre><code><span class="token-tag">&lt;div</span> <span class="token-attr">class</span>=<span class="token-string">"field"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;label</span> <span class="token-attr">for</span>=<span class="token-string">"email"</span><span class="token-tag">&gt;</span>Email<span class="token-tag">&lt;/label&gt;</span>
+  <span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"email"</span> <span class="token-attr">id</span>=<span class="token-string">"email"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;/div&gt;</span></code></pre>
+
+    <h3>autocomplete saves users typing</h3>
+<pre><code><span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"text"</span>     <span class="token-attr">autocomplete</span>=<span class="token-string">"name"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"email"</span>    <span class="token-attr">autocomplete</span>=<span class="token-string">"email"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"tel"</span>      <span class="token-attr">autocomplete</span>=<span class="token-string">"tel"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;input</span> <span class="token-attr">type</span>=<span class="token-string">"password"</span> <span class="token-attr">autocomplete</span>=<span class="token-string">"current-password"</span><span class="token-tag">&gt;</span></code></pre>
+    <p>The browser pre-fills these from saved info. Users love this — they won't even know your form is well-written, just that filling it is fast.</p>
+
+    <h3>Use semantic time</h3>
+<pre><code>Published <span class="token-tag">&lt;time</span> <span class="token-attr">datetime</span>=<span class="token-string">"2026-06-15"</span><span class="token-tag">&gt;</span>June 15, 2026<span class="token-tag">&lt;/time&gt;</span></code></pre>
+    <p>The <code>datetime</code> attribute is machine-readable. Screen readers, search engines, and calendars all understand it.</p>
+
+    <h3>The <code>&lt;picture&gt;</code> element — different images for different screens</h3>
+<pre><code><span class="token-tag">&lt;picture&gt;</span>
+  <span class="token-tag">&lt;source</span> <span class="token-attr">media</span>=<span class="token-string">"(max-width: 600px)"</span> <span class="token-attr">srcset</span>=<span class="token-string">"small.jpg"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;source</span> <span class="token-attr">media</span>=<span class="token-string">"(max-width: 1200px)"</span> <span class="token-attr">srcset</span>=<span class="token-string">"medium.jpg"</span><span class="token-tag">&gt;</span>
+  <span class="token-tag">&lt;img</span> <span class="token-attr">src</span>=<span class="token-string">"large.jpg"</span> <span class="token-attr">alt</span>=<span class="token-string">"Pasta"</span><span class="token-tag">&gt;</span>
+<span class="token-tag">&lt;/picture&gt;</span></code></pre>
+    <p>Phone users download <code>small.jpg</code>, desktop users download <code>large.jpg</code>. Saves bandwidth.</p>
+
+    <h3>Loading lazy on images below the fold</h3>
+<pre><code><span class="token-tag">&lt;img</span> <span class="token-attr">src</span>=<span class="token-string">"recipe.jpg"</span> <span class="token-attr">alt</span>=<span class="token-string">"..."</span> <span class="token-attr">loading</span>=<span class="token-string">"lazy"</span><span class="token-tag">&gt;</span></code></pre>
+    <p>The browser only loads the image when the user scrolls near it. Free performance win.</p>
+
+    <div class="footer-rule">— end of chapter eleven —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 12. COMMON MISTAKES ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 12</p>
+    <h1 class="chapter">Common mistakes</h1>
+    <p class="chapter-intro">Every beginner makes these. Spotting them early saves hours of confusion.</p>
+
+    <h3>1. Forgetting to close tags</h3>
+<pre><code><span class="token-comment">&lt;!-- Wrong --&gt;</span>
+<span class="token-tag">&lt;p&gt;</span>This paragraph never ends
+<span class="token-tag">&lt;p&gt;</span>So this one joins it weirdly<span class="token-tag">&lt;/p&gt;</span></code></pre>
+
+    <h3>2. Using headings for size, not meaning</h3>
+    <p>Don't write <code>&lt;h3&gt;</code> just because you want smaller text. Pick the heading level based on outline depth. Use CSS for size.</p>
+
+    <h3>3. Multiple <code>&lt;h1&gt;</code>s on one page</h3>
+    <p>One per page. The browser allows more, but it hurts SEO and accessibility.</p>
+
+    <h3>4. Skipping <code>alt</code> text</h3>
+    <p>The most common accessibility failure. <code>alt=""</code> for decoration is fine. Just don't leave it off entirely.</p>
+
+    <h3>5. <code>&lt;br&gt;</code> as spacing</h3>
+<pre><code><span class="token-comment">&lt;!-- Bad --&gt;</span>
+<span class="token-tag">&lt;p&gt;</span>Paragraph one.<span class="token-tag">&lt;/p&gt;</span>
+<span class="token-tag">&lt;br&gt;&lt;br&gt;</span>
+<span class="token-tag">&lt;p&gt;</span>Paragraph two.<span class="token-tag">&lt;/p&gt;</span></code></pre>
+    <p>Use CSS <code>margin</code> for space between elements. <code>&lt;br&gt;</code> is for line breaks within text only.</p>
+
+    <h3>6. <code>div</code> for everything</h3>
+    <p>Code that's all <code>&lt;div&gt;</code> is a sign you haven't picked the right semantic tags. Use <code>header</code>, <code>nav</code>, <code>main</code>, <code>article</code>, <code>section</code>, <code>footer</code> when they fit.</p>
+
+    <h3>7. Inline styles for everything</h3>
+<pre><code><span class="token-comment">&lt;!-- Bad --&gt;</span>
+<span class="token-tag">&lt;p</span> <span class="token-attr">style</span>=<span class="token-string">"color: red; font-size: 18px;"</span><span class="token-tag">&gt;</span>Hello<span class="token-tag">&lt;/p&gt;</span></code></pre>
+    <p>Inline styles are hard to change later. Put styling in a separate CSS file. Use <code>class</code> on the HTML.</p>
+
+    <h3>8. Forgetting the viewport meta tag</h3>
+    <p>Without it, your site looks tiny on phones. Always include it in <code>&lt;head&gt;</code>.</p>
+
+    <h3>9. Buttons that aren't <code>&lt;button&gt;</code></h3>
+    <p>If it's clickable and does something, make it a real <code>&lt;button&gt;</code>. Don't use <code>&lt;div onclick="..."&gt;</code>. Buttons have keyboard support, focus styles, and screen-reader announcements built in.</p>
+
+    <h3>10. Reusing the same <code>id</code></h3>
+    <p><code>id</code> values must be unique per page. If you need to reuse, use <code>class</code> instead.</p>
+
+    <div class="footer-rule">— end of chapter twelve —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 13. CHEAT SHEET ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 13</p>
+    <h1 class="chapter">The complete tag cheat sheet</h1>
+    <p class="chapter-intro">Bookmark this page. Print it. Tape it to the wall. Every tag you've met in the course, in one place.</p>
+
+    <h2>Document structure</h2>
+    <div class="tag-grid">
+      <div><code>&lt;html&gt;</code> root</div>
+      <div><code>&lt;head&gt;</code> page info</div>
+      <div><code>&lt;body&gt;</code> visible content</div>
+      <div><code>&lt;title&gt;</code> tab text</div>
+      <div><code>&lt;meta&gt;</code> page metadata</div>
+      <div><code>&lt;link&gt;</code> load CSS / fonts</div>
+      <div><code>&lt;script&gt;</code> load JS</div>
+      <div><code>&lt;style&gt;</code> inline CSS</div>
+    </div>
+
+    <h2>Semantic regions</h2>
+    <div class="tag-grid">
+      <div><code>&lt;header&gt;</code> top of page</div>
+      <div><code>&lt;nav&gt;</code> navigation</div>
+      <div><code>&lt;main&gt;</code> main content</div>
+      <div><code>&lt;section&gt;</code> thematic group</div>
+      <div><code>&lt;article&gt;</code> self-contained</div>
+      <div><code>&lt;aside&gt;</code> sidebar</div>
+      <div><code>&lt;footer&gt;</code> bottom of page</div>
+      <div><code>&lt;figure&gt;</code> media + caption</div>
+    </div>
+
+    <h2>Text content</h2>
+    <div class="tag-grid">
+      <div><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> headings</div>
+      <div><code>&lt;p&gt;</code> paragraph</div>
+      <div><code>&lt;strong&gt;</code> important</div>
+      <div><code>&lt;em&gt;</code> emphasis</div>
+      <div><code>&lt;b&gt;</code> stylistic bold</div>
+      <div><code>&lt;i&gt;</code> stylistic italic</div>
+      <div><code>&lt;u&gt;</code> underline</div>
+      <div><code>&lt;mark&gt;</code> highlight</div>
+      <div><code>&lt;small&gt;</code> fine print</div>
+      <div><code>&lt;sub&gt;</code> / <code>&lt;sup&gt;</code> sub/super</div>
+      <div><code>&lt;code&gt;</code> inline code</div>
+      <div><code>&lt;pre&gt;</code> preformatted</div>
+      <div><code>&lt;kbd&gt;</code> keyboard input</div>
+      <div><code>&lt;abbr&gt;</code> abbreviation</div>
+      <div><code>&lt;cite&gt;</code> source title</div>
+      <div><code>&lt;blockquote&gt;</code> quote block</div>
+      <div><code>&lt;q&gt;</code> inline quote</div>
+      <div><code>&lt;time&gt;</code> date/time</div>
+      <div><code>&lt;br&gt;</code> line break</div>
+      <div><code>&lt;hr&gt;</code> horizontal rule</div>
+    </div>
+
+    <h2>Lists</h2>
+    <div class="tag-grid">
+      <div><code>&lt;ul&gt;</code> unordered list</div>
+      <div><code>&lt;ol&gt;</code> ordered list</div>
+      <div><code>&lt;li&gt;</code> list item</div>
+      <div><code>&lt;dl&gt;</code> description list</div>
+      <div><code>&lt;dt&gt;</code> description term</div>
+      <div><code>&lt;dd&gt;</code> description detail</div>
+    </div>
+
+    <h2>Media</h2>
+    <div class="tag-grid">
+      <div><code>&lt;img&gt;</code> image</div>
+      <div><code>&lt;picture&gt;</code> responsive image</div>
+      <div><code>&lt;source&gt;</code> media source</div>
+      <div><code>&lt;audio&gt;</code> sound</div>
+      <div><code>&lt;video&gt;</code> video</div>
+      <div><code>&lt;track&gt;</code> captions</div>
+      <div><code>&lt;iframe&gt;</code> embed</div>
+      <div><code>&lt;figcaption&gt;</code> caption</div>
+    </div>
+
+    <h2>Links &amp; navigation</h2>
+    <div class="tag-grid">
+      <div><code>&lt;a href&gt;</code> link</div>
+      <div><code>&lt;a href="#id"&gt;</code> in-page jump</div>
+      <div><code>&lt;a href="mailto:"&gt;</code> email</div>
+      <div><code>&lt;a href="tel:"&gt;</code> phone</div>
+    </div>
+
+    <h2>Forms</h2>
+    <div class="tag-grid">
+      <div><code>&lt;form&gt;</code> form wrapper</div>
+      <div><code>&lt;input&gt;</code> single field</div>
+      <div><code>&lt;label&gt;</code> field label</div>
+      <div><code>&lt;textarea&gt;</code> multi-line</div>
+      <div><code>&lt;select&gt;</code> dropdown</div>
+      <div><code>&lt;option&gt;</code> dropdown option</div>
+      <div><code>&lt;optgroup&gt;</code> grouped options</div>
+      <div><code>&lt;button&gt;</code> button</div>
+      <div><code>&lt;fieldset&gt;</code> group fields</div>
+      <div><code>&lt;legend&gt;</code> fieldset title</div>
+      <div><code>&lt;datalist&gt;</code> autocomplete list</div>
+      <div><code>&lt;output&gt;</code> result of calculation</div>
+    </div>
+
+    <h2>Tables</h2>
+    <div class="tag-grid">
+      <div><code>&lt;table&gt;</code> the table</div>
+      <div><code>&lt;caption&gt;</code> table title</div>
+      <div><code>&lt;thead&gt;</code> header rows</div>
+      <div><code>&lt;tbody&gt;</code> body rows</div>
+      <div><code>&lt;tfoot&gt;</code> footer rows</div>
+      <div><code>&lt;tr&gt;</code> row</div>
+      <div><code>&lt;th&gt;</code> header cell</div>
+      <div><code>&lt;td&gt;</code> data cell</div>
+    </div>
+
+    <h2>Generic / interactive</h2>
+    <div class="tag-grid">
+      <div><code>&lt;div&gt;</code> block container</div>
+      <div><code>&lt;span&gt;</code> inline container</div>
+      <div><code>&lt;details&gt;</code> expand/collapse</div>
+      <div><code>&lt;summary&gt;</code> expander title</div>
+      <div><code>&lt;dialog&gt;</code> native modal</div>
+      <div><code>&lt;template&gt;</code> reusable HTML</div>
+    </div>
+
+    <div class="footer-rule">— end of chapter thirteen —</div>
+  </section>
+
+  <div class="page-break"></div>
+
+
+  <!-- ============ 14. WHERE NEXT ============ -->
+  <section>
+    <p class="chapter-eyebrow">Chapter 14</p>
+    <h1 class="chapter">Where to go next</h1>
+    <p class="chapter-intro">You now know enough HTML to build any web page's structure. The journey from here.</p>
+
+    <h2>The natural next steps</h2>
+    <ol>
+      <li><strong>CSS</strong> — color, fonts, spacing, layout. The "looks like a real site" part. <em>(Course Lesson 03.)</em></li>
+      <li><strong>Flexbox &amp; Grid</strong> — modern CSS layout. Cards in rows, headers with logos and nav side by side. <em>(Lesson 04.)</em></li>
+      <li><strong>JavaScript</strong> — interactivity. Buttons that do things, forms that validate, content that updates. <em>(Lessons 05–06.)</em></li>
+      <li><strong>TypeScript</strong> — JavaScript with safety rails. <em>(Lesson 07.)</em></li>
+      <li><strong>Tailwind CSS</strong> — a faster way to style. <em>(Lesson 08.)</em></li>
+    </ol>
+
+    <h2>Resources worth bookmarking</h2>
+    <ul>
+      <li><strong>MDN Web Docs</strong> (developer.mozilla.org) — the official, most accurate reference for every HTML tag.</li>
+      <li><strong>HTML5 Doctor</strong> — short articles on semantic HTML choices.</li>
+      <li><strong>Can I Use</strong> (caniuse.com) — check which browsers support a tag or attribute.</li>
+      <li><strong>The W3C HTML Validator</strong> — paste your HTML, get a list of errors.</li>
+    </ul>
+
+    <h2>Build something — anything</h2>
+    <p>Reading about HTML teaches you the vocabulary. Building teaches you to write. Don't wait until you "know enough" — you'll never feel ready. Pick something tiny:</p>
+    <ul>
+      <li>A one-page bio about yourself</li>
+      <li>A page that lists your three favorite movies, each with an image</li>
+      <li>A simple recipe page like the one we built in class</li>
+      <li>A contact form for an imaginary business</li>
+    </ul>
+
+    <blockquote>The fastest way to learn HTML is to build five small, ugly websites in a week. The second-fastest is to build one. Don't read another tutorial first — open VS Code now.</blockquote>
+
+    <div class="footer-rule">
+      — end —<br>
+      <span style="font-family: var(--font-display); font-size: 14pt; color: var(--terracotta); letter-spacing: 0.4em;">·  ·  ·</span><br>
+      Tasty Bites · Frontend Cohort
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

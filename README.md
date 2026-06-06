@@ -37,6 +37,10 @@ The course is split into **8 sections**. Each section is a folder that contains:
 | 07 | [TypeScript](07-typescript/) | Adding types so your code is safer. |
 | 08 | [Tailwind CSS](08-tailwind/) | Styling faster with utility classes. |
 
+### Printable references
+
+- [HTML reference PDF](reference/HTML-Reference.pdf) — beginner-friendly companion guide covering everything from lessons 01 + 02 with tips, hacks, and a complete cheat sheet.
+
 ---
 
 ## The project: Tasty Bites
